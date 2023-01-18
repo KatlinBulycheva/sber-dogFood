@@ -13,6 +13,7 @@ header div.logoContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 header .logoImg {
@@ -30,4 +31,8 @@ header .rightContainer {
     display: flex;
     width: 400px;
     justify-content: space-between;
+}
+
+header .rightContainer i {
+    cursor: pointer;
 }
