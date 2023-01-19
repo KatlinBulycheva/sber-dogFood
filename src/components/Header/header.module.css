@@ -39,7 +39,8 @@ header .rightContainer i {
 }
 
 header input {
-    width: 400px;
+    width: calc(100% - 250px);
+    max-width: 400px;
 }
 
 .rightContainerLinks {
@@ -47,4 +48,6 @@ header input {
     width: 20%;
     justify-content: space-between;
     align-items: center;
+    min-width: 150px;
+    max-width: 160px;
 }
