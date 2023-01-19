@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import { Home } from './components/Pages/Home/Home';
 import { Products } from './components/Pages/Products/Products';
-import { Signin } from './components/Pages/Signin/Signin';
-import { Signup } from './components/Pages/Signup/Signup';
+import { Signin } from './components/Pages/SignupOrSignin/Signin/Signin';
+import { Signup } from './components/Pages/SignupOrSignin/Signup/Signup';
 
 const router = createBrowserRouter([
   {

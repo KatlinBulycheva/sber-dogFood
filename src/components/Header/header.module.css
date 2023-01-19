@@ -29,10 +29,22 @@ header .logoText {
 
 header .rightContainer {
     display: flex;
-    width: 400px;
+    width: 65%;
     justify-content: space-between;
+    align-items: center;
 }
 
 header .rightContainer i {
     cursor: pointer;
+}
+
+header input {
+    width: 400px;
+}
+
+.rightContainerLinks {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    align-items: center;
 }

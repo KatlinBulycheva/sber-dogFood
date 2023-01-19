@@ -12,15 +12,17 @@ export function Header() {
         </div>
       </Link>
       <div className={headerStyles.rightContainer}>
-        <input type="text" />
-        <i className="fa-solid fa-heart" />
-        <i className="fa-solid fa-cart-shopping" />
-        <Link to="/signin">
-          <i className="fa-solid fa-right-to-bracket" />
-        </Link>
-        <Link to="/signup">
-          <i className="fa-solid fa-user-plus" />
-        </Link>
+        <input type="text" placeholder="Поиск" />
+        <div className={headerStyles.rightContainerLinks}>
+          <i className="fa-solid fa-heart" />
+          <i className="fa-solid fa-cart-shopping" />
+          <Link to="/signin">
+            <i className="fa-solid fa-right-to-bracket" />
+          </Link>
+          <Link to="/signup">
+            <i className="fa-solid fa-user-plus" />
+          </Link>
+        </div>
       </div>
     </header>
   );
