@@ -9,5 +9,5 @@ export const createSignupFormValidationSchema = Yup.object({
     .email("Введите корректный email")
     .required('Введите email'),
   group: Yup.string()
-    .required('Введите группу')
+  // .required('Введите группу')
 });
