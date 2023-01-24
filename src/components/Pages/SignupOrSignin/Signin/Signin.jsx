@@ -7,34 +7,22 @@ import { useContext } from "react";
 import { createSigninFormValidationSchema } from "./validatorSignin";
 import stylesSignin from "../SignupOrSignin.module.css";
 import { AppContext } from "../../../../context/DogFoodContextProvider";
+import { withQuery } from "../../../HOC/withQuery";
 
-const initialValuesSignin = {
-  password: '',
-  email: '',
-};
-
-export function Signin() {
+const SigninInner = withQuery(({ mutateAsync }) => {
   const navigate = useNavigate();
-
-  const { mutateAsync } = useMutation({
-    mutationFn: (data) => fetch('https://api.react-learning.ru/signin', {
-      method: 'POST',
-      headers: {
-        "Content-type": 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((res) => res.json()),
-  });
-
   const { setToken } = useContext(AppContext);
+
+  const initialValuesSignin = {
+    password: "",
+    email: "",
+  };
 
   const submitHandler = async (values) => {
     const response = await mutateAsync(values);
-    console.log({ response });
-
     setToken(response.token);
 
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -47,17 +35,53 @@ export function Signin() {
         <div className={stylesSignin.title}>Вход</div>
 
         <div>
-          <Field name="password" placeholder="Пароль" type="text" className={stylesSignin.input} />
-          <ErrorMessage component="p" className="error" name="password" />
+          <Field
+            name="email"
+            placeholder="Эл. почта"
+            type="email"
+            className={stylesSignin.input}
+          />
+          <ErrorMessage component="p" className="error" name="email" />
         </div>
 
         <div>
-          <Field name="email" placeholder="Эл. почта" type="email" className={stylesSignin.input} />
-          <ErrorMessage component="p" className="error" name="email" />
+          <Field
+            name="password"
+            placeholder="Пароль"
+            type="password"
+            className={stylesSignin.input}
+          />
+          <ErrorMessage component="p" className="error" name="password" />
         </div>
 
         <button type="submit">Войти</button>
       </Form>
     </Formik>
+  );
+});
+
+export function Signin() {
+  const { mutateAsync, error, isError } = useMutation({
+    mutationFn: (data) =>
+      fetch("https://api.react-learning.ru/signin", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 401) {
+          throw new Error(`Не правильные логин или пароль`);
+        }
+
+        if (res.status === 404) {
+          throw new Error(`Пользователь c указанным email не найден`);
+        }
+        return res.json();
+      }),
+  });
+
+  return (
+    <SigninInner mutateAsync={mutateAsync} error={error} isError={isError} />
   );
 }

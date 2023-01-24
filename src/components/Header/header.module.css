@@ -1,10 +1,11 @@
 header {
     background-color: rgb(249, 215, 78);
-    height: 80px;
+    height: 90px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 60px;
+    gap: 60px
 }
 
 header div.logoContainer {
@@ -27,27 +28,37 @@ header .logoText {
     line-height: 23px;
 }
 
-header .rightContainer {
-    display: flex;
-    width: 65%;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header .rightContainer i {
+header i {
     cursor: pointer;
+    font-size: 19px;
 }
 
-header input {
-    width: calc(100% - 250px);
-    max-width: 400px;
+.search {
+    width: 400px;
+    min-width: 200px;
 }
 
-.rightContainerLinks {
+.search input {
+    width: calc(100% - 40px);
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.616);
+}
+
+.containerIcons {
     display: flex;
     width: 20%;
+    min-width: 190px;
     justify-content: space-between;
     align-items: center;
-    min-width: 150px;
-    max-width: 160px;
+    /* min-width: 150px; */
+    /* max-width: 160px; */
+}
+
+.groupIcons {
+    display: flex;
+    width: 60px;
+    min-width: 55px;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 25px;
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import headerStyles from "./header.module.css";
+import headerStyles from "./Header.module.css";
 import logo from "./logo.png";
 
 export function Header() {
@@ -11,11 +11,15 @@ export function Header() {
           <h3 className={headerStyles.logoText}>DOG <br /> FOOD</h3>
         </div>
       </Link>
-      <div className={headerStyles.rightContainer}>
+      <div className={headerStyles.search}>
         <input type="text" placeholder="Поиск" />
-        <div className={headerStyles.rightContainerLinks}>
+      </div>
+      <div className={headerStyles.containerIcons}>
+        <div className={headerStyles.groupIcons}>
           <i className="fa-solid fa-heart" />
           <i className="fa-solid fa-cart-shopping" />
+        </div>
+        <div className={headerStyles.groupIcons}>
           <Link to="/signin">
             <i className="fa-solid fa-right-to-bracket" />
           </Link>
@@ -23,6 +27,7 @@ export function Header() {
             <i className="fa-solid fa-user-plus" />
           </Link>
         </div>
+        <i className="fa-regular fa-circle-user" />
       </div>
     </header>
   );

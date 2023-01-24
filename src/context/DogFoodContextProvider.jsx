@@ -9,13 +9,12 @@ export function AppContextProvider({ children }) {
 
   const [token, setToken] = useState(() => {
     const dataFromLS = localStorage.getItem(TOKEN_LS_KEY);
-    const prepareDataFromLS = dataFromLS ? JSON.parse(dataFromLS) : '';
 
-    return prepareDataFromLS;
+    return dataFromLS || '';
   });
 
   useEffect(() => {
-    localStorage.setItem(TOKEN_LS_KEY, JSON.stringify(token));
+    localStorage.setItem(TOKEN_LS_KEY, token);
   }, [token]);
 
   const valueProvider = useMemo(() => ({
