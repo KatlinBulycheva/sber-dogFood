@@ -7,9 +7,8 @@ import { useContext } from "react";
 import { createSigninFormValidationSchema } from "./validatorSignin";
 import stylesSignin from "../SignupOrSignin.module.css";
 import { AppContext } from "../../../../context/DogFoodContextProvider";
-import { withQuery } from "../../../HOC/withQuery";
 
-const SigninInner = withQuery(({ mutateAsync }) => {
+export function Signin() {
   const navigate = useNavigate();
   const { setToken } = useContext(AppContext);
 
@@ -18,50 +17,7 @@ const SigninInner = withQuery(({ mutateAsync }) => {
     email: "",
   };
 
-  const submitHandler = async (values) => {
-    const response = await mutateAsync(values);
-    setToken(response.token);
-
-    navigate("/");
-  };
-
-  return (
-    <Formik
-      initialValues={initialValuesSignin}
-      validationSchema={createSigninFormValidationSchema}
-      onSubmit={submitHandler}
-    >
-      <Form className={stylesSignin.form}>
-        <div className={stylesSignin.title}>Вход</div>
-
-        <div>
-          <Field
-            name="email"
-            placeholder="Эл. почта"
-            type="email"
-            className={stylesSignin.input}
-          />
-          <ErrorMessage component="p" className="error" name="email" />
-        </div>
-
-        <div>
-          <Field
-            name="password"
-            placeholder="Пароль"
-            type="password"
-            className={stylesSignin.input}
-          />
-          <ErrorMessage component="p" className="error" name="password" />
-        </div>
-
-        <button type="submit">Войти</button>
-      </Form>
-    </Formik>
-  );
-});
-
-export function Signin() {
-  const { mutateAsync, error, isError } = useMutation({
+  const { mutateAsync, isError, error } = useMutation({
     mutationFn: (data) =>
       fetch("https://api.react-learning.ru/signin", {
         method: "POST",
@@ -71,7 +27,7 @@ export function Signin() {
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status === 401) {
-          throw new Error(`Не правильные логин или пароль`);
+          throw new Error(`Неправильные логин или пароль`);
         }
 
         if (res.status === 404) {
@@ -81,7 +37,47 @@ export function Signin() {
       }),
   });
 
+  const submitHandler = async (values) => {
+    const response = await mutateAsync(values);
+    setToken(response.token);
+
+    navigate("/");
+  };
+
   return (
-    <SigninInner mutateAsync={mutateAsync} error={error} isError={isError} />
+    <>
+      <Formik
+        initialValues={initialValuesSignin}
+        validationSchema={createSigninFormValidationSchema}
+        onSubmit={submitHandler}
+      >
+        <Form className={stylesSignin.form}>
+          <div className={stylesSignin.title}>Вход</div>
+
+          <div>
+            <Field
+              name="email"
+              placeholder="Эл. почта"
+              type="email"
+              className={stylesSignin.input}
+            />
+            <ErrorMessage component="p" className="error" name="email" />
+          </div>
+
+          <div>
+            <Field
+              name="password"
+              placeholder="Пароль"
+              type="password"
+              className={stylesSignin.input}
+            />
+            <ErrorMessage component="p" className="error" name="password" />
+          </div>
+
+          <button type="submit">Войти</button>
+        </Form>
+      </Formik>
+      {isError && <p className="error">{error.message}</p>}
+    </>
   );
 }

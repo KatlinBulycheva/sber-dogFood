@@ -9,6 +9,8 @@ import { Products } from "./components/Pages/Products/Products";
 import { Signin } from "./components/Pages/SignupOrSignin/Signin/Signin";
 import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
 import { AppContextProvider } from "./context/DogFoodContextProvider";
+import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
+import { ProductsPopular } from "./components/Pages/ProductsPopular/ProductsPopular";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +22,33 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "products",
+        path: "products/",
         element: <Products />,
+        children: [
+          {
+            index: true,
+            element: <ProductsAll />
+          },
+          {
+            path: "popular",
+            element: <ProductsPopular />
+          },
+          {
+            path: "newly"
+          },
+          {
+            path: "priceup"
+          },
+          {
+            path: "pricedown"
+          },
+          {
+            path: "rate"
+          },
+          {
+            path: "benefit"
+          }
+        ]
       },
       {
         path: "signin",

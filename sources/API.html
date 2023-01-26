@@ -1,0 +1,1002 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>API для вебинаров и проектной работы.</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f359059d-ee01-4b44-8955-eab8c5b13062" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌐</span></div><h1 class="page-title">API для вебинаров и проектной работы.</h1></header><div class="page-body"><p id="fbaedfc2-a489-4983-be0f-7878085d91ce" class="">Список доступных эндпонитов, подробное описание ниже:</p><pre id="e625ae6f-1716-498d-a22b-b211d66f90af" class="code code-wrap"><code>//ПРО ПОСТЫ
+GET https://api.react-learning.ru/v2/:groupId/posts // получение всех постов
+GET https://api.react-learning.ru/v2/:groupId/posts/search/?query=&lt;строка фильтрации по title&gt; // для поиска постов
+GET https://api.react-learning.ru/v2/:groupId/posts/:id // получение поста по id
+
+GET https://api.react-learning.ru/v2/:groupId/posts/paginate?page=&lt;номер страницы&gt;&amp;limit=&lt;число ограничивающее вывод на страницу&gt;&amp;query=&lt;строка фильтрации по title&gt; //добавление навигации
+
+POST https://api.react-learning.ru/v2/:groupId/posts // создание нового поста
+PATCH https://api.react-learning.ru/v2/:groupId/posts/:postId //редактирование поста по id
+DELETE https://api.react-learning.ru/v2/:groupId/posts/:postId //удаление поста по id
+PUT https://api.react-learning.ru/v2/:groupId/posts/likes/:postId // установка лайка по id
+DELETE https://api.react-learning.ru/v2/:groupId/posts/likes/:postId // снятие лайка по id
+POST https://api.react-learning.ru/v2/:groupId/posts/comments/:postId // добавление комментария по id
+DELETE https://api.react-learning.ru/v2/:groupId/posts/comments/:postId/:commentId // удаление комментария по id
+GET https://api.react-learning.ru/v2/:groupId/posts/comments/ // получение всех комментариев
+GET https://api.react-learning.ru/v2/:groupId/posts/comments/:postId // получение комментариев конкрентного поста.
+
+//ПРО ПРОДУКТЫ
+GET https://api.react-learning.ru/products // получение всех товаров
+GET https://api.react-learning.ru/products/search?query=запрос // для поиска товаров
+GET https://api.react-learning.ru/products/:id // получение товра по id
+POST https://api.react-learning.ru/products // создание нового товара
+PATCH https://api.react-learning.ru/products/:productId //редактирование товара по id
+DELETE https://api.react-learning.ru/products/:productId //удаление товара по id
+PUT https://api.react-learning.ru/products/likes/:productId // установка лайка по id
+DELETE https://api.react-learning.ru/products/likes/:productId // снятие лайка по id
+POST https://api.react-learning.ru/products/review/:productId // добавление отзыва по id
+DELETE https://api.react-learning.ru/products/review/:productId/:reviewId // удаление отзыва по id
+GET https://api.react-learning.ru/products/review/ // получение всех отзывов
+GET https://api.react-learning.ru/products/review/:productId // получение отзывов конкрентного товара.
+
+//ПРО ПОЛЬЗОВАТЕЛЯ
+GET https://api.react-learning.ru/v2/:groupId/users //получение всех пользователей
+GET https://api.react-learning.ru/v2/:groupId/users/me // получение информации о пользователе по токену в заголовках
+GET https://api.react-learning.ru/v2/:groupId/users/:userId // получение информации о пользователе по его id
+PATCH https://api.react-learning.ru/v2/:groupId/users/me // изменение name и about
+PATCH https://api.react-learning.ru/v2/:groupId/users/me/avatar // изменение avatar 
+
+//ПРО РЕГИСТРАЦИЮ
+POST https://api.react-learning.ru/signup // регистрация
+POST https://api.react-learning.ru/signin // авторизация
+POST https://api.react-learning.ru/password-reset // сброс пароля на почту
+POST https://api.react-learning.ru/password-reset/:userId/:token // смена пароля после подтвержения токеном</code></pre><h2 id="bc68ea51-ca32-44ee-8d6a-164b12f72b64" class="">Необходимая информация</h2><p id="def07435-0b73-446f-911f-a45bf9a6c92c" class="">Для обращению к серверу вам понадобится дополнительная информация — ваш личный токен </p><pre id="b89b9e38-f8fa-4616-8b41-8571931ae6ea" class="code code-wrap"><code>так выглядит токен
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmOTk5MmFlNWM0MGMxMGMxMWRmZTQiLCJpYXQiOjE2NDcyODY2ODEsImV4cCI6MTY3ODgyMjY4MX0.WHKXAErKZtY445yXecOFZsx981MuXicJti-okSY-tac</code></pre><p id="47c77413-0284-465b-9b2c-702d0a208a3c" class="">Список будет опубликован. Если по какой-то причине вы не получили этих данных, напишите в группе в телеграмм.</p><p id="63a671b6-6ecf-4f19-be13-08af2f26d0e3" class="">Также при запросе указываете свою группу вместе <strong>:groupId</strong>, например <strong>group-7</strong></p><h1 id="8677858f-356a-47b2-adc4-9fd118d62cdd" class="">Api для проектной работы</h1><h2 id="3d337318-7da5-46a7-b597-35e15bd402f5" class="">Как сделать запрос к серверу</h2><p id="0fb204fd-1a3d-4dcf-b3d4-043d2db19b63" class="">Адрес сервера проекта:<a href="https://api.react-learning.ru"> https://api.react-learning.ru/</a></p><p id="3cfa0cca-94c0-4e43-94a9-330dc35d382e" class="">При каждом запросе нужно передавать токен. Вот пример запроса:</p><pre id="8ad18520-b3cc-4bf5-8155-878e3f6cd896" class="code code-wrap"><code>fetch(&#x27;https://api.react-learning.ru/v2/group-7/posts&#x27;, {
+  headers: {
+    authorization: &#x27;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmOTk5MmFlNWM0MGMxMGMxMWRmZTQiLCJpYXQiOjE2NDcyODY2ODEsImV4cCI6MTY3ODgyMjY4MX0.WHKXAErKZtY445yXecOFZsx981MuXicJti-okSY-tac&#x27;
+  }
+})
+  .then(res =&gt; res.json())
+  .then((result) =&gt; {
+    console.log(result);
+  });</code></pre><p id="3a0ee659-4fd8-4daa-82da-75933892f519" class="">Обратите внимание, что при запросе нужно передавать токен в заголовке в заголовке <code>authorization</code> со значение <code>Bearer ${ВАШ_JWT}</code>. Это необходимое условие. Если не передать серверу токен или передать неправильный — сервер ответит ошибкой. Делайте это в каждом запросе.</p><h2 id="9738f6e2-9716-4265-b41e-046b48e19253" class="">1. Загрузка информации о пользователе с сервера</h2><p id="92a9928e-5f99-465c-a415-6ba9210ab740" class="">Информация о пользователе должна подгружаться с сервера. Чтобы осуществить это, сделайте GET-запрос на URL:</p><pre id="c90849da-fa0c-43ea-92e3-523d81cce582" class="code code-wrap"><code>GET https://api.react-learning.ru/v2/:groupId/users/me</code></pre><p id="73ccc5c2-a4f8-4e20-b947-b2828bb70fde" class="">При запросе не забудьте передать токен. Если запрос прошёл успешно, в ответе вы получите объект пользователя:</p><pre id="fd9134d3-f8c2-4f30-8c35-6542c3c2d924" class="code code-wrap"><code>{
+    &quot;name&quot;: &quot;Максим Иванов&quot;,
+    &quot;about&quot;: &quot;Наставник&quot;,
+    &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+    &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+    &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+    &quot;__v&quot;: 0
+}</code></pre><p id="4cb3291a-edaf-4809-b0f7-987f3249dba7" class="">Используйте свойства <code>name</code>, <code>about</code> и <code>avatar</code> по своему усмотрению, например в шапке проекта. Свойство <code>_id</code> — это идентификатор пользователя, в данном случае вашего.</p><h2 id="1c09a823-90c8-46ab-aeb4-e1bd92e7eff7" class="">2. Загрузка постов с сервера</h2><p id="f087ceae-45a1-445b-b320-5ffa9d645b6d" class="">Начальные посты должны подгружаться с сервера. Для этого сделайте GET-запрос:</p><pre id="af6c54d2-294f-411e-ad9e-82726d541a93" class="code code-wrap"><code>GET https://api.react-learning.ru/v2/:groupId/posts</code></pre><p id="2990d0c8-f55e-4398-93fd-27c8350e7f79" class="">В ответ придёт JSON с массивом постов, которые загрузили студенты вашей группы:</p><pre id="6dc3139b-7659-49ca-b389-e285d6c31818" class="code code-wrap"><code>[
+    {
+        &quot;image&quot;: &quot;http://dummyimage.com/400x200.png/5fa2dd/ffffff&quot;,
+        &quot;likes&quot;: [
+            &quot;622bd81b06c7d323b8ae4614&quot;
+        ],
+        &quot;comments&quot;: [
+            &quot;622c6c4f1bd0d37edc594b21&quot;
+        ],
+        &quot;tags&quot;: [
+            &quot;legendary&quot;
+        ],
+        &quot;isPublished&quot;: true,
+        &quot;_id&quot;: &quot;622bd9e806c7d323b8ae4615&quot;,
+        &quot;title&quot;: &quot;Batman Beyond: Return of the Joker&quot;,
+        &quot;author&quot;: {
+            &quot;name&quot;: &quot;Максим Иванов&quot;,
+            &quot;about&quot;: &quot;Наставник&quot;,
+            &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+            &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+            &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+            &quot;__v&quot;: 0
+        },
+        &quot;text&quot;: &quot;Change Other Device on Right Upper Arm&quot;,
+        &quot;created_at&quot;: &quot;2022-03-11T23:23:20.891Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-03-12T09:51:45.683Z&quot;,
+        &quot;__v&quot;: 0,
+        &quot;updatedAt&quot;: &quot;2022-03-14T12:31:11.479Z&quot;
+    },
+    {
+        &quot;image&quot;: &quot;http://dummyimage.com/400x200.png/ff4444/ffffff&quot;,
+        &quot;likes&quot;: [],
+        &quot;comments&quot;: [],
+        &quot;tags&quot;: [
+            &quot;peace&quot;
+        ],
+        &quot;isPublished&quot;: true,
+        &quot;_id&quot;: &quot;622bda5606c7d323b8ae4616&quot;,
+        &quot;title&quot;: &quot;Float&quot;,
+        &quot;author&quot;: {
+            &quot;name&quot;: &quot;Максим Иванов&quot;,
+            &quot;about&quot;: &quot;Наставник&quot;,
+            &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+            &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+            &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+            &quot;__v&quot;: 0
+        },
+        &quot;text&quot;: &quot;Occlusion of Transverse Colon with Extraluminal Device, Percutaneous Endoscopic Approach&quot;,
+        &quot;created_at&quot;: &quot;2022-03-11T23:25:10.638Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-03-11T23:25:10.638Z&quot;,
+        &quot;__v&quot;: 0
+    }
+]</code></pre><p id="af93ae5e-205d-48ef-a9d3-a21bad79609d" class="">Используйте этот массив при отображении предзагруженных постов.</p><p id="422ed28f-8a15-4c29-8da4-11bd321ab0e2" class="">У каждой поста есть свойства <code>title</code> и <code>image</code> — это заголовок и ссылка на картинку — они понадобятся при отображении каждого отдельного поста.</p><h2 id="dd79d06e-173c-48db-a94e-56eecde233fd" class="">3. Редактирование профиля</h2><p id="9af7ec53-797e-44fa-b035-cfa4337d9cdb" class="">Отредактированные данные профиля должны сохраняться на сервере. Для этого отправьте запрос методом PATCH:</p><pre id="f3928cbd-5dd9-48d0-9a2b-82e1230ce73c" class="code code-wrap"><code>PATCH https://api.react-learning.ru/v2/:groupId/users/me</code></pre><p id="084b869b-a9d9-46bc-a42e-ec33d6f70afc" class="">В заголовках запроса, кроме токена, необходимо отправить <code>Content-Type</code>, а в теле — JSON с двумя свойствами — <code>name</code> и <code>about</code>. Значениями этих свойств должны быть обновлённые данные пользователя. Вот пример такого запроса:</p><pre id="98928626-271c-4fe3-aafe-4ac7097e21c1" class="code code-wrap"><code>fetch(&#x27;https://api.react-learning.ru/posts/users/me&#x27;, {
+  method: &#x27;PATCH&#x27;,
+  headers: {
+    authorization: &#x27;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmOTk5MmFlNWM0MGMxMGMxMWRmZTQiLCJpYXQiOjE2NDcyODY2ODEsImV4cCI6MTY3ODgyMjY4MX0.WHKXAErKZtY445yXecOFZsx981MuXicJti-okSY-tac&#x27;,
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+  },
+  body: JSON.stringify({
+    name: &#x27;Василий&#x27;,
+    about: &#x27;Программист&#x27;
+  })
+});
+</code></pre><p id="edb6d131-2c27-4ecb-8d4c-3e3512999bd5" class="">Если обновление прошло успешно, в теле ответа от сервера вы получите обновлённые данные пользователя:</p><pre id="24dfceef-dfdb-4af2-a622-6fb9bd24cc0c" class="code code-wrap"><code>{
+    &quot;name&quot;: &quot;Василий&quot;,
+    &quot;about&quot;: &quot;Программист&quot;,
+    &quot;avatar&quot;: &quot;https://react-learning.ru/image-compressed/default-image.jpg&quot;,
+    &quot;_id&quot;: &quot;622f9992ae5c40c10c11dfe4&quot;,
+    &quot;email&quot;: &quot;admin@react-learning.ru&quot;,
+    &quot;__v&quot;: 0
+}</code></pre><h2 id="c47f4a50-ac90-4dfd-aff5-f244d2c4593a" class="">4. Добавление нового поста</h2><p id="e90d3f6e-a401-4adc-8306-6b131f712f6f" class="">Чтобы добавить на сервер новый пост, отправьте POST-запрос:</p><pre id="6e7a46af-ee43-49de-9d13-9d5c13fb336a" class="code code-wrap"><code>POST https://api.react-learning.ru/v2/:groupId/posts</code></pre><p id="0c9ec422-ce57-4151-817f-667ea540cf3f" class="">В заголовках запроса, кроме токена, необходимо отправить <code>Content-Type</code>, а в теле — JSON с свойствами:</p><pre id="1cf3e843-15a7-4d21-9bba-5c5d0ca80376" class="code"><code>{
+  &quot;title&quot;: &quot;Welcome to school. Again.&quot;, // тип данных строка, обязательное
+  &quot;text&quot;: &quot;This is where it started&quot;, // тип данных строка, обязательное
+	&quot;image&quot;: &quot;http://dummyimage.com/400x200.png/5fa2dd/ffffff&quot;, // тип данных строка
+  &quot;tags&quot;: [&quot;legendary&quot;, &quot;peace&quot;, &quot;kaif&quot;] //тип данных массив строк
+}</code></pre><p id="ef53e99f-43c6-4508-9c69-b4a7bd3da98f" class="">Если запрос прошёл успешно, сервер вернёт ответ с объектом новым постом:</p><pre id="91de4d69-b3b8-4329-acb3-09dcd14b6641" class="code code-wrap"><code>{
+    &quot;image&quot;: &quot;http://dummyimage.com/400x200.png/5fa2dd/ffffff&quot;,
+    &quot;likes&quot;: [],
+    &quot;comments&quot;: [],
+    &quot;tags&quot;: [
+        &quot;legendary&quot;,
+        &quot;peace&quot;,
+        &quot;kaif&quot;
+    ],
+    &quot;isPublished&quot;: true,
+    &quot;_id&quot;: &quot;622f9f92ae5c40c10c11dfe5&quot;,
+    &quot;title&quot;: &quot;Welcome to school. Again.&quot;,
+    &quot;author&quot;: &quot;622f9992ae5c40c10c11dfe4&quot;,
+    &quot;text&quot;: &quot;This is where it started&quot;,
+    &quot;created_at&quot;: &quot;2022-03-14T20:03:30.834Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-03-14T20:03:30.834Z&quot;,
+    &quot;__v&quot;: 0
+}</code></pre><h2 id="88303add-8615-41b6-9cb4-0c6f7717216b" class="">4.1 Редактирование текущего поста</h2><p id="73ebd035-cf63-4887-b10f-32eb6e55e2ab" class="">Чтобы изменить на сервер новый пост, отправьте PATCH-запрос:</p><pre id="03533869-5092-42dc-b1bd-0b6e17615681" class="code code-wrap"><code>PATCH https://api.react-learning.ru/v2/:groupId/posts/:postId</code></pre><p id="c394988c-5468-4c78-a5f1-0ddd17371f21" class="">В заголовках запроса, кроме токена, необходимо отправить <code>Content-Type</code>, а в теле — JSON с свойствами (все свойства не обязательные):</p><pre id="87521e42-91d3-4dd6-b90b-aaac608f10b0" class="code"><code>{
+  &quot;image&quot;: &quot;http://dummyimage.com/400x200.png/5fa2dd/cccccc&quot;,
+  &quot;tags&quot;: [
+    &quot;legendary&quot;, &quot;test&quot;
+  ],
+  &quot;title&quot;: &quot;Beyond: Return of the Joker&quot;,
+  &quot;text&quot;: &quot;Change Other Device on Right Upper Arm&quot;
+}</code></pre><h2 id="cfc46ad0-316b-4cef-9b1c-d154dfafa222" class="">5. Отображение количества лайков постов</h2><p id="017d682a-6c07-421d-ac4d-7ddfca117a55" class="">У каждого поста есть свойство <code>likes</code> — оно содержит массив пользователей, лайкнувших пост:</p><pre id="d9db28e8-e604-4bcf-a6d9-a9e76663805e" class="code code-wrap"><code>{
+  &quot;likes&quot;: [&quot;622bd81b06c7d323b8ae4614&quot;, &quot;622b6ffc09b12f80f4c10bde&quot;],
+  ...другие данные поста
+}</code></pre><p id="35b70f89-fa5a-4a84-a0a6-d73f4b20584e" class="">Сделайте так, чтобы на каждом посте было написано, сколько у него лайков.</p><h2 id="e6609465-3fe0-4dbe-9bd9-d199070751af" class="">6. Удаления поста</h2><p id="cb6ca1ad-78d6-401b-a78c-13f81526c19c" class="">Удаление чего-то, как правило, безвозвратно. Поэтому перед этим действием стоит спросить пользователя, уверен ли он, что хочет удалить пост. Для этого используйте <code>alert()</code> как в задании с котиками (в дальнейшем его можно будет заменить его на popup).</p><p id="f60866db-9b33-430d-aba7-96dfd789e86a" class="">Удаление должно происходить по кнопке удаления, внешний вид и расположение относительно поста вы придумываете сами.</p><p id="8a255262-7ade-4b8b-a769-5a7cb178eb78" class="">Чтобы удалить поста, отправьте DELETE-запрос:</p><pre id="c471efc8-536f-42e0-bfb8-6ffa8be7abb2" class="code code-wrap"><code>DELETE https://api.react-learning.ru/v2/:groupId/posts/:postId</code></pre><p id="32956881-8ac5-4feb-a54e-4307d94dbfb8" class="">Вместо <code>postId</code> в URL нужно подставить параметр <code>_id</code> поста, который нужно удалить. <code>_id</code> каждого поста есть в JSON:</p><p id="0f4b5189-54a2-4b40-acbe-9f88b6a18aa4" class="">
+</p><pre id="783d3c62-1e19-4b50-a19d-ad1779705e72" class="code code-wrap"><code>{
+  &quot;likes&quot;: [],
+  &quot;_id&quot;: &quot;622bda5606c7d323b8ae4616&quot;, — вот он
+  ...другие данные поста
+}</code></pre><p id="46f8d361-c1e7-49aa-b0c1-bd4dcd6fae37" class="">В итоге, запрос на удаление поста должен выглядеть так:</p><pre id="aeb9e45a-b484-4cbe-bf97-2033599af865" class="code code-wrap"><code>DELETE https://api.react-learning.ru/v2/:groupId/posts/622bda5606c7d323b8ae4616</code></pre><h2 id="ea7b883d-bc91-40eb-abb4-bf75d3862c83" class="">7. Постановка и снятие лайка</h2><p id="f5c6551b-fc67-4fde-b7ed-eccc8b5b21e4" class="">Чтобы лайкнуть пост, отправьте <code>PUT-запрос</code>:</p><pre id="e1dbf121-7e48-46e7-936d-7f3efa700c2a" class="code code-wrap"><code>PUT https://api.react-learning.ru/v2/:groupId/posts/likes/:postId</code></pre><p id="022dc9b6-71b7-4488-b80f-d328f9fd3167" class="">Чтобы убрать лайк, нужно отправить <code>DELETE-запрос</code> с тем же URL:</p><pre id="4136b868-13f4-452f-83c7-4caef3ec9463" class="code code-wrap"><code>DELETE https://api.react-learning.ru/v2/:groupId/posts/likes/:postId</code></pre><p id="f81a1cfb-6e64-438d-b47e-d1e6a7807c74" class="">Вместо <code>postId</code> в URL нужно подставить свойство <code>_id</code> соответствующего поста.</p><p id="3b65907e-bd93-4fd3-89e3-84cff5ffa411" class="">В ответе придёт обновлённый JSON с постом. Массив лайков в нём будет уже обновлён.</p><p id="301c065e-0c89-4bd3-848e-056cfcb349e7" class="">При постановке и снятии лайка сердечко должно менять цвет, а счётчик лайков увеличиваться или уменьшаться.</p><p id="4ddeeb67-3e18-44c6-835b-ae672ea57424" class="">Чтобы изменить количество лайков, нужно отправить на сервер запрос с соответствующим методом. Рекомендуем брать количество лайков из ответа сервера, а не из вёрстки. Иначе могут возникнуть ошибки, когда два пользователя одновременно лайкнут один пост.</p><h2 id="1b5159e8-2322-4ea1-9f8a-cf135d7b2361" class="">8. Обновление аватара пользователя (доп задание)</h2><p id="37ddb52e-8ac6-45f9-8a26-d81d2e0062a6" class="">Чтобы сменить аватар, отправьте такой <code>PATCH-запрос</code>:</p><pre id="6ca57464-89d5-41f5-b9b7-f56cfa9a9e0d" class="code code-wrap"><code>PATCH https://api.react-learning.ru/v2/:groupId/users/me/avatar</code></pre><p id="07d16102-3ef0-4a8b-88e6-115b9f5e9942" class="">В теле запроса передайте JSON с единственным свойством — <code>avatar</code>. Это свойство должно хранить ссылку на новый аватар. Если отправить не ссылку, сервер вернёт ошибку.</p><h2 id="cdba8400-b3c4-4d44-9ca6-3bf0d2b7a13f" class="">9. Создание и удаление комментарий к постам (доп задание)</h2><p id="2318b8cd-43b7-481d-88c0-a22ca56ec650" class="">Чтобы добавить комментарий пост, отправьте <code>POST-запрос</code>:</p><pre id="6846a393-4fe7-4b50-ad72-2e96ebb8bf66" class="code code-wrap"><code>POST https://api.react-learning.ru/v2/:groupId/posts/comments/:postId</code></pre><p id="9c707641-0018-463e-8ef2-32bad44bd599" class="">Чтобы убрать лайк, нужно отправить <code>DELETE-запрос</code>:</p><pre id="b718bf84-2ce1-49fb-ad60-164eef9d3683" class="code code-wrap"><code>DELETE https://api.react-learning.ru/v2/:groupId/posts/comments/:postId/:commentId</code></pre><p id="cd0fd4c9-b9ac-4e22-bc94-967c6a27e7be" class="">Вместо <code>postId</code> в URL нужно подставить свойство <code>_id</code> соответствующего поста.</p><p id="846f5030-c869-43ad-bc61-24e724343db7" class="">Вместо <code>commentId</code> в URL нужно подставить свойство <code>_id</code> соответствующего комментария, комментарий должен быть добавлен именно к указанному посту.</p><p id="3f58b515-4662-4057-a5f6-bc9bb6a50e5d" class="">
+</p><p id="34f88ca1-97c2-48e0-9c3e-d16562f92800" class="">В ответе придёт обновлённый JSON с постом. Массив комментариев в нём будет уже обновлён.</p><p id="eca687c8-f921-4577-a5fb-1d1939692ce8" class="">При добавлении и удалении комментариев все изменения должны отображаться в DOM.</p><p id="ee06c506-2012-42dc-b8d2-116bf68bd66e" class="">
+</p><p id="5d9c4e7f-4db0-4060-876b-fff7d23a7969" class=""><strong>Так же есть два роута связанные с комментариями:</strong></p><p id="76d81afd-2ac2-4269-a0e0-49893b742ab5" class="">Чтобы получить список всех комментариев, отправьте <code>GET-запрос</code>:</p><pre id="4967166c-e1b5-4dad-9720-d8c3e6d716fe" class="code code-wrap"><code>GET https://api.react-learning.ru/v2/:groupId/posts/comments/</code></pre><p id="7fc823b3-ed97-4b7e-aa08-f63a9d0a4614" class="">Чтобы получить список комментариев к конкретному посту по его <code>_id</code>, отправьте <code>GET-запрос</code>:</p><pre id="c6a5beff-28df-4339-bf55-d7f96ebcb5b5" class="code code-wrap"><code>GET https://api.react-learning.ru/v2/:groupId/posts/comments/:postId</code></pre><h2 id="b7508e86-9363-49ea-aa68-6b63dd9cff0a" class="">10. Регистрация и аутентификация пользователя (доп задание)</h2><h3 id="1b1a9070-7586-4a04-9558-4046dcd6346d" class="">Регистрация:</h3><pre id="cf45562d-d21d-4a1a-8ad9-6489f2776027" class="code code-wrap"><code>POST https://api.react-learning.ru/signup</code></pre><p id="4644a68e-0e70-434a-91c5-59a6a7175b4a" class=""><strong>Заголовки:</strong></p><pre id="cb4d8df8-8226-46c8-8996-05bc9e6cac2a" class="code code-wrap"><code>{
+	&quot;Content-Type&quot;: &quot;application/json&quot;
+}</code></pre><p id="13699f01-ba01-467d-978d-7d73c2fa3041" class=""><strong>Тело запроса:</strong></p><pre id="7d3f98b1-1348-4c06-9a7f-e75696220647" class="code code-wrap"><code>{																																																																																																													&quot;email&quot;: &quot;maxim@mail.ru&quot;,
+&quot;group&quot;: &quot;group-7&quot;,																																																																																																				&quot;password&quot;: &quot;secter_pasword&quot;
+}</code></pre><p id="ee3f02a3-158a-4a8c-80f8-e81d239286af" class="">Успешный ответ:</p><pre id="5036f618-dd3e-45b7-9cba-a3f5c26616a5" class="code code-wrap"><code>{
+    &quot;name&quot;: &quot;Иван Иванов&quot;,
+    &quot;about&quot;: &quot;Писатель&quot;,
+    &quot;avatar&quot;: &quot;https://react-learning.ru/image-compressed/default-image.jpg&quot;,
+    &quot;isAdmin&quot;: false,
+    &quot;_id&quot;: &quot;622fa50dae5c40c10c11dfe6&quot;,
+    &quot;email&quot;: &quot;admin2@react-learning.ru&quot;,
+    &quot;group&quot;: &quot;group-7&quot;,			
+    &quot;__v&quot;: 0
+}</code></pre><p id="1ef6d177-a404-4687-b74f-c078d22b4055" class="">Коды ошибок:</p><pre id="3e5e3e8c-29c1-44da-8196-dfe70005a6ce" class="code code-wrap"><code>400 - некорректно заполнено одно из полей
+409 - юзер с указанным email уже существует</code></pre><h3 id="095af328-eaed-4d9f-be0e-d6338472e02e" class="">Авторизация:</h3><pre id="ca5f9b9e-b525-4d72-9a8a-f022dbfa3ffd" class="code code-wrap"><code>POST https://api.react-learning.ru/signin</code></pre><p id="8d6d7a32-2ae3-4e6f-bb99-c177fdfe6140" class=""><strong>Заголовки:</strong></p><pre id="0998c007-8a86-4913-bc70-0edb77237685" class="code code-wrap"><code>{
+	&quot;Content-Type&quot;: &quot;application/json&quot;
+}</code></pre><p id="e1d9cb08-ef3a-4223-9621-5a644e2ec0fd" class=""><strong>Тело запроса:</strong></p><pre id="82655994-b4a0-4791-8db8-052f25881fd8" class="code code-wrap"><code>{
+	&quot;email&quot;: &quot;maxim@mail.ru&quot;
+	&quot;password&quot;: &quot;secter_pasword&quot;
+}</code></pre><p id="97a6dc3d-7c5b-45b5-98fd-8507fa738074" class="">Успешный ответ:</p><pre id="3d989fd1-63e5-46d7-9ffd-c018d6e4203d" class="code code-wrap"><code>{
+    &quot;data&quot;: {
+        &quot;name&quot;: &quot;Иван Иванов&quot;,
+        &quot;about&quot;: &quot;Писатель&quot;,
+        &quot;avatar&quot;: &quot;https://react-learning.ru/image-compressed/default-image.jpg&quot;,
+        &quot;_id&quot;: &quot;622fa50dae5c40c10c11dfe6&quot;,
+        &quot;email&quot;: &quot;admin2@react-learning.ru&quot;,
+        &quot;__v&quot;: 0
+    },
+    &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmYTUwZGFlNWM0MGMxMGMxMWRmZTYiLCJpYXQiOjE2NDcyODk5NDgsImV4cCI6MTY3ODgyNTk0OH0.4_rJEsFmbvcWUGTI3SD4Lqt8qTNamoCIiFmlSFNbSbM&quot;
+}</code></pre><p id="0bcb31a6-44f8-4050-ae01-c9be31438aea" class="">Коды ошибок:</p><pre id="7c87adb5-d42a-41f2-808c-2ec011d963d8" class="code code-wrap"><code>401 - не правильные логин или пароль
+404 - пользователь с email не найден</code></pre><h3 id="127ddb29-84e4-4354-bae3-3f71e61c4b7e" class="">Проверка валидности токена и получение информации о пользователе:</h3><pre id="3a7a06ef-11f1-4439-9660-4b2c906c672c" class="code code-wrap"><code>GET https://api.react-learning.ru/v2/:groupId/users/me</code></pre><p id="a7d30fb7-ff2f-422f-a93e-5bc36ab9e7b3" class=""><strong>Заголовки:</strong></p><pre id="3b46c55f-5f9d-46df-a4a3-870add72b168" class="code code-wrap"><code>{
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;authorization&quot; : `Bearer ${ВАШ JWT}`
+}</code></pre><p id="5e104968-ab62-4f6f-bbc0-4ce255c4670a" class=""><strong>Успешный ответ:</strong></p><pre id="eb0f84da-b664-484b-81b6-c5c5a395d908" class="code code-wrap"><code>{
+    &quot;name&quot;: &quot;Василий&quot;,
+    &quot;about&quot;: &quot;Программист&quot;,
+    &quot;avatar&quot;: &quot;https://react-learning.ru/image-compressed/default-image.jpg&quot;,
+    &quot;_id&quot;: &quot;622f9992ae5c40c10c11dfe4&quot;,
+    &quot;email&quot;: &quot;admin@react-learning.ru&quot;,
+    &quot;__v&quot;: 0
+}</code></pre><p id="8cb4ade9-7d29-4c68-ac36-9ef8d75668cf" class="">Коды ошибок:</p><pre id="42ab0de6-dd5c-405e-bfb1-2f4d40d107d4" class="code code-wrap"><code># Если токен не передан или передан без Bearer
+400 — Токен не передан или передан не в том формате
+
+# Если передан некорректный токен
+401 — Переданный токен некорректен</code></pre><h3 id="75d00d9e-ee98-4ac8-abad-130ffa71ccd5" class="">Сброс пароля</h3><p id="6d70a8d5-8b8f-4bea-aadb-4afa947dbce0" class="">При сбросе пароль на почту придет ссылка, которая в своем адресе содержит действующий токен для конкретного пользователя.</p><pre id="cd4e0ddd-aabb-4029-953f-0c45d158e396" class="code code-wrap"><code>POST https://api.react-learning.ru/password-reset</code></pre><p id="994c9ecd-3385-4e1c-961a-69999e37f364" class=""><strong>Заголовки:</strong></p><pre id="de2b5bb7-de5f-46e9-ae48-531ca9c15c2d" class="code code-wrap"><code>{
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+}</code></pre><p id="31a854ff-c47e-4292-9f65-b9cd122d365d" class=""><strong>Тело запроса:</strong></p><pre id="af273a1a-b47e-4462-bf57-570d29ab085c" class="code code-wrap"><code>{
+	&quot;email&quot;: &quot;maxim@mail.ru&quot;
+}</code></pre><p id="3936c5ec-5c32-4de7-9cc0-c87685db9727" class=""><strong>Успешный ответ:</strong></p><pre id="806853ca-f7cc-4035-b169-863beb1e3b5f" class="code code-wrap"><code>{
+    &quot;message&quot;: &quot;Письмо успешно отправлено&quot;
+}
+
+//На почту придет письмо с текстом:
+// Ваше секретное слово для восстановления пароля eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiZDgxYjA2YzdkMzIzYjhhZTQ2MTQiLCJpYXQiOjE2NDcyOTQyMjYsImV4cCI6MTY3ODgzMDIyNn0.Oi5rT3lkG9h07NfGviQz_r5LmbYChHZIul4x7uS3paA
+//этот токен и используем в следущем запросе</code></pre><h3 id="e206248b-d064-4498-88bc-3b56fffa1796" class="">Смена пароля</h3><p id="92cab570-3c6b-4cf4-8fb8-2d89414478e4" class="">При сбросе пароль на почту приходит токен его нужно использовать в этом запросе.</p><pre id="4aa355c8-946f-4bfd-a04d-2785446dd8ef" class="code code-wrap"><code>POST https://api.react-learning.ru/password-reset/:userId/:token</code></pre><p id="606133b9-42b7-4431-b6eb-b80b10d787ef" class=""><strong>Заголовки:</strong></p><pre id="46c5f60c-a16b-4043-b205-8b13fe246587" class="code code-wrap"><code>{
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+}</code></pre><p id="57091ba9-a99a-4da7-953c-cea9a9eea10c" class=""><strong>Тело запроса:</strong></p><pre id="6eec280d-9e2d-48e3-8b29-dffad4c0938f" class="code code-wrap"><code>{
+  &quot;password&quot;: &quot;new_secter_pasword&quot;
+}</code></pre><p id="3edbcd25-e290-4b32-a1bd-e8b2a7cacefe" class=""><strong>Успешный ответ:</strong></p><pre id="d74b7165-ecde-4743-aa7f-313277695c0a" class="code code-wrap"><code>{
+    &quot;data&quot;: {
+        &quot;name&quot;: &quot;Максим Иванов&quot;,
+        &quot;about&quot;: &quot;Наставник&quot;,
+        &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+        &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+        &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+        &quot;__v&quot;: 0
+    },
+    &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiZDgxYjA2YzdkMzIzYjhhZTQ2MTQiLCJpYXQiOjE2NDcyOTQ1NjQsImV4cCI6MTY3ODgzMDU2NH0.-xqSfjDt5elAKySAImIufsqU1HUUu2GOJn50PwkrvB0&quot;
+}</code></pre><p id="ba8f165d-afde-42b5-a2c2-a661b1e12cb6" class="">При повторной отправке запроса появится ошибка</p><pre id="779da24f-d2f2-4127-91ff-8843b893cdc2" class="code"><code>{
+    &quot;message&quot;: &quot;Время действия кода истекло, отправьте запрос на восстановления паролья повторно&quot;,
+    &quot;err&quot;: {
+        &quot;statusCode&quot;: 401
+    }
+}</code></pre><h2 id="5f3f9b59-1434-4e41-a0dc-4ee9366a3d14" class="">Требования к коду</h2><p id="5fd3a6c8-f8eb-48b4-9ca8-e7092ab6888b" class="">Для работы с API создайте класс <code>Api</code>. Все запросы должны быть методами этого класса:</p><pre id="dc22ef69-766d-469c-9629-5680ee218641" class="code code-wrap"><code>Скопировать кодJAVASCRIPT
+class Api {
+  constructor(options) {
+// тело конструктора
+  }
+
+  getInitialPost() {
+// ...
+  }
+
+// другие методы работы с API
+}
+
+const api = new Api({
+  baseUrl: &#x27;https://api.react-learning.ru&#x27;,
+  headers: {
+    authorization: &#x27;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmOTk5MmFlNWM0MGMxMGMxMWRmZTQiLCJpYXQiOjE2NDcyODY2ODEsImV4cCI6MTY3ODgyMjY4MX0.WHKXAErKZtY445yXecOFZsx981MuXicJti-okSY-tac&#x27;,
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+  },
+	groupId: &#x27;/v2/group-7&#x27;
+});</code></pre><h1 id="a13273df-fca9-46ab-9c43-2faba0fca4af" class="">Api для работы с интернет-магазином</h1><p id="fb42f739-be70-4ae2-a264-ce9d1e5de0e1" class="">Отличаются только роуты связанные с товарами, роуты связанные с юзером такие же как описаны выше.</p><p id="6ddb3bd4-63c3-45d3-8b46-8d5d770ed228" class="">
+</p><h2 id="63711e60-4d83-459c-a61b-53205b68e6aa" class="">1. Загрузка товаров с сервера</h2><p id="aa8d21e0-9627-48a9-9f1d-e9df89a91a82" class="">Начальные товары должны подгружаться с сервера. Для этого сделайте GET-запрос:</p><pre id="48b45318-ed56-4d61-950a-dca2f01c1dbe" class="code code-wrap"><code>GET https://api.react-learning.ru/products</code></pre><p id="255c1ff5-e71a-48f6-b3b5-f3c70dba480e" class="">В ответ придёт JSON с массивом товаров:</p><pre id="26fa3b20-ecbc-40e7-90b4-247c02b4971b" class="code code-wrap"><code>[
+    {
+        &quot;available&quot;: true,
+        &quot;pictures&quot;: &quot;https://react-learning.ru/image-compressed/1.jpg&quot;,
+        &quot;likes&quot;: [
+            &quot;622bd81b06c7d323b8ae4614&quot;
+        ],
+        &quot;reviews&quot;: [],
+        &quot;tags&quot;: [
+            &quot;new&quot;
+        ],
+        &quot;isPublished&quot;: true,
+        &quot;_id&quot;: &quot;622c779c77d63f6e70967d1c&quot;,
+        &quot;name&quot;: &quot;Желудки утиные сушено-вяленые&quot;,
+        &quot;author&quot;: {
+            &quot;name&quot;: &quot;Максим Иванов&quot;,
+            &quot;about&quot;: &quot;Наставник&quot;,
+            &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+            &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+            &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+            &quot;__v&quot;: 0
+        },
+        &quot;price&quot;: 550,
+        &quot;discount&quot;: 15,
+        &quot;stock&quot;: 10,
+        &quot;wight&quot;: &quot;100 г&quot;,
+        &quot;description&quot;: &quot;Описание demo&quot;,
+        &quot;created_at&quot;: &quot;2022-03-12T10:36:12.324Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-03-12T22:09:06.806Z&quot;,
+        &quot;__v&quot;: 0
+    },
+    {
+        &quot;available&quot;: true,
+        &quot;pictures&quot;: &quot;https://react-learning.ru/image-compressed/2.jpg&quot;,
+        &quot;likes&quot;: [],
+        &quot;reviews&quot;: [],
+        &quot;tags&quot;: [],
+        &quot;isPublished&quot;: true,
+        &quot;_id&quot;: &quot;622c77c377d63f6e70967d1d&quot;,
+        &quot;name&quot;: &quot;Куриные желудочки для собак&quot;,
+        &quot;author&quot;: {
+            &quot;name&quot;: &quot;Максим Иванов&quot;,
+            &quot;about&quot;: &quot;Наставник&quot;,
+            &quot;avatar&quot;: &quot;https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg&quot;,
+            &quot;_id&quot;: &quot;622bd81b06c7d323b8ae4614&quot;,
+            &quot;email&quot;: &quot;maxim_91@inbox.ru&quot;,
+            &quot;__v&quot;: 0
+        },
+        &quot;price&quot;: 450,
+        &quot;discount&quot;: 10,
+        &quot;stock&quot;: 10,
+        &quot;wight&quot;: &quot;100 г&quot;,
+        &quot;description&quot;: &quot;Описание demo&quot;,
+        &quot;created_at&quot;: &quot;2022-03-12T10:36:51.731Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-03-12T22:09:37.809Z&quot;,
+        &quot;__v&quot;: 0
+    },
+]</code></pre><p id="971e25af-a235-430f-a8ff-e0d8a571a561" class="">Используйте этот массив при отображении предзагруженных товаров.</p><p id="ef20008a-7124-4e57-8b3b-e3070caad9f4" class="">У каждой поста есть свойства <code>name</code> и <code>pictures</code> — это название и ссылка на картинку — они понадобятся при отображении каждого отдельного товара.</p><h2 id="573d4dd7-198d-4dfa-8ea3-00c5c59c6610" class="">2. Добавление нового товара</h2><p id="7985b3ce-351b-4fce-85b2-b3baac7561b2" class="">Чтобы добавить на сервер новый товар, отправьте POST-запрос:</p><pre id="0a49bd83-fcbb-4492-995b-1ac23c91fafc" class="code code-wrap"><code>POST https://api.react-learning.ru/products</code></pre><p id="52c9ac7c-3a19-4315-8600-e840453139b7" class="">В заголовках запроса, кроме токена, необходимо отправить <code>Content-Type</code>, а в теле — JSON с свойствами:</p><pre id="2679ac8c-afd8-48cc-bb63-8e50db5b3076" class="code"><code>{
+    &quot;available&quot;: true, // boolean
+    &quot;pictures&quot;: &quot;https://react-learning.ru/image-compressed/2.jpg&quot;, // string
+    &quot;name&quot;: &quot;Куриные желудочки для собак&quot;, // string, обязательное
+    &quot;price&quot;: 450, // number, обязательное
+    &quot;discount&quot;: 10, // number 
+    &quot;stock&quot;: 10, // number
+    &quot;wight&quot;: &quot;100 г&quot;, // string
+    &quot;description&quot;: &quot;Описание demo&quot;, // string, обязательное
+}</code></pre><p id="0c1ea916-256d-4c90-94c1-19cbcb1a8f3a" class="">Если запрос прошёл успешно, сервер вернёт ответ с объектом нового товара:</p><h2 id="edbba460-b76a-4d79-8be6-f2a41b8d3dd8" class="">3. Отображение количества лайков товара</h2><p id="e7acb723-726c-4cf4-93d9-cdae0382c042" class="">У каждого товара есть свойство <code>likes</code> — оно содержит массив пользователей, лайкнувших товар:</p><pre id="86db2069-f86e-48d9-87d6-0f50e5be264e" class="code code-wrap"><code>{
+  &quot;likes&quot;: [&quot;622bd81b06c7d323b8ae4614&quot;, &quot;622b6ffc09b12f80f4c10bde&quot;],
+  ...другие данные поста
+}</code></pre><h2 id="9d2a67f7-30d8-4bb6-b822-e32fe317d468" class="">4. Постановка и снятие лайка</h2><p id="78a15c20-ad8d-4640-8841-e2c4da391b27" class="">Чтобы лайкнуть товар, отправьте <code>PUT-запрос</code>:</p><pre id="dd7772d5-cb3d-44b1-a28a-f372cf752cb7" class="code code-wrap"><code>PUT https://api.react-learning.ru/products/likes/:productId</code></pre><p id="9de45354-e1e5-4c6d-a82b-7bb10a283917" class="">Чтобы убрать лайк, нужно отправить <code>DELETE-запрос</code> с тем же URL:</p><pre id="aeafe83d-490d-4b77-a406-9eaf0cc4e96f" class="code code-wrap"><code>DELETE https://api.react-learning.ru/products/likes/:productId</code></pre><p id="3cf22e27-12b9-494e-a200-4e9d4a69920d" class="">Вместо <code>postId</code> в URL нужно подставить свойство <code>_id</code> соответствующего товара.</p><p id="8a1c8938-750d-4a3f-b94d-39d6bb6f98ae" class="">В ответе придёт обновлённый JSON с товаром. Массив лайков в нём будет уже обновлён.</p><p id="685b5c90-fc7b-4911-adcd-db3cd26fbbc0" class="">При постановке и снятии лайка сердечко должно менять цвет, а счётчик лайков увеличиваться или уменьшаться.</p><p id="48f40647-e4f0-4ccd-9840-6b5deb545c8d" class="">Чтобы изменить количество лайков, нужно отправить на сервер запрос с соответствующим методом. Рекомендуем брать количество лайков из ответа сервера, а не из вёрстки. Иначе могут возникнуть ошибки, когда два пользователя одновременно лайкнут один товар.</p><h2 id="aa448c1e-670c-4e00-a208-e8f0e6a851c2" class="">5. Удаления товара</h2><p id="65ba4822-6997-4899-81b9-34346d4198f5" class="">Удалять товары может только пользователь с правами администратора.</p><p id="9bad250d-238d-4d2f-b2c3-21162bac45ef" class="">Поле <code>isAdmin:true</code> в БД.</p><p id="02627a88-75a0-421e-8d71-d0857a12c065" class="">Удаление чего-то, как правило, безвозвратно. Поэтому перед этим действием стоит спросить пользователя, уверен ли он, что хочет удалить товар. Для этого используйте <code>alert()</code> как в задании с котиками (в дальнейшем его можно будет заменить его на popup).</p><p id="a303b5bf-679c-43f8-be46-f27a2e7cc1cd" class="">Удаление должно происходить по кнопке удаления, внешний вид и расположение относительно товара вы придумываете сами.</p><p id="bef68c6b-c4ad-4f02-9bea-f25284a5a4fb" class="">Чтобы удалить товар, отправьте DELETE-запрос:</p><pre id="7f41dc59-0df0-495e-bce5-dd615b925fde" class="code code-wrap"><code>DELETE https://api.react-learning.ru/products/:productId</code></pre><p id="5db180bf-e3bf-43e7-b535-442f7749b294" class="">Вместо <code>productId</code> в URL нужно подставить параметр <code>_id</code> товара, который нужно удалить. <code>_id</code> каждого поста есть в JSON:</p><p id="ef38c772-158d-4c79-9c18-5a76c7206c95" class="">В итоге, запрос на удаление товара должен выглядеть так:</p><pre id="a91d3ed8-be96-4d4f-8fb1-c39bd35f983e" class="code code-wrap"><code>DELETE https://api.react-learning.ru/products/622bda5606c7d323b8ae4616</code></pre><h2 id="985d11ec-a2b1-4289-8fc9-2da72cdc2548" class="">9. Создание и удаление отзывов к товарам</h2><p id="34b98ffc-4c98-49d9-b770-cf2dedee6004" class="">Чтобы добавить отзыв к товару, отправьте <code>PUT-запрос</code>:</p><pre id="8ce3c5b2-805a-4944-b6dd-de9679108218" class="code code-wrap"><code>PUT https://api.react-learning.ru/products/review/:productId</code></pre><p id="21a508a1-9340-4d67-95fa-d70aece59233" class="">Чтобы убрать лайк, нужно отправить <code>DELETE-запрос</code>:</p><pre id="aff18e9f-fbbe-42f2-930e-9b9f04a341d2" class="code code-wrap"><code>DELETE https://api.react-learning.ru/products/review/:postId/:reviewId</code></pre><p id="0d08883e-846f-4348-a540-bb59368e82ec" class="">Вместо <code>productId</code> в URL нужно подставить свойство <code>_id</code> соответствующего товара.</p><p id="b52595d6-59db-4a58-8c5f-72d5c584d5ed" class="">Вместо <code>reviewId</code> в URL нужно подставить свойство <code>_id</code> соответствующего отзыва, отзыв должен быть добавлен именно к указанному товару.</p><p id="dbb5dfc8-8a4b-49b9-b8d1-42a0a76a4a19" class="">
+</p><p id="1da99549-5b57-4c3b-a48a-ce85c445e6a4" class="">В ответе придёт обновлённый JSON с постом. Массив отзывов в нём будет уже обновлён.</p><p id="c86312be-b59c-41a9-8cda-819b9deecbfa" class="">При добавлении и удалении отзыва все изменения должны отображаться в DOM.</p><p id="79a1467d-c993-4aa7-90db-58a33f43983a" class="">
+</p><p id="a85c01e6-beb5-4cad-9901-2f57e7fb7472" class=""><strong>Так же есть два роута связанные с отзывами:</strong></p><p id="8ef58776-0ccb-4d04-ae00-89e94e667286" class="">Чтобы получить список всех отзывов, отправьте <code>GET-запрос</code>:</p><pre id="616d0087-3e61-40e4-ac58-cd19a78fe9e7" class="code code-wrap"><code>GET https://api.react-learning.ru/products/review/</code></pre><p id="2c5c60fa-8c92-4bbf-a7f7-16bd74e16267" class="">Чтобы получить список отзывов к конкретному товару по его <code>_id</code>, отправьте <code>GET-запрос</code>:</p><pre id="e148a99b-ad6f-4c35-8c30-7c196dd5dfc4" class="code code-wrap"><code>GET https://api.react-learning.ru/products/review/:productId</code></pre><p id="63749100-e105-4ba8-8881-2ae73940fa49" class="">
+</p></div></article></body></html>

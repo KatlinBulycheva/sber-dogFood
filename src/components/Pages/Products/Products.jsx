@@ -1,55 +1,65 @@
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/DogFoodContextProvider";
-import { ProductCard } from "../../ProductCard/ProductCard";
+import { NavLink, Outlet } from "react-router-dom";
+import { Filter } from "../../Filter/Filter";
+import { UniversalPage } from "../UniversalPage/UniversalPage";
 import productsStyles from "./Products.module.css";
 
 export function Products() {
-  const navigate = useNavigate();
-  const { token } = useContext(AppContext);
-
-  useEffect(() => {
-    if (!token) {
-      navigate("/signin");
-    }
-  }, [token]);
-
-  const {
-    data: products,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["AllProductsFetch", token],
-    queryFn: () =>
-      fetch("https://api.react-learning.ru/products", {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-      }).then((res) => {
-        res.json();
-      }),
-  });
-
-  console.log({
-    token, products, isLoading, isError, error
-  });
-
   return (
-    <>
-      <h1>Page products</h1>
-      <div className={productsStyles.productsContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </div>
-    </>
+    <UniversalPage>
+      <Filter>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products"
+          end
+        >
+          Все товары
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/popular"
+        >
+          Популярные
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/newly"
+        >
+          Новинки
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/priceup"
+        >
+          Сначала дешевые
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/pricedown"
+        >
+          Сначала дорогие
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/rate"
+        >
+          По рейтингу
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
+          to="/products/benefit"
+        >
+          По скидке
+        </NavLink>
+      </Filter>
+
+      <Outlet />
+    </UniversalPage>
   );
 }

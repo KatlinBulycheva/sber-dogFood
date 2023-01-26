@@ -5,69 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createSignupFormValidationSchema } from "./validatorSignup";
 import stylesSignup from "../SignupOrSignin.module.css";
-import { withQuery } from "../../../HOC/withQuery";
 
-const SignupInner = withQuery(({ mutateAsync }) => {
+export function Signup() {
   const navigate = useNavigate();
 
   const initialValuesSignup = {
     password: "",
     email: "",
+    group: ''
   };
 
-  const submitHandler = async (values) => {
-    await mutateAsync(values);
-    navigate("/signin");
-  };
-
-  return (
-    <div id="form">
-      <Formik
-        initialValues={initialValuesSignup}
-        validationSchema={createSignupFormValidationSchema}
-        onSubmit={submitHandler}
-      >
-        <Form className={stylesSignup.form}>
-          <div className={stylesSignup.title}>Регистрация</div>
-
-          <div>
-            <Field
-              name="group"
-              placeholder="Группа"
-              type="text"
-              className={stylesSignup.input}
-            />
-            <ErrorMessage component="p" className="error" name="group" />
-          </div>
-
-          <div>
-            <Field
-              name="email"
-              placeholder="Эл. почта"
-              type="email"
-              className={stylesSignup.input}
-            />
-            <ErrorMessage component="p" className="error" name="email" />
-          </div>
-
-          <div>
-            <Field
-              name="password"
-              placeholder="Пароль"
-              type="password"
-              className={stylesSignup.input}
-            />
-            <ErrorMessage component="p" className="error" name="password" />
-          </div>
-
-          <button type="submit">Зарегистрироваться</button>
-        </Form>
-      </Formik>
-    </div>
-  );
-});
-
-export function Signup() {
   const { mutateAsync, error, isError } = useMutation({
     mutationFn: (data) =>
       fetch("https://api.react-learning.ru/signup", {
@@ -88,5 +35,58 @@ export function Signup() {
       }),
   });
 
-  return <SignupInner mutateAsync={mutateAsync} error={error} isError={isError} />;
+  const submitHandler = async (values) => {
+    await mutateAsync(values);
+    navigate("/signin");
+  };
+
+  return (
+    <>
+      <div id="form">
+        <Formik
+          initialValues={initialValuesSignup}
+          validationSchema={createSignupFormValidationSchema}
+          onSubmit={submitHandler}
+        >
+          <Form className={stylesSignup.form}>
+            <div className={stylesSignup.title}>Регистрация</div>
+
+            <div>
+              <Field
+                name="group"
+                placeholder="Группа"
+                type="text"
+                className={stylesSignup.input}
+              />
+              <ErrorMessage component="p" className="error" name="group" />
+            </div>
+
+            <div>
+              <Field
+                name="email"
+                placeholder="Эл. почта"
+                type="email"
+                className={stylesSignup.input}
+              />
+              <ErrorMessage component="p" className="error" name="email" />
+            </div>
+
+            <div>
+              <Field
+                name="password"
+                placeholder="Пароль"
+                type="password"
+                className={stylesSignup.input}
+              />
+              <ErrorMessage component="p" className="error" name="password" />
+            </div>
+
+            <button type="submit">Зарегистрироваться</button>
+          </Form>
+        </Formik>
+      </div>
+      {isError && <p className="error">{error.message}</p>}
+    </>
+
+  );
 }
