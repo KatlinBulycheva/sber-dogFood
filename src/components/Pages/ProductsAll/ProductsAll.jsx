@@ -23,7 +23,7 @@ export function ProductsAll() {
     if (!token) {
       navigate("/signin");
     }
-  });
+  }, [token]);
 
   const {
     data, isLoading, isError, error, refetch
@@ -35,6 +35,7 @@ export function ProductsAll() {
           authorization: `Bearer ${token}`,
         },
       }).then((res) => res.json()),
+    enabled: !!token
   });
 
   console.log({

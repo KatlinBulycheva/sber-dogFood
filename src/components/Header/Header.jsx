@@ -27,7 +27,9 @@ export function Header() {
             <i className="fa-solid fa-user-plus" />
           </Link>
         </div>
-        <i className="fa-regular fa-circle-user" />
+        <Link to="/persona">
+          <i className="fa-regular fa-circle-user" />
+        </Link>
       </div>
     </header>
   );

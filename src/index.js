@@ -11,6 +11,7 @@ import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
 import { AppContextProvider } from "./context/DogFoodContextProvider";
 import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
 import { ProductsPopular } from "./components/Pages/ProductsPopular/ProductsPopular";
+import { PersonalAccount } from "./components/Pages/PersonalAccount/PersonalAccount";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "persona",
+        element: <PersonalAccount />
       }
     ]
   }
