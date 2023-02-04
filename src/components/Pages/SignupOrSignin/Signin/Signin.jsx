@@ -52,7 +52,7 @@ export function Signin() {
         onSubmit={submitHandler}
       >
         <Form className={stylesSignin.form}>
-          <div className={stylesSignin.title}>Вход</div>
+          <h3 className={stylesSignin.title}>Вход</h3>
 
           <div>
             <Field

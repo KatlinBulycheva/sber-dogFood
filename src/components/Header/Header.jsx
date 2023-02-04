@@ -1,8 +1,37 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import headerStyles from "./Header.module.css";
 import logo from "./logo.png";
+import { AppContext } from "../../context/DogFoodContextProvider";
 
 export function Header() {
+  const { token } = useContext(AppContext);
+
+  function isLogin() {
+    if (token) {
+      return (
+        <>
+          <div className={headerStyles.groupIcons}>
+            <i className="fa-solid fa-heart" />
+            <i className="fa-solid fa-cart-shopping" />
+          </div>
+          <Link to="/persona" className={headerStyles.profile}>
+            <i className="fa-regular fa-circle-user" />
+          </Link>
+        </>
+      );
+    } return (
+      <div className={headerStyles.groupIcons}>
+        <Link to="/signin">
+          <i className="fa-solid fa-right-to-bracket" />
+        </Link>
+        <Link to="/signup">
+          <i className="fa-solid fa-user-plus" />
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <header>
       <Link to="/">
@@ -15,21 +44,7 @@ export function Header() {
         <input type="text" placeholder="Поиск" />
       </div>
       <div className={headerStyles.containerIcons}>
-        <div className={headerStyles.groupIcons}>
-          <i className="fa-solid fa-heart" />
-          <i className="fa-solid fa-cart-shopping" />
-        </div>
-        <div className={headerStyles.groupIcons}>
-          <Link to="/signin">
-            <i className="fa-solid fa-right-to-bracket" />
-          </Link>
-          <Link to="/signup">
-            <i className="fa-solid fa-user-plus" />
-          </Link>
-        </div>
-        <Link to="/persona">
-          <i className="fa-regular fa-circle-user" />
-        </Link>
+        {isLogin()}
       </div>
     </header>
   );

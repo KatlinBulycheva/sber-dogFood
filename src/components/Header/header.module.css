@@ -46,9 +46,9 @@ header i {
 
 .containerIcons {
     display: flex;
-    width: 20%;
-    min-width: 190px;
-    justify-content: space-between;
+    /* width: 20%; */
+    /* min-width: 120px; */
+    justify-content: flex-end;
     align-items: center;
     /* min-width: 150px; */
     /* max-width: 160px; */
@@ -57,8 +57,12 @@ header i {
 .groupIcons {
     display: flex;
     width: 60px;
-    min-width: 55px;
+    /* min-width: 55px; */
     justify-content: space-between;
-    align-items: center;
-    margin-right: 25px;
+    /* align-items: center; */
+    /* margin-right: 25px; */
+}
+
+.profile {
+    margin-left: 50px;
 }

@@ -11,7 +11,7 @@ import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
 import { AppContextProvider } from "./context/DogFoodContextProvider";
 import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
 import { ProductsPopular } from "./components/Pages/ProductsPopular/ProductsPopular";
-import { PersonalAccount } from "./components/Pages/PersonalAccount/PersonalAccount";
+import { Profile } from "./components/Pages/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: "persona",
-        element: <PersonalAccount />
+        element: <Profile />
       }
     ]
   }
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false, // default: true
+      refetchOnWindowFocus: false,
     },
   },
 });

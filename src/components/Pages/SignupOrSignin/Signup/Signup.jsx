@@ -42,49 +42,47 @@ export function Signup() {
 
   return (
     <>
-      <div id="form">
-        <Formik
-          initialValues={initialValuesSignup}
-          validationSchema={createSignupFormValidationSchema}
-          onSubmit={submitHandler}
-        >
-          <Form className={stylesSignup.form}>
-            <div className={stylesSignup.title}>Регистрация</div>
+      <Formik
+        initialValues={initialValuesSignup}
+        validationSchema={createSignupFormValidationSchema}
+        onSubmit={submitHandler}
+      >
+        <Form className={stylesSignup.form}>
+          <h3 className={stylesSignup.title}>Регистрация</h3>
 
-            <div>
-              <Field
-                name="group"
-                placeholder="Группа"
-                type="text"
-                className={stylesSignup.input}
-              />
-              <ErrorMessage component="p" className="error" name="group" />
-            </div>
+          <div>
+            <Field
+              name="group"
+              placeholder="Группа"
+              type="text"
+              className={stylesSignup.input}
+            />
+            <ErrorMessage component="p" className="error" name="group" />
+          </div>
 
-            <div>
-              <Field
-                name="email"
-                placeholder="Эл. почта"
-                type="email"
-                className={stylesSignup.input}
-              />
-              <ErrorMessage component="p" className="error" name="email" />
-            </div>
+          <div>
+            <Field
+              name="email"
+              placeholder="Эл. почта"
+              type="email"
+              className={stylesSignup.input}
+            />
+            <ErrorMessage component="p" className="error" name="email" />
+          </div>
 
-            <div>
-              <Field
-                name="password"
-                placeholder="Пароль"
-                type="password"
-                className={stylesSignup.input}
-              />
-              <ErrorMessage component="p" className="error" name="password" />
-            </div>
+          <div>
+            <Field
+              name="password"
+              placeholder="Пароль"
+              type="password"
+              className={stylesSignup.input}
+            />
+            <ErrorMessage component="p" className="error" name="password" />
+          </div>
 
-            <button type="submit">Зарегистрироваться</button>
-          </Form>
-        </Formik>
-      </div>
+          <button type="submit">Зарегистрироваться</button>
+        </Form>
+      </Formik>
       {isError && <p className="error">{error.message}</p>}
     </>
 
