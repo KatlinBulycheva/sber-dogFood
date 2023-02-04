@@ -1,0 +1,36 @@
+.card {
+    aspect-ratio: 3 / 4;
+    /* overflow: hidden; */
+}
+
+.cardImg {
+    width: 100%;
+    height: 60%;
+}
+
+.cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.cardBody h3{
+    margin: 30px 0 10px 0;
+}
+
+p.wight {
+    font-size: 12px;
+    color: gray;
+    margin: 0;
+}
+
+p.name {
+    text-align: left;
+    margin: 0;
+}
