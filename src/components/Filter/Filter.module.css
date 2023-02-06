@@ -5,8 +5,10 @@ div.filter {
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     border-radius: 10px;
     display: flex;
+    gap: 10px;
     align-items: center;
     justify-content: space-around;
+    padding: 5px 10px;
 }
 
 div.filter:hover {

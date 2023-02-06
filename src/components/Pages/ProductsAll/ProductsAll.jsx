@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/DogFoodContextProvider";
+import { getTokenSelector } from "../../../redux/slices/userSlice";
 import { withQuery } from "../../HOC/withQuery";
 import { ProductCard } from "../../ProductCard/ProductCard";
 import productsStyles from "../Products/Products.module.css";
@@ -17,7 +18,7 @@ const ProductCardInner = withQuery(({ data }) => (
 
 export function ProductsAll() {
   const navigate = useNavigate();
-  const { token } = useContext(AppContext);
+  const token = useSelector(getTokenSelector);
 
   useEffect(() => {
     if (!token) {
@@ -36,15 +37,6 @@ export function ProductsAll() {
         },
       }).then((res) => res.json()),
     enabled: !!token
-  });
-
-  console.log({
-    token,
-    data,
-    isLoading,
-    isError,
-    error,
-    refetch,
   });
 
   return (

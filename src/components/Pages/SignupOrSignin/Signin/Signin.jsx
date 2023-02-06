@@ -3,14 +3,14 @@ import {
 } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
 import { createSigninFormValidationSchema } from "./validatorSignin";
 import stylesSignin from "../SignupOrSignin.module.css";
-import { AppContext } from "../../../../context/DogFoodContextProvider";
+import { setTokenUser } from "../../../../redux/slices/userSlice";
 
 export function Signin() {
   const navigate = useNavigate();
-  const { setToken } = useContext(AppContext);
+  const dispatch = useDispatch();
 
   const initialValuesSignin = {
     password: "",
@@ -39,7 +39,7 @@ export function Signin() {
 
   const submitHandler = async (values) => {
     const response = await mutateAsync(values);
-    setToken(response.token);
+    dispatch(setTokenUser(response.token));
 
     navigate("/");
   };

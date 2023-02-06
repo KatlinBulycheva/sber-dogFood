@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getTokenSelector } from "../../redux/slices/userSlice";
 import headerStyles from "./Header.module.css";
 import logo from "./logo.png";
-import { AppContext } from "../../context/DogFoodContextProvider";
 
 export function Header() {
-  const { token } = useContext(AppContext);
+  const token = useSelector(getTokenSelector);
 
   function isLogin() {
     if (token) {
