@@ -9,6 +9,9 @@ export const initState = {
     avatar: '',
     id: '',
     token: ''
+  },
+  filter: {
+    search: ''
   }
 };
 

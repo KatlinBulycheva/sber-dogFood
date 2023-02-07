@@ -7,14 +7,12 @@ export function ProductCard({
     <div className={productCardStyles.card}>
       <div className={productCardStyles.cardImg}>
         <img
-          // eslint-disable-next-line max-len
           src={pictures}
           alt={name}
         />
       </div>
       <div className={productCardStyles.cardBody}>
         <h3>{`${price} ₽`} <span><i className="fa-solid fa-cart-shopping" /></span></h3>
-        {/* <i className="fa-solid fa-cart-shopping" /> */}
         <p className={productCardStyles.wight}>{wight}</p>
         <p className={productCardStyles.name}>{name}</p>
       </div>

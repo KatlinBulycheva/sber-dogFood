@@ -1,6 +1,5 @@
 .card {
     aspect-ratio: 3 / 4;
-    /* overflow: hidden; */
 }
 
 .cardImg {
@@ -33,6 +32,7 @@
     align-items: center;
     color: rgb(178, 175, 175);
     margin-right: 20px;
+    cursor: pointer;
 }
 
 p.wight {

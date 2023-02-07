@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getTokenSelector } from "../../redux/slices/userSlice";
+import { Search } from "../Search/Search";
 import headerStyles from "./Header.module.css";
 import logo from "./logo.png";
 
@@ -40,9 +41,7 @@ export function Header() {
           <h3 className={headerStyles.logoText}>DOG <br /> FOOD</h3>
         </div>
       </Link>
-      <div className={headerStyles.search}>
-        <input type="text" placeholder="Поиск" />
-      </div>
+      <Search />
       <div className={headerStyles.containerIcons}>
         {isLogin()}
       </div>
