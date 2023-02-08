@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createSignupFormValidationSchema } from "./validatorSignup";
 import stylesSignup from "../SignupOrSignin.module.css";
+import { dogFoodApi } from "../../../../api/DogFoodApi";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -12,27 +13,11 @@ export function Signup() {
   const initialValuesSignup = {
     password: "",
     email: "",
-    group: ''
+    group: "",
   };
 
   const { mutateAsync, error, isError } = useMutation({
-    mutationFn: (data) =>
-      fetch("https://api.react-learning.ru/signup", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }).then((res) => {
-        if (res.status === 400) {
-          throw new Error(`Некорректно заполнено одно из полей`);
-        }
-
-        if (res.status === 409) {
-          throw new Error(`Пользователь c указанным email уже существует`);
-        }
-        return res.json();
-      }),
+    mutationFn: (values) => dogFoodApi.signUp(values),
   });
 
   const submitHandler = async (values) => {
@@ -85,6 +70,5 @@ export function Signup() {
       </Formik>
       {isError && <p className="error">{error.message}</p>}
     </>
-
   );
 }

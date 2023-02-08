@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { dogFoodApi } from "../../../api/DogFoodApi";
 import { getFilterSelector } from "../../../redux/slices/filterSlice";
 import { getTokenSelector } from "../../../redux/slices/userSlice";
 import { getQueryKeySearch } from "../../../utils/functions";
@@ -32,12 +33,7 @@ export function ProductsAll() {
     data, isLoading, isError, error, refetch
   } = useQuery({
     queryKey: getQueryKeySearch(searchValue),
-    queryFn: () =>
-      fetch(`https://api.react-learning.ru/products/search?query=${searchValue}`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }).then((res) => res.json()),
+    queryFn: () => dogFoodApi.getAllProducts(searchValue, token),
     enabled: !!token
   });
 
