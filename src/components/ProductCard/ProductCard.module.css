@@ -26,13 +26,21 @@
     width: 100%;
 }
 
-.cardBody span {
+.cardBodyCart {
     font-size: 15px;
     display: flex;
     align-items: center;
-    color: rgb(178, 175, 175);
     margin-right: 20px;
     cursor: pointer;
+    color: black;
+}
+
+.activeCart {
+    color: black;
+}
+
+.noActiveCart {
+    color: rgb(178, 175, 175);
 }
 
 p.wight {

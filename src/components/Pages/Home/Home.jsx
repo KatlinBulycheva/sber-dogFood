@@ -15,7 +15,7 @@ export function Home() {
         <div className={homeStyles.containerGreeting}>
           <img src={dogImg} alt="greeting" />
           <p className={homeStyles.textGreeting}>
-            Самое вкусное и полезное лакомство для вашего питомца - здесь!
+            Вкусное и полезное лакомство для вашего питомца - здесь!
           </p>
         </div>
       </section>

@@ -9,23 +9,13 @@ import { withQuery } from "../../HOC/withQuery";
 import { ProductCard } from "../../ProductCard/ProductCard";
 import productsStyles from "../Products/Products.module.css";
 
-const ProductCardInner = withQuery(({ data, searchValue }) => {
-  if (searchValue) {
-    return (
-      <div className={productsStyles.productsContainer}>
-        {data.map(({ _id: id, ...product }) => (
-          <ProductCard {...product} id={id} key={id} />
-        ))}
-      </div>
-    );
-  } return (
-    <div className={productsStyles.productsContainer}>
-      {data.products.map(({ _id: id, ...product }) => (
-        <ProductCard {...product} id={id} key={id} />
-      ))}
-    </div>
-  );
-});
+const ProductCardInner = withQuery(({ data }) => (
+  <div className={productsStyles.productsContainer}>
+    {data.map(({ _id: id, ...product }) => (
+      <ProductCard {...product} id={id} key={id} />
+    ))}
+  </div>
+));
 
 export function ProductsAll() {
   const navigate = useNavigate();
@@ -38,29 +28,17 @@ export function ProductsAll() {
     }
   }, [token]);
 
-  const getEndPoint = () => {
-    if (searchValue) {
-      return `https://api.react-learning.ru/products/search?query=${searchValue}`;
-    }
-    return "https://api.react-learning.ru/products";
-  };
-
-  const getIsEnabled = () => {
-    if (!!token && !!searchValue) return true;
-    return !!token;
-  };
-
   const {
     data, isLoading, isError, error, refetch
   } = useQuery({
     queryKey: getQueryKeySearch(searchValue),
     queryFn: () =>
-      fetch(getEndPoint(), {
+      fetch(`https://api.react-learning.ru/products/search?query=${searchValue}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
       }).then((res) => res.json()),
-    enabled: getIsEnabled()
+    enabled: !!token
   });
 
   return (

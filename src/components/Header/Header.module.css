@@ -8,26 +8,6 @@ header {
     gap: 60px
 }
 
-header div.logoContainer {
-    display: flex;
-    width: 125px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-header .logoImg {
-    height: 60px;
-}
-
-header .logoText {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 23px;
-}
-
 header i {
     cursor: pointer;
     font-size: 19px;
@@ -43,6 +23,19 @@ header i {
     display: flex;
     width: 60px;
     justify-content: space-between;
+    position: relative;
+}
+
+.cartCount {
+    position: absolute;
+    min-width: 15px;
+    padding: 0 1px;
+    right: -7px;
+    top: -10px;
+    border-radius: 40%;
+    background-color: white;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 .profile {

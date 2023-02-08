@@ -10,9 +10,9 @@ import { Products } from "./components/Pages/Products/Products";
 import { Signin } from "./components/Pages/SignupOrSignin/Signin/Signin";
 import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
 import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
-import { ProductsPopular } from "./components/Pages/ProductsPopular/ProductsPopular";
 import { Profile } from "./components/Pages/Profile/Profile";
 import { store } from "./redux/store";
+import { Cart } from "./components/Cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -30,25 +30,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <ProductsAll />
-          },
-          {
-            path: "popular",
-            element: <ProductsPopular />
-          },
-          {
-            path: "newly"
-          },
-          {
-            path: "priceup"
-          },
-          {
-            path: "pricedown"
-          },
-          {
-            path: "rate"
-          },
-          {
-            path: "benefit"
           }
         ]
       },
@@ -63,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "persona",
         element: <Profile />
+      },
+      {
+        path: "cart",
+        element: <Cart />
       }
     ]
   }

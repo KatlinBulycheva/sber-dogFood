@@ -7,12 +7,12 @@ export const initState = {
     email: '',
     about: '',
     avatar: '',
-    id: '',
     token: ''
   },
   filter: {
     search: ''
-  }
+  },
+  cart: []
 };
 
 export const getInitState = () => {
