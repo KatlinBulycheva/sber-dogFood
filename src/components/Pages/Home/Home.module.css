@@ -4,12 +4,8 @@
     align-items: center;
 }
 
-.contentHome a {
-    width: 100%;
-}
-
 .containerGreeting {
-    margin-top: 40px;
+    margin: 35px 0;
     position: relative;
 }
 
@@ -29,5 +25,19 @@
     height: 50%;
     margin: 0;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
+
+.containerGreeting button {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    margin: 10px;
+    height: auto;
+}
+
+.containerGreeting a {
+    width: max-content;
 }

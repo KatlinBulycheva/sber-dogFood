@@ -1,0 +1,51 @@
+.cart, .ordering {
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px 5%;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cartTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 90px;
+    
+}
+
+.cartTitle h3, .ordering h3 {
+    font-size: large;
+}
+
+.cartTitle input {
+    margin: 0 10px 0 0;
+    height: auto;
+}
+
+.hr {
+    height: .5px; 
+    background-color: rgb(235, 229, 229); 
+}
+
+.ordering {
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.orderingTitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ordering button {
+    height: 50px;
+    font-size: inherit;
+}

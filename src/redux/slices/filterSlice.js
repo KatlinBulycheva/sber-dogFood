@@ -6,7 +6,6 @@ const filterSlice = createSlice({
   initialState: initState.filter,
   reducers: {
     changeSearchFilter(state, action) {
-      // eslint-disable-next-line no-param-reassign
       state.search = action.payload;
     }
   }

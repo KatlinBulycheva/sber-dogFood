@@ -57,6 +57,16 @@ class DogFoodApi {
 
     return res.json();
   }
+
+  async getProductsByIds(ids, token) {
+    this.checkToken(token);
+
+    return Promise.all(ids.map((id) => fetch(`${this.baseURL}/products/${id}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    }).then((res) => res.json())));
+  }
 }
 
 export const dogFoodApi = new DogFoodApi({ baseURL: 'https://api.react-learning.ru' });

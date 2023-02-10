@@ -1,7 +1,7 @@
 .productsContainer {
     padding: 40px 0 30px 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 0.3fr));
+    grid-template-columns: repeat(auto-fit, minmax(190px, 0.3fr));
     gap: 30px;
     justify-content: center;
 }

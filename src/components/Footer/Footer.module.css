@@ -4,7 +4,7 @@ footer {
     margin-top: auto;
     display: flex;
     justify-content: space-between;
-    padding: 30px 60px;
+    padding: 30px 5%;
 }
 
 footer ul.list {

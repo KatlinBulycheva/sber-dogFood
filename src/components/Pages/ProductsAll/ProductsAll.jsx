@@ -15,6 +15,7 @@ const ProductCardInner = withQuery(({ data }) => (
     {data.map(({ _id: id, ...product }) => (
       <ProductCard {...product} id={id} key={id} />
     ))}
+    {!data.length && <p>По вашему запросу товары не найдены</p>}
   </div>
 ));
 
