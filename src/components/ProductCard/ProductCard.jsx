@@ -15,11 +15,8 @@ export function ProductCard({
   const productWithActiveCart = cart.find((product) => product.id === id);
 
   const cartOfProductHandler = () => {
-    if (productWithActiveCart) {
-      dispatch(removeProductFromCart(id));
-    } else {
-      dispatch(addProductToCart(id));
-    }
+    if (productWithActiveCart) dispatch(removeProductFromCart(id));
+    else dispatch(addProductToCart(id));
   };
 
   return (

@@ -36,6 +36,43 @@ const cartSlice = createSlice({
         }
         return product;
       });
+    },
+    setChecked(state, action) {
+      return state.map((product) => {
+        if (product.id === action.payload) {
+          return {
+            ...product,
+            isChecked: true,
+          };
+        }
+        return product;
+      });
+    },
+    setUnChecked(state, action) {
+      return state.map((product) => {
+        if (product.id === action.payload) {
+          return {
+            ...product,
+            isChecked: false,
+          };
+        }
+        return product;
+      });
+    },
+    clearCart() {
+      return [];
+    },
+    checkAllProducts(state) {
+      return state.map((product) => ({
+        ...product,
+        isChecked: true
+      }));
+    },
+    uncheckAllProducts(state) {
+      return state.map((product) => ({
+        ...product,
+        isChecked: false
+      }));
     }
   },
 });
@@ -44,7 +81,12 @@ export const {
   addProductToCart,
   removeProductFromCart,
   counterIncrementProduct,
-  counterDecrementProduct
+  counterDecrementProduct,
+  setChecked,
+  setUnChecked,
+  clearCart,
+  checkAllProducts,
+  uncheckAllProducts
 } = cartSlice.actions;
 export const cartReduce = cartSlice.reducer;
 export const getCartSelector = (state) => state.cart;

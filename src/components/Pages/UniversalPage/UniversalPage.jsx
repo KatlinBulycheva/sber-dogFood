@@ -1,19 +1,8 @@
 import stylesUniversalPage from "./UniversalPage.module.css";
 
-export function UniversalPage({ children, ...props }) {
-  const lengthProps = Object.keys(props).length;
-  const display = lengthProps ? props.wrStyles.display : '';
-  const gridTemplateColumns = lengthProps ? props.wrStyles.gridTemplateColumns : '';
-  const gap = lengthProps ? props.wrStyles.gap : '';
+export function UniversalPage({ children }) {
   return (
-    <main
-      className={stylesUniversalPage.page}
-      style={{
-        display,
-        gridTemplateColumns,
-        gap
-      }}
-    >
+    <main className={stylesUniversalPage.page}>
       {children}
     </main>
   );

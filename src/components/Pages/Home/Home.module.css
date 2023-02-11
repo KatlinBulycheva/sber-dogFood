@@ -36,6 +36,11 @@
     font-weight: inherit;
     margin: 10px;
     height: auto;
+    padding-bottom: 5px;
+}
+
+.containerGreeting button:hover {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.205);
 }
 
 .containerGreeting a {

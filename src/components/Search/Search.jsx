@@ -17,13 +17,12 @@ export function Search() {
   };
 
   return (
-    <div className={searchStyles.search}>
-      <input
-        type="text"
-        value={search}
-        placeholder="Поиск"
-        onInput={changeSearchHandler}
-      />
-    </div>
+    <input
+      type="text"
+      value={search}
+      placeholder="Поиск"
+      onInput={changeSearchHandler}
+      className={searchStyles.search}
+    />
   );
 }

@@ -4,6 +4,8 @@ import {
   counterIncrementProduct,
   getCartSelector,
   removeProductFromCart,
+  setChecked,
+  setUnChecked,
 } from "../../redux/slices/cartSlice";
 import { Button } from "../Button/Button";
 import cartProductStyles from "./CartProductCard.module.css";
@@ -13,7 +15,12 @@ export function CartProductCard({
 }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
-  const { count } = cart.find((productItem) => productItem.id === id);
+  const product = cart.find((productItem) => productItem.id === id);
+
+  const productIsChecked = () => {
+    if (!product.isChecked) dispatch(setChecked(id));
+    else dispatch(setUnChecked(id));
+  };
 
   const removeProduct = () => {
     dispatch(removeProductFromCart(id));
@@ -29,7 +36,11 @@ export function CartProductCard({
 
   return (
     <div className={cartProductStyles.card}>
-      <input type="checkbox" />
+      <input
+        type="checkbox"
+        onChange={productIsChecked}
+        checked={product.isChecked}
+      />
       <div className={cartProductStyles.cardImg}>
         <img src={pictures} alt={name} />
       </div>
@@ -40,11 +51,19 @@ export function CartProductCard({
         </div>
         <div className={cartProductStyles.containerCounter}>
           <div className={cartProductStyles.counter}>
-            <Button disabled={count === 0} type="button" onClick={counterDecrement}>
+            <Button
+              disabled={product.count === 1}
+              type="button"
+              onClick={counterDecrement}
+            >
               -
             </Button>
-            <span>{count}</span>
-            <Button disabled={count === stock} type="button" onClick={counterIncrement}>
+            <span>{product.count}</span>
+            <Button
+              disabled={product.count === stock}
+              type="button"
+              onClick={counterIncrement}
+            >
               +
             </Button>
           </div>
@@ -57,7 +76,7 @@ export function CartProductCard({
           </p>
         </div>
         <div className={cartProductStyles.containerPrice}>
-          <h3>{`${price * count} ₽`}</h3>
+          <h3>{`${price * product.count} ₽`}</h3>
         </div>
       </div>
     </div>

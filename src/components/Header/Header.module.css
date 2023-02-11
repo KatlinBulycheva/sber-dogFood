@@ -41,3 +41,11 @@ header i {
 .profile {
     margin-left: 50px;
 }
+
+.catalog {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 400px;
+    min-width: 90px;
+}

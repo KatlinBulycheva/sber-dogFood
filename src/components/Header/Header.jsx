@@ -42,7 +42,12 @@ export function Header() {
   return (
     <header>
       <Logo />
-      <Search />
+      <div className={headerStyles.catalog}>
+        <Link to="/products">
+          <i className="fa-solid fa-bars" />
+        </Link>
+        <Search />
+      </div>
       <div className={headerStyles.containerIcons}>
         {isLogin()}
       </div>

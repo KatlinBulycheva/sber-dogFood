@@ -12,7 +12,7 @@ import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
 import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
 import { Profile } from "./components/Pages/Profile/Profile";
 import { store } from "./redux/store";
-import { Cart } from "./components/Cart/Cart";
+import { Cart } from "./components/Pages/Cart/Cart";
 
 const router = createBrowserRouter([
   {

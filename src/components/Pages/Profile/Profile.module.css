@@ -14,18 +14,10 @@
     padding: 0 20px;
 }
 
-.form p {
-    margin: 0;
-}
-
 .form button {
     background-color: rgb(249, 215, 78);
     cursor: pointer;
     width: max-content;
-}
-
-.title {
-    font-weight: 500;
 }
 
 .avatarContainer {
