@@ -18,42 +18,42 @@ export function Products() {
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/popular"
+          to="/"
         >
           Популярные
         </NavLink>
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/newly"
+          to="/"
         >
           Новинки
         </NavLink>
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/priceup"
+          to="/"
         >
           Сначала дешевые
         </NavLink>
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/pricedown"
+          to="/"
         >
           Сначала дорогие
         </NavLink>
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/rate"
+          to="/"
         >
           По рейтингу
         </NavLink>
         <NavLink
           className={({ isActive }) =>
             (isActive ? productsStyles.activeLink : productsStyles.filterLink)}
-          to="/products/benefit"
+          to="/"
         >
           По скидке
         </NavLink>

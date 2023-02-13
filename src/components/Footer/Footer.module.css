@@ -3,8 +3,8 @@ footer {
     height: 150px;
     margin-top: auto;
     display: flex;
-    justify-content: space-around;
-    padding: 30px 120px;
+    justify-content: space-between;
+    padding: 30px 5%;
 }
 
 footer ul.list {

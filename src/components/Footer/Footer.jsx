@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { Logo } from "../Logo/Logo";
 import footerStyles from "./Footer.module.css";
 
 export function Footer() {
   return (
     <footer>
+      <Logo />
       <ul className={footerStyles.list}>
         <Link to="/"><li>Каталог</li></Link>
         <Link to="/"><li>Акции</li></Link>

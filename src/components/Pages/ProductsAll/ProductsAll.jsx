@@ -1,23 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/DogFoodContextProvider";
+import { dogFoodApi } from "../../../api/DogFoodApi";
+import { getFilterSelector } from "../../../redux/slices/filterSlice";
+import { getTokenSelector } from "../../../redux/slices/userSlice";
+import { getQueryKeySearch } from "../../../utils/functions";
 import { withQuery } from "../../HOC/withQuery";
 import { ProductCard } from "../../ProductCard/ProductCard";
 import productsStyles from "../Products/Products.module.css";
 
 const ProductCardInner = withQuery(({ data }) => (
-
   <div className={productsStyles.productsContainer}>
-    {data.products.map(({ _id: id, ...product }) => (
+    {data.map(({ _id: id, ...product }) => (
       <ProductCard {...product} id={id} key={id} />
     ))}
+    {!data.length && <p>По вашему запросу товары не найдены</p>}
   </div>
 ));
 
 export function ProductsAll() {
   const navigate = useNavigate();
-  const { token } = useContext(AppContext);
+  const token = useSelector(getTokenSelector);
+  const searchValue = useSelector(getFilterSelector);
 
   useEffect(() => {
     if (!token) {
@@ -28,23 +33,9 @@ export function ProductsAll() {
   const {
     data, isLoading, isError, error, refetch
   } = useQuery({
-    queryKey: ["AllProductsFetch", token],
-    queryFn: () =>
-      fetch("https://api.react-learning.ru/products", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }).then((res) => res.json()),
+    queryKey: getQueryKeySearch(searchValue),
+    queryFn: () => dogFoodApi.getAllProducts(searchValue, token),
     enabled: !!token
-  });
-
-  console.log({
-    token,
-    data,
-    isLoading,
-    isError,
-    error,
-    refetch,
   });
 
   return (
@@ -54,6 +45,7 @@ export function ProductsAll() {
       isError={isError}
       error={error}
       refetch={refetch}
+      searchValue={searchValue}
     />
   );
 }

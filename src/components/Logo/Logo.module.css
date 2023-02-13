@@ -1,0 +1,19 @@
+.logoContainer {
+    display: flex;
+    width: 125px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logoImg {
+    height: 60px;
+}
+
+.logoText {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 23px;
+}

@@ -1,15 +1,15 @@
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/DogFoodContextProvider";
+import { setTokenUser } from "../../../redux/slices/userSlice";
 import { UniversalPage } from "../UniversalPage/UniversalPage";
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
-  const { setToken } = useContext(AppContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handlerExit() {
-    setToken('');
+    dispatch(setTokenUser(''));
     navigate('/');
   }
   return (

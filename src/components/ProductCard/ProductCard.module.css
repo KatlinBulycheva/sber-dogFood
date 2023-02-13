@@ -1,17 +1,40 @@
 .card {
     aspect-ratio: 3 / 4;
-    /* overflow: hidden; */
 }
 
 .cardImg {
     width: 100%;
     height: 60%;
+    position: relative;
 }
 
 .cardImg img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.offers {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.discount, .new {
+    color: white;
+    border-radius: 5px;
+    padding: 0 5px 2px;
+    font-size: smaller;
+}
+
+.discount {
+    background-color: rgba(236, 67, 67, 0.995);
+}
+
+.new {
+    background-color: rgb(54, 155, 54);
 }
 
 .cardBody {
@@ -21,7 +44,34 @@
 }
 
 .cardBody h3{
-    margin: 30px 0 10px 0;
+    margin: 20px 0 10px 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.oldPrice {
+    color: rgb(178, 175, 175);
+    text-decoration: line-through;
+    font-size: smaller;
+    font-weight: 500;
+}
+
+.cardBodyCart {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+    color: black;
+}
+
+.activeCart {
+    color: black;
+}
+
+.noActiveCart {
+    color: rgb(178, 175, 175);
 }
 
 p.wight {

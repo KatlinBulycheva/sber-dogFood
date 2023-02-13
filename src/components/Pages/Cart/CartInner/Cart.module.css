@@ -1,0 +1,108 @@
+.dogFoodCart {
+    display: grid;
+    grid-template-columns: 1fr minmax(150px, 28%);
+    gap: 30px;
+}
+
+.dogFoodCartEmpty {
+    margin-top: 20px;
+}
+
+.sectionLinks a:first-child button {
+    background-color: rgb(235, 229, 229);
+}
+
+.sectionLinks {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.cart, .ordering {
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px 20px;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cartTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 90px;
+    
+}
+
+.cartTitle h3, .ordering h3 {
+    font-size: large;
+}
+
+.cartTitle input {
+    margin: 0 10px 0 0;
+    height: auto;
+}
+
+.handlerAll {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.clearCart {
+    margin: 0;
+    color: gray;
+}
+
+.clearCart:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hr {
+    height: .5px; 
+    background-color: rgb(235, 229, 229); 
+}
+
+.ordering {
+    min-height: 90px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.orderingBody {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.orderingBody>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderingBody p {
+    margin: 0;
+}
+
+.ordering button {
+    height: 50px;
+    font-size: inherit;
+}
+
+.ordering button:hover {
+    background-color: rgb(249, 222, 116);
+}
+
+.emptyListChecked {
+    margin: 0;
+    text-align: start;
+}
