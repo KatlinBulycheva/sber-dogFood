@@ -8,7 +8,13 @@ import {
 import productCardStyles from "./ProductCard.module.css";
 
 export function ProductCard({
-  pictures, name, price, wight, id
+  pictures,
+  name,
+  price,
+  wight,
+  discount,
+  tags,
+  id,
 }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
@@ -23,10 +29,17 @@ export function ProductCard({
     <div className={productCardStyles.card}>
       <div className={productCardStyles.cardImg}>
         <img src={pictures} alt={name} />
+        <span className={productCardStyles.offers}>
+          {!!discount && (<span className={productCardStyles.discount}>-{discount}%</span>)}
+          {tags.includes("new") && (<span className={productCardStyles.new}>Новинка</span>)}
+        </span>
       </div>
       <div className={productCardStyles.cardBody}>
         <h3>
-          {`${price} ₽`}{" "}
+          <div>
+            {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
+            {!!discount && <span className={productCardStyles.oldPrice}>{price} ₽</span>}
+          </div>
           <span
             className={classNames(
               productCardStyles.cardBodyCart,

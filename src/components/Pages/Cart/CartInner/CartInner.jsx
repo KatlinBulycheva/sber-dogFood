@@ -4,7 +4,7 @@ import {
   checkAllProducts, clearCart, getCartSelector, uncheckAllProducts
 } from "../../../../redux/slices/cartSlice";
 import { Button } from "../../../Button/Button";
-import { CartProductCard } from "../../../CartProductCard/CartProductCard";
+import { CartItem } from "../../../CartItem/CartItem";
 import { withQuery } from "../../../HOC/withQuery";
 import { UniversalPage } from "../../UniversalPage/UniversalPage";
 import cartStyles from "./Cart.module.css";
@@ -12,6 +12,10 @@ import cartStyles from "./Cart.module.css";
 export const CartInner = withQuery(({ data }) => {
   const cart = useSelector(getCartSelector);
   const dispatch = useDispatch();
+  let finalPriceCart = 0;
+  let finalCountCart = 0;
+  let finalDiscountCart = 0;
+  let finalPriceWithoutDiscount = 0;
 
   const clearCartHandler = () => {
     dispatch(clearCart());
@@ -21,12 +25,19 @@ export const CartInner = withQuery(({ data }) => {
     .map((product, i) => ({ ...product, ...data[i] }))
     .filter((product) => product.isChecked === true);
 
-  let finalPrice = 0;
   checkedProductsFull.forEach(
     // eslint-disable-next-line no-return-assign
-    (product) => (finalPrice += product.price * product.count)
+    (product) => {
+      const productWithDiscount = Math.round(product.price * (1 - product.discount * 0.01));
+      const productDiscount = product.price - productWithDiscount;
+      finalPriceCart += productWithDiscount * product.count;
+      finalCountCart += product.count;
+      finalDiscountCart += productDiscount * product.count;
+      finalPriceWithoutDiscount += product.price * product.count;
+    }
   );
 
+  const firstProductWithDiscount = checkedProductsFull.find((product) => product.discount > 0);
   const isAllProductCheck = checkedProductsFull.length === cart.length;
 
   const checkAllProductsHandler = () => {
@@ -70,19 +81,32 @@ export const CartInner = withQuery(({ data }) => {
         </div>
         <div className={cartStyles.hr} />
         {data.map(({ _id: id, ...product }) => (
-          <CartProductCard {...product} id={id} key={id} />
+          <CartItem {...product} id={id} key={id} />
         ))}
       </section>
       <section className={cartStyles.ordering}>
-        {finalPrice ? (
+        {!!finalPriceCart && (
           <>
-            <div className={cartStyles.orderingTitle}>
-              <h3>Итого</h3>
-              <h3>{`${finalPrice} ₽`}</h3>
+            <div className={cartStyles.orderingBody}>
+              <div>
+                <h3>Итого</h3>
+                <h3>{finalPriceCart} ₽</h3>
+              </div>
+              <div>
+                <p>Товары, {finalCountCart} шт.</p>
+                <p>{finalPriceWithoutDiscount} ₽</p>
+              </div>
+              {!!firstProductWithDiscount && (
+                <div>
+                  <p>Скидка</p>
+                  <p>-{finalDiscountCart} ₽</p>
+                </div>
+              )}
             </div>
             <Button type="submit">Заказать</Button>
           </>
-        ) : (
+        )}
+        {!finalPriceCart && (
           <p className={cartStyles.emptyListChecked}>
             Выберите товары для оформления
           </p>

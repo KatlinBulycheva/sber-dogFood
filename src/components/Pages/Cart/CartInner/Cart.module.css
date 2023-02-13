@@ -78,14 +78,28 @@
     gap: 30px;
 }
 
-.orderingTitle {
+.orderingBody {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.orderingBody>div {
     display: flex;
     justify-content: space-between;
+}
+
+.orderingBody p {
+    margin: 0;
 }
 
 .ordering button {
     height: 50px;
     font-size: inherit;
+}
+
+.ordering button:hover {
+    background-color: rgb(249, 222, 116);
 }
 
 .emptyListChecked {

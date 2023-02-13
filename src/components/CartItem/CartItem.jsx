@@ -8,14 +8,15 @@ import {
   setUnChecked,
 } from "../../redux/slices/cartSlice";
 import { Button } from "../Button/Button";
-import cartProductStyles from "./CartProductCard.module.css";
+import cartItemStyles from "./CartItem.module.css";
 
-export function CartProductCard({
-  pictures, name, price, wight, id, stock
+export function CartItem({
+  pictures, name, price, wight, id, stock, discount
 }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
   const product = cart.find((productItem) => productItem.id === id);
+  const priceWithDiscount = Math.round(price * (1 - discount * 0.01));
 
   const productIsChecked = () => {
     if (!product.isChecked) dispatch(setChecked(id));
@@ -35,22 +36,22 @@ export function CartProductCard({
   };
 
   return (
-    <div className={cartProductStyles.card}>
+    <div className={cartItemStyles.card}>
       <input
         type="checkbox"
         onChange={productIsChecked}
         checked={product.isChecked}
       />
-      <div className={cartProductStyles.cardImg}>
+      <div className={cartItemStyles.cardImg}>
         <img src={pictures} alt={name} />
       </div>
-      <div className={cartProductStyles.cardBody}>
-        <div className={cartProductStyles.containerInfo}>
-          <p className={cartProductStyles.name}>{name}</p>
-          <p className={cartProductStyles.wight}>{wight}</p>
+      <div className={cartItemStyles.cardBody}>
+        <div className={cartItemStyles.containerInfo}>
+          <p className={cartItemStyles.name}>{name}</p>
+          <p className={cartItemStyles.wight}>{wight}</p>
         </div>
-        <div className={cartProductStyles.containerCounter}>
-          <div className={cartProductStyles.counter}>
+        <div className={cartItemStyles.containerCounter}>
+          <div className={cartItemStyles.counter}>
             <Button
               disabled={product.count === 1}
               type="button"
@@ -68,15 +69,16 @@ export function CartProductCard({
             </Button>
           </div>
           <p
-            className={cartProductStyles.remove}
+            className={cartItemStyles.remove}
             role="presentation"
             onClick={removeProduct}
           >
             Удалить
           </p>
         </div>
-        <div className={cartProductStyles.containerPrice}>
-          <h3>{`${price * product.count} ₽`}</h3>
+        <div className={cartItemStyles.containerPrice}>
+          <h3>{priceWithDiscount * product.count} ₽</h3>
+          {!!discount && (<span>{price * product.count} ₽</span>)}
         </div>
       </div>
     </div>
