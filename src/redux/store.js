@@ -2,13 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { REDUX_LS_KEY } from "../utils/constants";
 import { getInitState } from "./initState";
 import { cartReduce } from "./slices/cartSlice";
-import { filterReduce } from "./slices/filterSlice";
+import { searchReduce } from "./slices/filterSlice";
 import { userReduce } from "./slices/userSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReduce,
-    filter: filterReduce,
+    filter: searchReduce,
     cart: cartReduce
   },
   preloadedState: getInitState()

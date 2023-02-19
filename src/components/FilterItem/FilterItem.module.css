@@ -1,0 +1,9 @@
+.noActive {
+    color: rgba(109, 108, 108, 0.781);
+    cursor: pointer;
+}
+
+.active {
+    color: black;
+    cursor: pointer;
+}

@@ -3,3 +3,7 @@
     height: 45px;
     background-color: rgba(255, 255, 255, 0.616);
 }
+
+.onfocus {
+    background-color: white;
+}
