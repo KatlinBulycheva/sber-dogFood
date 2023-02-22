@@ -6,17 +6,20 @@
     align-items: center;
 }
 
-.input, .form button {
-    border: none;
+.input {
     background-color: rgb(235, 229, 229);
-    height: 30px;
-    border-radius: 15px;
-    padding: 0 20px;
+    display: block;
+    width: 200px;
+}
+
+.label {
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    font-size: smaller
 }
 
 .form button {
-    background-color: rgb(249, 215, 78);
-    cursor: pointer;
     width: max-content;
 }
 
@@ -40,10 +43,9 @@
 }
 
 .rightContainer {
-    padding-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px
+    justify-content: space-between;
 }
 
 .prifile {
