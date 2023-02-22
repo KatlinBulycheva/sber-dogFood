@@ -6,7 +6,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { createSigninFormValidationSchema } from "./validatorSignin";
 import stylesSignin from "../SignupOrSignin.module.css";
-import { setTokenUser } from "../../../../redux/slices/userSlice";
+import {
+  setDataUser,
+  setTokenUser,
+} from "../../../../redux/slices/userSlice";
 import { dogFoodApi } from "../../../../api/DogFoodApi";
 
 export function Signin() {
@@ -19,12 +22,13 @@ export function Signin() {
   };
 
   const { mutateAsync, isError, error } = useMutation({
-    mutationFn: (values) => dogFoodApi.signIn(values)
+    mutationFn: (values) => dogFoodApi.signIn(values),
   });
 
   const submitHandler = async (values) => {
     const response = await mutateAsync(values);
     dispatch(setTokenUser(response.token));
+    dispatch(setDataUser(response.data));
 
     navigate("/");
   };

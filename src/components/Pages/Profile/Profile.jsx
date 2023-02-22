@@ -1,12 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setTokenUser } from "../../../redux/slices/userSlice";
+import { getUserSelector, setTokenUser } from "../../../redux/slices/userSlice";
 import { UniversalPage } from "../UniversalPage/UniversalPage";
 import profileStyles from "./Profile.module.css";
 
 export function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userData = useSelector(getUserSelector);
 
   function handlerExit() {
     dispatch(setTokenUser(''));
@@ -20,18 +21,27 @@ export function Profile() {
         <div className={profileStyles.prifile}>
           <div className={profileStyles.leftContainer}>
 
-            <div className={profileStyles.avatarContainer}>avatarImg</div>
+            <div className={profileStyles.avatarContainer}>
+              <img src={userData.avatar} alt="avatar" />
+            </div>
             <button type="submit">Сохранить</button>
             <button type="button" onClick={handlerExit}>Выйти</button>
 
           </div>
 
           <div className={profileStyles.rightContainer}>
-            <div><input className={profileStyles.input} defaultValue="name" /></div>
-            <div><input className={profileStyles.input} defaultValue="avatar" /></div>
-            <div><input className={profileStyles.input} defaultValue="about" /></div>
-            <div><input className={profileStyles.input} defaultValue="email" /></div>
-            <div><input className={profileStyles.input} defaultValue="group" /></div>
+            <div>
+              <input className={profileStyles.input} defaultValue={userData.name} />
+            </div>
+            <div>
+              <input className={profileStyles.input} defaultValue={userData.about} />
+            </div>
+            <div>
+              <input className={profileStyles.input} defaultValue={userData.avatar} />
+            </div>
+            <div>
+              <input className={profileStyles.input} defaultValue={userData.email} />
+            </div>
           </div>
         </div>
 

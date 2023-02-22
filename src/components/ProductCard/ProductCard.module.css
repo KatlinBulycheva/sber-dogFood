@@ -1,5 +1,12 @@
 .card {
     aspect-ratio: 3 / 4;
+    padding: 10px;
+    max-height: 350px;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
 }
 
 .cardImg {
@@ -12,6 +19,28 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.cardLike {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.activeLike {
+    color: rgba(236, 67, 67, 0.995);
+    
+}
+
+.noActiveLike {
+    color: rgb(178, 175, 175);
+    visibility: hidden;
+}
+
+.noActiveLikeDisplay {
+    color: rgb(178, 175, 175);
+    visibility: visible;
 }
 
 .offers {
@@ -61,7 +90,6 @@
     font-size: 15px;
     display: flex;
     align-items: center;
-    margin-right: 20px;
     cursor: pointer;
     color: black;
 }
@@ -83,4 +111,6 @@ p.wight {
 p.name {
     text-align: left;
     margin: 0;
+    max-height: 45px;
+    overflow: hidden;
 }

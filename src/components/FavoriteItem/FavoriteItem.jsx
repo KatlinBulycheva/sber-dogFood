@@ -6,14 +6,11 @@ import {
   getCartSelector,
   removeProductFromCart,
 } from "../../redux/slices/cartSlice";
-import {
-  addProductToFavorites,
-  getFavoritesSelector,
-  removeProductFromFavorites,
-} from "../../redux/slices/favoritesSlice";
-import productCardStyles from "./ProductCard.module.css";
+import { removeProductFromFavorites } from "../../redux/slices/favoritesSlice";
+import productCardStyles from "../ProductCard/ProductCard.module.css";
+import favoriteItemStyles from "./FavoriteItem.module.css";
 
-export function ProductCard({
+export function FavoritesItem({
   pictures,
   name,
   price,
@@ -26,32 +23,26 @@ export function ProductCard({
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find((product) => product.id === id);
 
-  const favorites = useSelector(getFavoritesSelector);
-  const productWithActiveLike = favorites.find((productId) => productId === id);
-
   const cartOfProductHandler = () => {
     if (productWithActiveCart) dispatch(removeProductFromCart(id));
     else dispatch(addProductToCart(id));
   };
 
-  const likeOfProductHandler = () => {
-    if (productWithActiveLike) dispatch(removeProductFromFavorites(id));
-    else dispatch(addProductToFavorites(id));
+  const removeFromFavorites = () => {
+    dispatch(removeProductFromFavorites(id));
   };
 
-  const [hoverStyles, setHoverStyles] = useState({
-    [productCardStyles.noActiveLike]: !productWithActiveLike
-  });
+  const [hoverStyles, setHoverStyles] = useState();
 
   const mouseEnterHandler = () => {
     setHoverStyles({
-      [productCardStyles.noActiveLikeDisplay]: !productWithActiveLike
+      [favoriteItemStyles.displayDelete]: true
     });
   };
 
   const mouseLeaveHandler = () => {
     setHoverStyles({
-      [productCardStyles.noActiveLike]: !productWithActiveLike
+      [favoriteItemStyles.displayDelete]: false
     });
   };
 
@@ -73,14 +64,13 @@ export function ProductCard({
         </span>
         <span
           className={classNames(
-            productCardStyles.cardLike,
-            { [productCardStyles.activeLike]: !!productWithActiveLike },
+            favoriteItemStyles.deleteCardLike,
             hoverStyles
           )}
-          onClick={likeOfProductHandler}
-          title={productWithActiveLike ? "Удалить из избранного" : "Добавить в избранное"}
+          onClick={removeFromFavorites}
+          title="Удалить из избранного"
         >
-          <i className="fa-solid fa-heart" />
+          <i className="fa-solid fa-circle-xmark" />
         </span>
       </div>
       <div className={productCardStyles.cardBody}>
@@ -98,7 +88,6 @@ export function ProductCard({
               { [productCardStyles.noActiveCart]: !productWithActiveCart }
             )}
             onClick={cartOfProductHandler}
-            title={productWithActiveCart ? "Удалить из корзины" : "Добавить в корзину"}
           >
             <i className="fa-solid fa-cart-shopping" />
           </span>

@@ -5,6 +5,7 @@ import {
 
 export const getQueryKeySearch = (searchValue) => ["AllProductsFetch", searchValue];
 export const getQueryKeyCart = (ids) => ["CartProductsFetch", ids];
+export const getQueryKeyFavorites = (ids) => ["FavoritesProductsFetch", ids];
 
 export const productsSorting = (data) => {
   let sortData;
