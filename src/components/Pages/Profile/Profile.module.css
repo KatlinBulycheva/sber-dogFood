@@ -23,6 +23,10 @@
     width: max-content;
 }
 
+.form button:hover {
+    background-color: rgb(252, 235, 169);
+}
+
 .avatarContainer {
     border-radius: 50%;
     height: 150px;

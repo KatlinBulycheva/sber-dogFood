@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addProductToCart,
   getCartSelector,
@@ -20,7 +21,7 @@ export function ProductCard({
   wight,
   discount,
   tags,
-  id,
+  id
 }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
@@ -29,12 +30,14 @@ export function ProductCard({
   const favorites = useSelector(getFavoritesSelector);
   const productWithActiveLike = favorites.find((productId) => productId === id);
 
-  const cartOfProductHandler = () => {
+  const cartOfProductHandler = (e) => {
+    e.preventDefault();
     if (productWithActiveCart) dispatch(removeProductFromCart(id));
     else dispatch(addProductToCart(id));
   };
 
-  const likeOfProductHandler = () => {
+  const likeOfProductHandler = (e) => {
+    e.preventDefault();
     if (productWithActiveLike) dispatch(removeProductFromFavorites(id));
     else dispatch(addProductToFavorites(id));
   };
@@ -56,56 +59,58 @@ export function ProductCard({
   };
 
   return (
-    <div
-      className={productCardStyles.card}
-      onMouseEnter={mouseEnterHandler}
-      onMouseLeave={mouseLeaveHandler}
-    >
-      <div className={productCardStyles.cardImg}>
-        <img src={pictures} alt={name} />
-        <span className={productCardStyles.offers}>
-          {!!discount && (
-            <span className={productCardStyles.discount}>-{discount}%</span>
-          )}
-          {tags.includes("new") && (
-            <span className={productCardStyles.new}>Новинка</span>
-          )}
-        </span>
-        <span
-          className={classNames(
-            productCardStyles.cardLike,
-            { [productCardStyles.activeLike]: !!productWithActiveLike },
-            hoverStyles
-          )}
-          onClick={likeOfProductHandler}
-          title={productWithActiveLike ? "Удалить из избранного" : "Добавить в избранное"}
-        >
-          <i className="fa-solid fa-heart" />
-        </span>
-      </div>
-      <div className={productCardStyles.cardBody}>
-        <h3>
-          <div>
-            {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
+    <Link to={`./${id}`}>
+      <div
+        className={productCardStyles.card}
+        onMouseEnter={mouseEnterHandler}
+        onMouseLeave={mouseLeaveHandler}
+      >
+        <div className={productCardStyles.cardImg}>
+          <img src={pictures} alt={name} />
+          <span className={productCardStyles.offers}>
             {!!discount && (
-              <span className={productCardStyles.oldPrice}>{price} ₽</span>
+            <span className={productCardStyles.discount}>-{discount}%</span>
             )}
-          </div>
+            {tags.includes("new") && (
+            <span className={productCardStyles.new}>Новинка</span>
+            )}
+          </span>
           <span
             className={classNames(
-              productCardStyles.cardBodyCart,
-              { [productCardStyles.activeCart]: !!productWithActiveCart },
-              { [productCardStyles.noActiveCart]: !productWithActiveCart }
+              productCardStyles.cardLike,
+              { [productCardStyles.activeLike]: !!productWithActiveLike },
+              hoverStyles
             )}
-            onClick={cartOfProductHandler}
-            title={productWithActiveCart ? "Удалить из корзины" : "Добавить в корзину"}
+            onClick={likeOfProductHandler}
+            title={productWithActiveLike ? "Удалить из избранного" : "Добавить в избранное"}
           >
-            <i className="fa-solid fa-cart-shopping" />
+            <i className="fa-solid fa-heart" />
           </span>
-        </h3>
-        <p className={productCardStyles.wight}>{wight}</p>
-        <p className={productCardStyles.name}>{name}</p>
+        </div>
+        <div className={productCardStyles.cardBody}>
+          <h3>
+            <div>
+              {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
+              {!!discount && (
+              <span className={productCardStyles.oldPrice}>{price} ₽</span>
+              )}
+            </div>
+            <span
+              className={classNames(
+                productCardStyles.cardBodyCart,
+                { [productCardStyles.activeCart]: !!productWithActiveCart },
+                { [productCardStyles.noActiveCart]: !productWithActiveCart }
+              )}
+              onClick={cartOfProductHandler}
+              title={productWithActiveCart ? "Удалить из корзины" : "Добавить в корзину"}
+            >
+              <i className="fa-solid fa-cart-shopping" />
+            </span>
+          </h3>
+          <p className={productCardStyles.wight}>{wight}</p>
+          <p className={productCardStyles.name}>{name}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

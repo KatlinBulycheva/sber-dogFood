@@ -49,7 +49,6 @@ export function ProductsInner() {
       isError={isError}
       error={error}
       refetch={refetch}
-      searchValue={searchValue}
     />
   );
 }

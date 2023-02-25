@@ -79,7 +79,7 @@ export const CartInner = withQuery(({ data }) => {
             </p>
           </div>
         </div>
-        <div className={cartStyles.hr} />
+        <hr />
         {data.map(({ _id: id, ...product }) => (
           <CartItem {...product} id={id} key={id} />
         ))}

@@ -27,3 +27,11 @@ input {
   border-radius: 15px;
   padding: 0 20px;
 }
+
+hr {
+  height: 0.5px;
+  background-color: rgb(235, 229, 229);
+  width: 100%;
+  border: none;
+  margin: 0;
+}
