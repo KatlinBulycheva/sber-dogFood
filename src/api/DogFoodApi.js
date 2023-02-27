@@ -91,6 +91,25 @@ class DogFoodApi {
 
     return res.json();
   }
+
+  async postNewProduct(values, token) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products`, {
+      method: "POST",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 400) {
+      throw new Error(`Не корректно заполнено одно из полей`);
+    }
+
+    return res.json();
+  }
 }
 
 export const dogFoodApi = new DogFoodApi({ baseURL: 'https://api.react-learning.ru' });

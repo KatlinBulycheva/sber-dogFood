@@ -6,7 +6,8 @@ import { getUserSelector, setTokenUser } from "../../../redux/slices/userSlice";
 import { Button } from "../../Button/Button";
 import { UniversalPage } from "../UniversalPage/UniversalPage";
 import styles from "./Profile.module.css";
-import { Modal } from "../../Modal/Modal";
+import { ExitModal } from "../../Modals/ExitModal/ExitModal";
+import { NewProductModal } from "../../Modals/NewProductModal/NewProductModal";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -14,19 +15,20 @@ export function Profile() {
   const userData = useSelector(getUserSelector);
 
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
-
-  const closeExitModalHandler = () => {
-    setIsExitModalOpen(false);
-  };
+  const [isNewProductModalOpen, setIsNewProductModalOpen] = useState(false);
 
   const openExitModalHandler = () => {
     setIsExitModalOpen(true);
   };
 
-  function handlerExit() {
+  const openNewProductModalHandler = () => {
+    setIsNewProductModalOpen(true);
+  };
+
+  const exitHandler = () => {
     dispatch(setTokenUser(""));
     navigate("/");
-  }
+  };
 
   const initialValuesProfile = {
     name: `${userData.name}`,
@@ -37,94 +39,78 @@ export function Profile() {
 
   return (
     <UniversalPage>
-      <section className={styles.myData}>
-        <Formik initialValues={initialValuesProfile}>
-          <Form className={styles.form}>
-            <h3 className={styles.title}>Редактирование профиля</h3>
+      <article className={styles.containerMain}>
+        <section className={styles.myData}>
+          <Formik initialValues={initialValuesProfile}>
+            <Form className={styles.form}>
+              <h3 className={styles.title}>Редактирование профиля</h3>
 
-            <div className={styles.prifile}>
-              <div className={styles.leftContainer}>
-                <div className={styles.avatarContainer}>
-                  <img src={userData.avatar} alt="avatar" />
-                </div>
-                <Button type="button" onClick={() => openExitModalHandler()}>
-                  Выйти
-                </Button>
-              </div>
-
-              <div className={styles.rightContainer}>
-                <div>
-                  <label htmlFor="name" className={styles.label}>
-                    Имя
-                  </label>
-                  <Field
-                    name="name"
-                    type="text"
-                    className={styles.input}
-                  />
+              <div className={styles.prifile}>
+                <div className={styles.leftContainer}>
+                  <div className={styles.avatarContainer}>
+                    <img src={userData.avatar} alt="avatar" />
+                  </div>
+                  <Button type="button" onClick={() => openExitModalHandler()}>
+                    Выйти
+                  </Button>
                 </div>
 
-                <div>
-                  <label htmlFor="about" className={styles.label}>
-                    Обо мне
-                  </label>
-                  <Field
-                    name="about"
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
+                <div className={styles.rightContainer}>
+                  <div>
+                    <label htmlFor="name" className={styles.label}>
+                      Имя
+                    </label>
+                    <Field name="name" type="text" className={styles.input} />
+                  </div>
 
-                <div>
-                  <label htmlFor="avatar" className={styles.label}>
-                    Фото
-                  </label>
-                  <Field
-                    name="avatar"
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="about" className={styles.label}>
+                      Обо мне
+                    </label>
+                    <Field name="about" type="text" className={styles.input} />
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className={styles.label}>
-                    Эл. почта
-                  </label>
-                  <Field
-                    name="email"
-                    type="text"
-                    className={styles.input}
-                  />
+                  <div>
+                    <label htmlFor="avatar" className={styles.label}>
+                      Фото
+                    </label>
+                    <Field name="avatar" type="text" className={styles.input} />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className={styles.label}>
+                      Эл. почта
+                    </label>
+                    <Field name="email" type="text" className={styles.input} />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Form>
-        </Formik>
-      </section>
+            </Form>
+          </Formik>
+        </section>
 
-      <section className={styles.myProduct}>
-        <h3>Мои товары</h3>
-        <Button type="button">Добавить товар</Button>
-      </section>
+        <section className={styles.myProducts}>
+          <div className={styles.listProducts}>
+            <h3>Мои товары</h3>
+          </div>
+          <div className={styles.result}>
+            <div>Итого</div>
+            <Button type="button" onClick={openNewProductModalHandler}>
+              Добавить товар
+            </Button>
+          </div>
+        </section>
+      </article>
 
-      <Modal isOpen={isExitModalOpen} closeHandler={closeExitModalHandler}>
-        <h4 className={styles.modalTitle}>Вы точно хотите выйти?</h4>
-        <div className={styles.containerButton}>
-          <Button
-            type="button"
-            onClick={closeExitModalHandler}
-          >
-            Отмена
-          </Button>
-          <Button
-            type="button"
-            onClick={() => handlerExit()}
-          >
-            Выйти
-          </Button>
-        </div>
-
-      </Modal>
+      <ExitModal
+        isExitModalOpen={isExitModalOpen}
+        setIsExitModalOpen={setIsExitModalOpen}
+        exitHandler={exitHandler}
+      />
+      <NewProductModal
+        isNewProductModalOpen={isNewProductModalOpen}
+        setIsNewProductModalOpen={setIsNewProductModalOpen}
+      />
     </UniversalPage>
   );
 }
