@@ -1,51 +1,48 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-  ErrorMessage, Field, Formik, Form
-} from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { ErrorMessage, Field, Formik } from "formik";
+import { useSelector } from "react-redux";
+import { Form } from "react-router-dom";
 import { dogFoodApi } from "../../../api/DogFoodApi";
-import { getTokenSelector, setProductIdsUser } from "../../../redux/slices/userSlice";
-import { Button } from "../../Button/Button";
+import { getTokenSelector } from "../../../redux/slices/userSlice";
 import { Modal } from "../../Modal/Modal";
+import styles from "../NewProductModal/NewProductModal.module.css";
 import profileStyles from "../../Pages/Profile/Profile.module.css";
-import styles from "./NewProductModal.module.css";
-import { createNewProductValidationSchema } from "./validatorNewProduct";
+import { Button } from "../../Button/Button";
+import { createEditProductValidationSchema } from "./validatorEditProduct";
 
-export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpen }) {
+export function EditProductModal({ isEditProductModalOpen, setIsEditProductModalOpen, product }) {
   const token = useSelector(getTokenSelector);
-  const dispatch = useDispatch();
 
-  const closeNewProductModalHandler = () => {
-    setIsNewProductModalOpen(false);
+  const closeEditProductModalHandler = () => {
+    setIsEditProductModalOpen(false);
   };
 
-  const initialValuesNewProduct = {
-    available: true,
-    pictures: "",
-    name: "",
-    price: 0,
-    discount: 0,
-    stock: 0,
-    wight: "",
-    description: "",
+  const initialValuesEditProduct = {
+    available: product.available,
+    pictures: product.pictures,
+    name: product.name,
+    price: product.price,
+    discount: product.discount,
+    stock: product.stock,
+    wight: product.wight,
+    description: product.description
   };
 
   const { mutateAsync, error, isError } = useMutation({
-    mutationFn: (values) => dogFoodApi.postNewProduct(values, token),
+    mutationFn: (values) => dogFoodApi.patchEditProduct(values, token),
   });
 
   const submitHandler = async (values) => {
-    const newProduct = await mutateAsync(values);
-    dispatch(setProductIdsUser(newProduct['_id']));
-    setIsNewProductModalOpen(false);
+    await mutateAsync(values);
+    setIsEditProductModalOpen(false);
   };
 
   return (
-    <Modal isOpen={isNewProductModalOpen} closeHandler={closeNewProductModalHandler}>
+    <Modal isOpen={isEditProductModalOpen} closeHandler={closeEditProductModalHandler}>
       <h4 className={profileStyles.modalTitle}>Заполните данные товара</h4>
       <Formik
-        initialValues={initialValuesNewProduct}
-        validationSchema={createNewProductValidationSchema}
+        initialValues={initialValuesEditProduct}
+        validationSchema={createEditProductValidationSchema}
         onSubmit={submitHandler}
       >
         <Form className={styles.containerForm}>
@@ -91,7 +88,6 @@ export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpe
               <Field
                 name="price"
                 type="number"
-                // placeholder="1200 ₽"
               />
               <ErrorMessage component="p" name="price" className="error" />
             </div>
@@ -103,7 +99,6 @@ export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpe
               <Field
                 name="discount"
                 type="number"
-                // placeholder="20 %"
               />
               <ErrorMessage component="p" name="discount" className="error" />
             </div>
@@ -117,7 +112,6 @@ export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpe
               <Field
                 name="stock"
                 type="number"
-                // placeholder="10 шт"
               />
               <ErrorMessage component="p" name="stock" className="error" />
             </div>
@@ -151,7 +145,7 @@ export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpe
           <div className={profileStyles.containerButton}>
             <Button
               type="button"
-              onClick={closeNewProductModalHandler}
+              onClick={closeEditProductModalHandler}
             >
               Отмена
             </Button>

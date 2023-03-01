@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { withQuery } from "../../../HOC/withQuery";
 import { UniversalPage } from "../../UniversalPage/UniversalPage";
 import styles from "./ProductDetailInner.module.css";
@@ -16,9 +17,31 @@ import {
   removeProductFromCart,
 } from "../../../../redux/slices/cartSlice";
 import { ReviewsItem } from "../../../ReviewsItem/ReviewsItem";
+import { NewReviewModal } from "../../../Modals/NewReviewModal/NewReviewModal";
+import { getProductsIdsSelector } from "../../../../redux/slices/userSlice";
+import { EditProductModal } from "../../../Modals/EditProductModal/EditProductModal";
 
 export const ProductDetailInner = withQuery(({ data: product }) => {
   const dispatch = useDispatch();
+
+  const userProductIds = useSelector(getProductsIdsSelector);
+  const isUserProduct = userProductIds.includes(product["_id"]);
+
+  const [isNewReviewModalOpen, setIsNewReviewModalOpen] = useState(false);
+  const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
+  // const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] = useState(false);
+
+  const openNewReviewModalHandler = () => {
+    setIsNewReviewModalOpen(true);
+  };
+
+  const openEditProductModalHandler = () => {
+    setIsEditProductModalOpen(true);
+  };
+
+  // const openDeleteProductModalHandler = () => {
+  //   setIsDeleteProductModalOpen(true);
+  // };
 
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find(
@@ -120,9 +143,12 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
           </div>
           <div className={styles.containerReviews}>
             <h3>Отзывы</h3>
+            {!isUserProduct && (
+            <Button type="button" onClick={openNewReviewModalHandler}>Добавить отзыв</Button>
+            )}
             {!product.reviews.length && <span>Отзывов пока нет</span>}
             {product.reviews.map(({ _id: id, ...reviewer }) => (
-              <ReviewsItem {...reviewer} id={id} key={id} />
+              <ReviewsItem {...reviewer} id={id} key={id} productId={product["_id"]} />
             ))}
           </div>
         </section>
@@ -139,10 +165,24 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
                   </span>
                 )}
               </h3>
-              <Button type="button" onClick={cartOfProductHandler}>
-                {productWithActiveCart ? 'Удалить из корзины' : 'Добавить в корзину'}
-              </Button>
-              <Button type="submit">Купить сейчас</Button>
+              {isUserProduct && (
+                <>
+                  <Button type="button" onClick={openEditProductModalHandler}>
+                    Редактировать
+                  </Button>
+                  <Button type="button">
+                    Удалить
+                  </Button>
+                </>
+              )}
+              {!isUserProduct && (
+                <>
+                  <Button type="button" onClick={cartOfProductHandler}>
+                    {productWithActiveCart ? 'Удалить из корзины' : 'Добавить в корзину'}
+                  </Button>
+                  <Button type="submit">Купить сейчас</Button>
+                </>
+              )}
             </>
           )}
           {!product.available && (
@@ -153,6 +193,17 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
           )}
         </section>
       </article>
+      <NewReviewModal
+        isNewReviewModalOpen={isNewReviewModalOpen}
+        setIsNewReviewModalOpen={setIsNewReviewModalOpen}
+        id={product["_id"]}
+        name={product.name}
+      />
+      <EditProductModal
+        isEditProductModalOpen={isEditProductModalOpen}
+        setIsEditProductModalOpen={setIsEditProductModalOpen}
+        product={product}
+      />
     </UniversalPage>
   );
 });

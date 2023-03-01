@@ -7,13 +7,21 @@
 .myData, .myProducts {
     box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
     border-radius: 10px;
+}
+
+.myData {
     padding: 20px 20px;
 }
 
 .myProducts {
-    display: grid;
-    grid-template-columns: 1fr minmax(150px, 28%);
+    display: flex;
+    flex-direction: column;
     gap: 30px;
+    padding: 20px 20px 40px 20px;
+}
+
+.myProducts h3 {
+    text-align: start;
 }
 
 .form {

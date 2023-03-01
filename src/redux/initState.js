@@ -6,7 +6,8 @@ export const initState = {
     about: '',
     avatar: '',
     email: '',
-    token: ''
+    token: '',
+    productIds: []
   },
   filter: {
     search: ''

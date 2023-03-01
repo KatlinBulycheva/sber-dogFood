@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addProductToCart,
   getCartSelector,
@@ -23,12 +24,14 @@ export function FavoritesItem({
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find((product) => product.id === id);
 
-  const cartOfProductHandler = () => {
+  const cartOfProductHandler = (e) => {
+    e.preventDefault();
     if (productWithActiveCart) dispatch(removeProductFromCart(id));
     else dispatch(addProductToCart(id));
   };
 
-  const removeFromFavorites = () => {
+  const removeFromFavorites = (e) => {
+    e.preventDefault();
     dispatch(removeProductFromFavorites(id));
   };
 
@@ -47,54 +50,58 @@ export function FavoritesItem({
   };
 
   return (
-    <div
-      className={productCardStyles.card}
-      onMouseEnter={mouseEnterHandler}
-      onMouseLeave={mouseLeaveHandler}
-    >
-      <div className={productCardStyles.cardImg}>
-        <img src={pictures} alt={name} />
-        <span className={productCardStyles.offers}>
-          {!!discount && (
-            <span className={productCardStyles.discount}>-{discount}%</span>
-          )}
-          {tags.includes("new") && (
-            <span className={productCardStyles.new}>Новинка</span>
-          )}
-        </span>
-        <span
-          className={classNames(
-            favoriteItemStyles.deleteCardLike,
-            hoverStyles
-          )}
-          onClick={removeFromFavorites}
-          title="Удалить из избранного"
-        >
-          <i className="fa-solid fa-circle-xmark" />
-        </span>
-      </div>
-      <div className={productCardStyles.cardBody}>
-        <h3>
-          <div>
-            {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
+    <Link to={`/products/${id}`}>
+      <div
+        className={productCardStyles.card}
+        onMouseEnter={mouseEnterHandler}
+        onMouseLeave={mouseLeaveHandler}
+      >
+        <div className={productCardStyles.cardImg}>
+          <img src={pictures} alt={name} />
+          <span className={productCardStyles.offers}>
             {!!discount && (
-              <span className={productCardStyles.oldPrice}>{price} ₽</span>
+            <span className={productCardStyles.discount}>-{discount}%</span>
             )}
-          </div>
+            {tags.includes("new") && (
+            <span className={productCardStyles.new}>Новинка</span>
+            )}
+          </span>
           <span
             className={classNames(
-              productCardStyles.cardBodyCart,
-              { [productCardStyles.activeCart]: !!productWithActiveCart },
-              { [productCardStyles.noActiveCart]: !productWithActiveCart }
+              favoriteItemStyles.deleteCardLike,
+              hoverStyles
             )}
-            onClick={cartOfProductHandler}
+            onClick={removeFromFavorites}
+            title="Удалить из избранного"
           >
-            <i className="fa-solid fa-cart-shopping" />
+            <i className="fa-solid fa-circle-xmark" />
           </span>
-        </h3>
-        <p className={productCardStyles.wight}>{wight}</p>
-        <p className={productCardStyles.name}>{name}</p>
+        </div>
+        <div className={productCardStyles.cardBody}>
+          <h3>
+            <div>
+              {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
+              {!!discount && (
+              <span className={productCardStyles.oldPrice}>{price} ₽</span>
+              )}
+            </div>
+            <span
+              className={classNames(
+                productCardStyles.cardBodyCart,
+                { [productCardStyles.activeCart]: !!productWithActiveCart },
+                { [productCardStyles.noActiveCart]: !productWithActiveCart }
+              )}
+              onClick={cartOfProductHandler}
+              title={productWithActiveCart ? "Удалить из корзины" : "Добавить в корзину"}
+            >
+              <i className="fa-solid fa-cart-shopping" />
+            </span>
+          </h3>
+          <p className={productCardStyles.wight}>{wight}</p>
+          <p className={productCardStyles.name}>{name}</p>
+        </div>
       </div>
-    </div>
+    </Link>
+
   );
 }

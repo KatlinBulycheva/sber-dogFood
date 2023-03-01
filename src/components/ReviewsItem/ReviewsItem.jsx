@@ -1,21 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { dogFoodApi } from "../../api/DogFoodApi";
-import { getTokenSelector } from "../../redux/slices/userSlice";
-import { formatDate, getQueryKeyUser } from "../../utils/functions";
+import { getTokenSelector, getUserSelector } from "../../redux/slices/userSlice";
+import { formatDate, getQueryKeyProduct, getQueryKeyUser } from "../../utils/functions";
 import { Rating } from "../Rating/Rating";
 import styles from "./ReviewsItem.module.css";
 
 export function ReviewsItem({
-  text, rating, updated_at: updatedAt, author: authorId
+  id, text, rating, updated_at: updatedAt, author: authorId, productId
 }) {
   const token = useSelector(getTokenSelector);
+  const user = useSelector(getUserSelector);
 
   const { data: author } = useQuery({
     queryKey: getQueryKeyUser(authorId),
     queryFn: () => dogFoodApi.getUserById(authorId, token),
     enabled: !!token
   });
+
+  const isUserReview = (author && author.email) === user.email;
+
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation({
+    mutationFn: () => dogFoodApi.deleteReview(productId, token, id),
+    onSuccess: () => queryClient.invalidateQueries(getQueryKeyProduct(productId)),
+  });
+
+  const deleteUserReview = async () => {
+    await mutateAsync();
+  };
 
   return (
     <>
@@ -35,6 +49,15 @@ export function ReviewsItem({
         <div className={styles.containerText}>
           {text}
         </div>
+        {isUserReview && (
+          <i
+            className={classNames(
+              "fa-regular fa-trash-can",
+              [styles.icoDelete]
+            )}
+            onClick={deleteUserReview}
+          />
+        )}
       </div>
       <hr />
     </>

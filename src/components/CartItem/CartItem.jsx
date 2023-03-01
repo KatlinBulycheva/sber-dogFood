@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   counterDecrementProduct,
   counterIncrementProduct,
@@ -43,7 +44,9 @@ export function CartItem({
         checked={product.isChecked}
       />
       <div className={cartItemStyles.cardImg}>
-        <img src={pictures} alt={name} />
+        <Link to={`/products/${id}`}>
+          <img src={pictures} alt={name} />
+        </Link>
       </div>
       <div className={cartItemStyles.cardBody}>
         <div className={cartItemStyles.containerInfo}>

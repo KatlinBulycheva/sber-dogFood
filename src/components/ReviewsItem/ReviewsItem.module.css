@@ -4,6 +4,19 @@
     grid-template-rows: 50px auto;
     width: 100%;
     gap: 20px 30px;
+    position: relative;
+}
+
+.icoDelete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: gray;
+    cursor: pointer;
+}
+
+.icoDelete:hover {
+    color: black;
 }
 
 .reviewsItem p {

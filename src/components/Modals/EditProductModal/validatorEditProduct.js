@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const createNewProductValidationSchema = Yup.object({
+export const createEditProductValidationSchema = Yup.object({
   available: Yup.boolean(),
   pictures: Yup.string()
     .required("Введите url картинки")
@@ -14,10 +14,7 @@ export const createNewProductValidationSchema = Yup.object({
     .moreThan(-1, "Введите положительное число")
     .integer("Введите целое число"),
   stock: Yup.number()
-    .moreThan(-1, "Введите положительное число")
-    .integer("Введите целое число"),
-  wight: Yup.string()
-    .required("Введите вес"),
+    .moreThan(-1, "Введите положительное число"),
+  wight: Yup.string(),
   description: Yup.string()
-    .required("Введите описание"),
 });

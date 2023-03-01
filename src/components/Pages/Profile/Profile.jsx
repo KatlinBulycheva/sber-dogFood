@@ -7,7 +7,7 @@ import { Button } from "../../Button/Button";
 import { UniversalPage } from "../UniversalPage/UniversalPage";
 import styles from "./Profile.module.css";
 import { ExitModal } from "../../Modals/ExitModal/ExitModal";
-import { NewProductModal } from "../../Modals/NewProductModal/NewProductModal";
+import { UserProducts } from "../../UserProducts/UserProducts";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -15,14 +15,9 @@ export function Profile() {
   const userData = useSelector(getUserSelector);
 
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
-  const [isNewProductModalOpen, setIsNewProductModalOpen] = useState(false);
 
   const openExitModalHandler = () => {
     setIsExitModalOpen(true);
-  };
-
-  const openNewProductModalHandler = () => {
-    setIsNewProductModalOpen(true);
   };
 
   const exitHandler = () => {
@@ -90,15 +85,8 @@ export function Profile() {
         </section>
 
         <section className={styles.myProducts}>
-          <div className={styles.listProducts}>
-            <h3>Мои товары</h3>
-          </div>
-          <div className={styles.result}>
-            <div>Итого</div>
-            <Button type="button" onClick={openNewProductModalHandler}>
-              Добавить товар
-            </Button>
-          </div>
+          <h3>Мои товары</h3>
+          <UserProducts />
         </section>
       </article>
 
@@ -106,10 +94,6 @@ export function Profile() {
         isExitModalOpen={isExitModalOpen}
         setIsExitModalOpen={setIsExitModalOpen}
         exitHandler={exitHandler}
-      />
-      <NewProductModal
-        isNewProductModalOpen={isNewProductModalOpen}
-        setIsNewProductModalOpen={setIsNewProductModalOpen}
       />
     </UniversalPage>
   );

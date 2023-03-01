@@ -8,6 +8,7 @@ export const getQueryKeyCart = (ids) => ["CartProductsFetch", ids];
 export const getQueryKeyFavorites = (ids) => ["FavoritesProductsFetch", ids];
 export const getQueryKeyProduct = (id) => ["DetailProductFetch", id];
 export const getQueryKeyUser = (id) => ["UserFetch", id];
+export const getQueryKeyProductsUser = (ids) => ["ProductsUserFetch", ids];
 
 export const productsSorting = (data) => {
   let sortData;

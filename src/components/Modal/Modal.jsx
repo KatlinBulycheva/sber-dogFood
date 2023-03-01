@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
@@ -21,7 +22,13 @@ function ModalInner({ closeHandler, children }) {
 
   return (
     <div className={styles.modalInner}>
-      <i className="fa-solid fa-xmark" onClick={closeModalByClickButton} />
+      <i
+        className={classNames(
+          "fa-solid fa-xmark",
+          { [styles.closeIcon]: true }
+        )}
+        onClick={closeModalByClickButton}
+      />
       {children}
     </div>
   );

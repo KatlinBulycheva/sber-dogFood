@@ -110,6 +110,55 @@ class DogFoodApi {
 
     return res.json();
   }
+
+  async postNewReview(values, token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}`, {
+      method: "POST",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 400) {
+      throw new Error(`Не корректно заполнено одно из полей`);
+    }
+
+    return res.json();
+  }
+
+  async deleteReview(productId, token, reviewId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}/${reviewId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this.getAuthorizationHeader(token)
+      }
+    });
+
+    if (res.status === 403) {
+      throw new Error(`Невозможно удалить отзыв`);
+    }
+
+    return res.json();
+  }
+
+  async patchEditProduct(token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/${productId}`, {
+      method: "PATCH",
+      headers: {
+        authorization: this.getAuthorizationHeader(token)
+      }
+    });
+
+    return res.json();
+  }
 }
 
 export const dogFoodApi = new DogFoodApi({ baseURL: 'https://api.react-learning.ru' });

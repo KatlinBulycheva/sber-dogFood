@@ -1,19 +1,22 @@
+.stars {
+    display: none;
+}
+
 .containerForm {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 350px;
+    width: 300px;
     margin-top: 20px;
-}
-
-.containerFields {
-    display: flex;
-    gap: 20px;
 }
 
 .containerField {
     display: flex;
     flex-direction: column;
+}
+
+.containerField p {
+    margin: 5px 0 0;
 }
 
 .containerField input, .containerField textarea {
@@ -26,20 +29,3 @@
     min-width: 100%;
     max-width: 100%;
 }
-
-.containerField p {
-    margin: 5px 0 0;
-}
-
-.containerCheckbox {
-    line-height: 100%;
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-}
-
-.containerCheckbox input {
-    margin: 0;
-    height: max-content;
-}
-

@@ -1,0 +1,33 @@
+.userProductsWr {
+    display: grid;
+    grid-template-columns: 1fr minmax(150px, 28%);
+    gap: 30px;
+}
+
+.listProducts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.windowResult {
+    padding: 0 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.windowResult button {
+    height: 50px;
+    font-size: inherit;
+}
+
+.windowResult button:hover {
+    background-color: rgb(252, 235, 169);
+}
+
+.localContainer {
+    background-color: rgba(235, 229, 229, 0.475);
+    border-radius: 15px;
+    height: 50px; /*временное свойство*/
+}
