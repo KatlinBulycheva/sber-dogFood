@@ -16,17 +16,13 @@ const userSlice = createSlice({
         avatar: action.payload.avatar,
         email: action.payload.email
       };
-    },
-    setProductIdsUser(state, action) {
-      state.productIds.unshift(action.payload);
     }
   }
 });
 
 export const {
-  setTokenUser, setDataUser, setProductIdsUser
+  setTokenUser, setDataUser
 } = userSlice.actions;
 export const userReduce = userSlice.reducer;
 export const getTokenSelector = (state) => state.user.token;
 export const getUserSelector = (state) => state.user;
-export const getProductsIdsSelector = (state) => state.user.productIds;

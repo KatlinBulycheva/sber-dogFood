@@ -14,14 +14,14 @@ export const UserProductsInner = withQuery(({ data }) => {
 
   const jsxUserProductsEmpty = () => (
     <div className={styles.userProductsEmpty}>
-      <h3>Здесь пока пусто.<br /> Хотите добавить свой товар?</h3>
+      <p>Здесь пока пусто.<br /> Хотите добавить свой товар?</p>
       <Button type="button" onClick={openNewProductModalHandler}>
         Добавить товар
       </Button>
     </div>
   );
 
-  const jsxCartNotEmpty = () => (
+  const jsxUserProductsNotEmpty = () => (
     <div className={styles.userProductsWr}>
       <div className={styles.listProducts}>
         {data.map(({ _id: id, ...product }) => (
@@ -37,16 +37,17 @@ export const UserProductsInner = withQuery(({ data }) => {
         </div>
       </div>
 
-      <NewProductModal
-        isNewProductModalOpen={isNewProductModalOpen}
-        setIsNewProductModalOpen={setIsNewProductModalOpen}
-      />
     </div>
   );
 
   return (
     <section>
-      {!data.length ? jsxUserProductsEmpty() : jsxCartNotEmpty()}
+      {!data.length ? jsxUserProductsEmpty() : jsxUserProductsNotEmpty()}
+      <NewProductModal
+        isNewProductModalOpen={isNewProductModalOpen}
+        setIsNewProductModalOpen={setIsNewProductModalOpen}
+      />
     </section>
+
   );
 });

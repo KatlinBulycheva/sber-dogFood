@@ -2,14 +2,16 @@ import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import profileStyles from "../../Pages/Profile/Profile.module.css";
 
-export function ExitModal({ isExitModalOpen, setIsExitModalOpen, exitHandler }) {
+export function ExitModal({
+  isExitModalOpen, setIsExitModalOpen, exitHandler
+}) {
   const closeExitModalHandler = () => {
     setIsExitModalOpen(false);
   };
 
   return (
     <Modal isOpen={isExitModalOpen} closeHandler={closeExitModalHandler}>
-      <h4 className={profileStyles.modalTitle}>Вы точно хотите выйти?</h4>
+      <h4 className={profileStyles.modalTitle}>Хотите выйти?</h4>
       <div className={profileStyles.containerButton}>
         <Button
           type="button"

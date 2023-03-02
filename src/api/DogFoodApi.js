@@ -147,13 +147,28 @@ class DogFoodApi {
     return res.json();
   }
 
-  async patchEditProduct(token, productId) {
+  async patchEditProduct(token, productId, values) {
     this.checkToken(token);
 
     const res = await fetch(`${this.baseURL}/products/${productId}`, {
       method: "PATCH",
       headers: {
-        authorization: this.getAuthorizationHeader(token)
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    return res.json();
+  }
+
+  async deleteProduct(token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
       }
     });
 

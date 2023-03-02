@@ -1,10 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ErrorMessage, Field, Formik, Form
 } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { dogFoodApi } from "../../../api/DogFoodApi";
-import { getTokenSelector, setProductIdsUser } from "../../../redux/slices/userSlice";
+import { getTokenSelector } from "../../../redux/slices/userSlice";
+import { getQueryKeySearch } from "../../../utils/functions";
 import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import profileStyles from "../../Pages/Profile/Profile.module.css";
@@ -13,7 +14,6 @@ import { createNewProductValidationSchema } from "./validatorNewProduct";
 
 export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpen }) {
   const token = useSelector(getTokenSelector);
-  const dispatch = useDispatch();
 
   const closeNewProductModalHandler = () => {
     setIsNewProductModalOpen(false);
@@ -30,14 +30,17 @@ export function NewProductModal({ isNewProductModalOpen, setIsNewProductModalOpe
     description: "",
   };
 
-  const { mutateAsync, error, isError } = useMutation({
+  const queryClient = useQueryClient();
+  const {
+    mutateAsync, error, isError
+  } = useMutation({
     mutationFn: (values) => dogFoodApi.postNewProduct(values, token),
+    onSuccess: () => queryClient.invalidateQueries(getQueryKeySearch('')),
   });
 
   const submitHandler = async (values) => {
-    const newProduct = await mutateAsync(values);
-    dispatch(setProductIdsUser(newProduct['_id']));
     setIsNewProductModalOpen(false);
+    await mutateAsync(values);
   };
 
   return (

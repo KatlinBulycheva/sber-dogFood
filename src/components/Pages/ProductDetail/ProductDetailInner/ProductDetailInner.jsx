@@ -18,18 +18,19 @@ import {
 } from "../../../../redux/slices/cartSlice";
 import { ReviewsItem } from "../../../ReviewsItem/ReviewsItem";
 import { NewReviewModal } from "../../../Modals/NewReviewModal/NewReviewModal";
-import { getProductsIdsSelector } from "../../../../redux/slices/userSlice";
 import { EditProductModal } from "../../../Modals/EditProductModal/EditProductModal";
+import { DeleteProductModal } from "../../../Modals/DeleteProductModal/DeleteProductModal";
+import { getUserSelector } from "../../../../redux/slices/userSlice";
 
 export const ProductDetailInner = withQuery(({ data: product }) => {
   const dispatch = useDispatch();
 
-  const userProductIds = useSelector(getProductsIdsSelector);
-  const isUserProduct = userProductIds.includes(product["_id"]);
+  const user = useSelector(getUserSelector);
+  const isUserProduct = user.email === product.author.email;
 
   const [isNewReviewModalOpen, setIsNewReviewModalOpen] = useState(false);
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
-  // const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] = useState(false);
+  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] = useState(false);
 
   const openNewReviewModalHandler = () => {
     setIsNewReviewModalOpen(true);
@@ -39,9 +40,9 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
     setIsEditProductModalOpen(true);
   };
 
-  // const openDeleteProductModalHandler = () => {
-  //   setIsDeleteProductModalOpen(true);
-  // };
+  const openDeleteProductModalHandler = () => {
+    setIsDeleteProductModalOpen(true);
+  };
 
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find(
@@ -106,10 +107,12 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
             </span>
             <div className={styles.offers}>
               {!!product.discount && (
-              <span className={productCardStyles.discount}>-{product.discount}%</span>
+                <span className={productCardStyles.discount}>
+                  -{product.discount}%
+                </span>
               )}
               {product.tags.includes("new") && (
-              <span className={productCardStyles.new}>Новинка</span>
+                <span className={productCardStyles.new}>Новинка</span>
               )}
             </div>
           </div>
@@ -144,11 +147,18 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
           <div className={styles.containerReviews}>
             <h3>Отзывы</h3>
             {!isUserProduct && (
-            <Button type="button" onClick={openNewReviewModalHandler}>Добавить отзыв</Button>
+              <Button type="button" onClick={openNewReviewModalHandler}>
+                Добавить отзыв
+              </Button>
             )}
             {!product.reviews.length && <span>Отзывов пока нет</span>}
             {product.reviews.map(({ _id: id, ...reviewer }) => (
-              <ReviewsItem {...reviewer} id={id} key={id} productId={product["_id"]} />
+              <ReviewsItem
+                {...reviewer}
+                id={id}
+                key={id}
+                productId={product["_id"]}
+              />
             ))}
           </div>
         </section>
@@ -170,7 +180,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
                   <Button type="button" onClick={openEditProductModalHandler}>
                     Редактировать
                   </Button>
-                  <Button type="button">
+                  <Button type="button" onClick={openDeleteProductModalHandler}>
                     Удалить
                   </Button>
                 </>
@@ -178,7 +188,9 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
               {!isUserProduct && (
                 <>
                   <Button type="button" onClick={cartOfProductHandler}>
-                    {productWithActiveCart ? 'Удалить из корзины' : 'Добавить в корзину'}
+                    {productWithActiveCart
+                      ? "Удалить из корзины"
+                      : "Добавить в корзину"}
                   </Button>
                   <Button type="submit">Купить сейчас</Button>
                 </>
@@ -188,7 +200,17 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
           {!product.available && (
             <>
               <h3>Нет в наличии</h3>
-              <Button type="button">Найти похожие</Button>
+              {isUserProduct && (
+                <>
+                  <Button type="button" onClick={openEditProductModalHandler}>
+                    Редактировать
+                  </Button>
+                  <Button type="button" onClick={openDeleteProductModalHandler}>
+                    Удалить
+                  </Button>
+                </>
+              )}
+              {!isUserProduct && <Button type="button">Найти похожие</Button>}
             </>
           )}
         </section>
@@ -202,6 +224,11 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
       <EditProductModal
         isEditProductModalOpen={isEditProductModalOpen}
         setIsEditProductModalOpen={setIsEditProductModalOpen}
+        product={product}
+      />
+      <DeleteProductModal
+        isDeleteProductModalOpen={isDeleteProductModalOpen}
+        setIsDeleteProductModalOpen={setIsDeleteProductModalOpen}
         product={product}
       />
     </UniversalPage>

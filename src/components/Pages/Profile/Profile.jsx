@@ -36,9 +36,9 @@ export function Profile() {
     <UniversalPage>
       <article className={styles.containerMain}>
         <section className={styles.myData}>
+          <h3>Редактирование профиля</h3>
           <Formik initialValues={initialValuesProfile}>
             <Form className={styles.form}>
-              <h3 className={styles.title}>Редактирование профиля</h3>
 
               <div className={styles.prifile}>
                 <div className={styles.leftContainer}>

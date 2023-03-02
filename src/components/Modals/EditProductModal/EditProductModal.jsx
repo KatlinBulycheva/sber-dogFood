@@ -1,7 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { ErrorMessage, Field, Formik } from "formik";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  ErrorMessage, Field, Formik, Form
+} from "formik";
 import { useSelector } from "react-redux";
-import { Form } from "react-router-dom";
 import { dogFoodApi } from "../../../api/DogFoodApi";
 import { getTokenSelector } from "../../../redux/slices/userSlice";
 import { Modal } from "../../Modal/Modal";
@@ -9,6 +10,7 @@ import styles from "../NewProductModal/NewProductModal.module.css";
 import profileStyles from "../../Pages/Profile/Profile.module.css";
 import { Button } from "../../Button/Button";
 import { createEditProductValidationSchema } from "./validatorEditProduct";
+import { getQueryKeyProduct } from "../../../utils/functions";
 
 export function EditProductModal({ isEditProductModalOpen, setIsEditProductModalOpen, product }) {
   const token = useSelector(getTokenSelector);
@@ -28,8 +30,10 @@ export function EditProductModal({ isEditProductModalOpen, setIsEditProductModal
     description: product.description
   };
 
+  const queryClient = useQueryClient();
   const { mutateAsync, error, isError } = useMutation({
-    mutationFn: (values) => dogFoodApi.patchEditProduct(values, token),
+    mutationFn: (values) => dogFoodApi.patchEditProduct(token, product["_id"], values),
+    onSuccess: () => queryClient.invalidateQueries(getQueryKeyProduct(product["_id"])),
   });
 
   const submitHandler = async (values) => {

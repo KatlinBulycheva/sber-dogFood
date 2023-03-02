@@ -7,6 +7,9 @@
 .myData, .myProducts {
     box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .myData {
@@ -14,13 +17,10 @@
 }
 
 .myProducts {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
     padding: 20px 20px 40px 20px;
 }
 
-.myProducts h3 {
+.myProducts h3, .myData h3 {
     text-align: start;
 }
 
