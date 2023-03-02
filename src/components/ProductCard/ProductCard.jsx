@@ -12,7 +12,9 @@ import {
   getFavoritesSelector,
   removeProductFromFavorites,
 } from "../../redux/slices/favoritesSlice";
-import productCardStyles from "./ProductCard.module.css";
+import { getUserSelector } from "../../redux/slices/userSlice";
+import { getRating } from "../../utils/functions";
+import styles from "./ProductCard.module.css";
 
 export function ProductCard({
   pictures,
@@ -21,9 +23,15 @@ export function ProductCard({
   wight,
   discount,
   tags,
-  id
+  id,
+  author,
+  reviews
 }) {
   const dispatch = useDispatch();
+
+  const user = useSelector(getUserSelector);
+  const isUserProduct = user.email === author.email;
+
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find((product) => product.id === id);
 
@@ -43,42 +51,43 @@ export function ProductCard({
   };
 
   const [hoverStyles, setHoverStyles] = useState({
-    [productCardStyles.noActiveLike]: !productWithActiveLike
+    [styles.noActiveLike]: !productWithActiveLike
   });
 
   const mouseEnterHandler = () => {
     setHoverStyles({
-      [productCardStyles.noActiveLikeDisplay]: !productWithActiveLike
+      [styles.noActiveLikeDisplay]: !productWithActiveLike
     });
   };
 
   const mouseLeaveHandler = () => {
     setHoverStyles({
-      [productCardStyles.noActiveLike]: !productWithActiveLike
+      [styles.noActiveLike]: !productWithActiveLike
     });
   };
 
   return (
     <Link to={`./${id}`}>
       <div
-        className={productCardStyles.card}
+        className={styles.card}
         onMouseEnter={mouseEnterHandler}
         onMouseLeave={mouseLeaveHandler}
       >
-        <div className={productCardStyles.cardImg}>
+        <div className={styles.cardImg}>
           <img src={pictures} alt={name} />
-          <span className={productCardStyles.offers}>
+          <span className={styles.offers}>
             {!!discount && (
-            <span className={productCardStyles.discount}>-{discount}%</span>
+            <span className={styles.discount}>-{discount}%</span>
             )}
             {tags.includes("new") && (
-            <span className={productCardStyles.new}>Новинка</span>
+            <span className={styles.new}>Новинка</span>
             )}
           </span>
+          {!isUserProduct && (
           <span
             className={classNames(
-              productCardStyles.cardLike,
-              { [productCardStyles.activeLike]: !!productWithActiveLike },
+              styles.cardLike,
+              { [styles.activeLike]: !!productWithActiveLike },
               hoverStyles
             )}
             onClick={likeOfProductHandler}
@@ -86,29 +95,43 @@ export function ProductCard({
           >
             <i className="fa-solid fa-heart" />
           </span>
+          )}
         </div>
-        <div className={productCardStyles.cardBody}>
+        <div className={styles.cardBody}>
           <h3>
             <div>
               {`${Math.round(price * (1 - discount * 0.01))} ₽   `}
               {!!discount && (
-              <span className={productCardStyles.oldPrice}>{price} ₽</span>
+              <span className={styles.oldPrice}>{price} ₽</span>
               )}
             </div>
+            {!isUserProduct && (
             <span
               className={classNames(
-                productCardStyles.cardBodyCart,
-                { [productCardStyles.activeCart]: !!productWithActiveCart },
-                { [productCardStyles.noActiveCart]: !productWithActiveCart }
+                styles.cardBodyCart,
+                { [styles.activeCart]: !!productWithActiveCart },
+                { [styles.noActiveCart]: !productWithActiveCart }
               )}
               onClick={cartOfProductHandler}
               title={productWithActiveCart ? "Удалить из корзины" : "Добавить в корзину"}
             >
               <i className="fa-solid fa-cart-shopping" />
             </span>
+            )}
           </h3>
-          <p className={productCardStyles.wight}>{wight}</p>
-          <p className={productCardStyles.name}>{name}</p>
+          <p className={styles.containerStar}>
+            <i
+              className={classNames(
+                "fa-solid fa-star",
+                { [styles.isActiveStar]: !!reviews.length },
+                { [styles.isNoActiveStar]: !reviews.length }
+              )}
+            />
+            <span>
+              {reviews.length ? `  ${getRating(reviews)}` : `  0`}
+            </span>
+          </p>
+          <p className={styles.name}>{`${name}, ${wight}`}</p>
         </div>
       </div>
     </Link>

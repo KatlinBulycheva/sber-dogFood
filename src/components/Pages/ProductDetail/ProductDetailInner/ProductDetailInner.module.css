@@ -108,6 +108,10 @@
     height: max-content;
 }
 
+.containerRight h3 {
+    text-align: start;
+}
+
 .containerRight button {
     height: 50px;
     font-size: inherit;

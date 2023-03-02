@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
-import { getUserSelector, setTokenUser } from "../../../redux/slices/userSlice";
+import { useEffect, useState } from "react";
+import { getTokenSelector, getUserSelector, setTokenUser } from "../../../redux/slices/userSlice";
 import { Button } from "../../Button/Button";
 import { UniversalPage } from "../UniversalPage/UniversalPage";
 import styles from "./Profile.module.css";
@@ -10,9 +10,16 @@ import { ExitModal } from "../../Modals/ExitModal/ExitModal";
 import { UserProducts } from "../../UserProducts/UserProducts";
 
 export function Profile() {
+  const token = useSelector(getTokenSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(getUserSelector);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/signin");
+    }
+  }, [token]);
 
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 

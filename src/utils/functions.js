@@ -1,42 +1,68 @@
 import { useSearchParams } from "react-router-dom";
 import {
-  FILTER_BENEFIT, FILTER_NEWLY, FILTER_POPULAR, FILTER_PRICEDOWN, FILTER_PRICEUP, FILTER_RATE
+  FILTER_BENEFIT,
+  FILTER_NEWLY,
+  FILTER_POPULAR,
+  FILTER_PRICEDOWN,
+  FILTER_PRICEUP,
+  FILTER_RATE,
 } from "./constants";
 
-export const getQueryKeySearch = (searchValue) => ["AllProductsFetch", searchValue];
+export const getQueryKeySearch = (searchValue) => [
+  "AllProductsFetch",
+  searchValue,
+];
 export const getQueryKeyCart = (ids) => ["CartProductsFetch", ids];
 export const getQueryKeyFavorites = (ids) => ["FavoritesProductsFetch", ids];
 export const getQueryKeyProduct = (id) => ["DetailProductFetch", id];
 export const getQueryKeyUser = (id) => ["UserFetch", id];
 export const getQueryKeyProductsUser = (ids) => ["ProductsUserFetch", ids];
 
+export const formatDate = (date) =>
+  `${date.slice(0, 10)}     ${date.slice(11, 16)}`;
+
+export const getRating = (reviews) => {
+  const sumRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const countReviews = reviews.length;
+  return (sumRating / countReviews).toFixed(1);
+};
+
 export const productsSorting = (data) => {
   let sortData;
   const [searchParams] = useSearchParams();
 
-  switch (searchParams.get('filterName')) {
+  switch (searchParams.get("filterName")) {
     case FILTER_POPULAR:
-      sortData = data.filter((item) => item.reviews.length > 10);
+      sortData = data.filter((item) => item.likes.length > 10);
       break;
     case FILTER_NEWLY:
-      sortData = data.filter((item) => item.tags.includes('new'));
+      sortData = data.filter((item) => item.tags.includes("new"));
       break;
     case FILTER_PRICEUP:
-      sortData = data.sort((item1, item2) => {
-        const priceItem1 = item1.price * (1 - item1.discount * 0.01);
-        const priceItem2 = item2.price * (1 - item2.discount * 0.01);
-        return priceItem1 - priceItem2;
-      });
+      sortData = data
+        .sort((item1, item2) => {
+          const priceItem1 = item1.price * (1 - item1.discount * 0.01);
+          const priceItem2 = item2.price * (1 - item2.discount * 0.01);
+          return priceItem1 - priceItem2;
+        });
       break;
     case FILTER_PRICEDOWN:
-      sortData = data.sort((item1, item2) => {
-        const priceItem1 = item1.price * (1 - item1.discount * 0.01);
-        const priceItem2 = item2.price * (1 - item2.discount * 0.01);
-        return priceItem2 - priceItem1;
-      });
+      sortData = data
+        .sort((item1, item2) => {
+          const priceItem1 = item1.price * (1 - item1.discount * 0.01);
+          const priceItem2 = item2.price * (1 - item2.discount * 0.01);
+          return priceItem2 - priceItem1;
+        });
       break;
-    case FILTER_RATE:
-      sortData = data.sort((item1, item2) => item2.likes.length - item1.likes.length);
+    case FILTER_RATE: {
+      const dataWithoutReviews = data.filter((item) => item.reviews.length === 0);
+      const dataWithReviews = data
+        .filter((item) => item.reviews.length > 0)
+        .sort(
+          (item1, item2) => getRating(item2.reviews) - getRating(item1.reviews)
+        );
+      sortData = [...dataWithReviews, ...dataWithoutReviews];
+    }
       break;
     case FILTER_BENEFIT:
       sortData = data.filter((item) => item.discount > 0);
@@ -47,5 +73,3 @@ export const productsSorting = (data) => {
 
   return sortData;
 };
-
-export const formatDate = (date) => `${date.slice(0, 10)}   ${date.slice(11, 16)}`;

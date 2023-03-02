@@ -28,9 +28,12 @@
     cursor: pointer;
 }
 
+.cardLike:hover {
+    color: rgba(236, 67, 67, 0.995);
+}
+
 .activeLike {
     color: rgba(236, 67, 67, 0.995);
-    
 }
 
 .noActiveLike {
@@ -114,6 +117,20 @@ p.wight {
 p.name {
     text-align: left;
     margin: 0;
-    max-height: 45px;
+    height: 45px;
     overflow: hidden;
+}
+
+.containerStar {
+    font-size: small;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.isActiveStar {
+    color: rgb(249, 215, 78);
+}
+
+.isNoActiveStar {
+    color: rgb(170, 169, 169);
 }

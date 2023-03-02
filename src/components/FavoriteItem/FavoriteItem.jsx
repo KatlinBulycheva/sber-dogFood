@@ -8,8 +8,10 @@ import {
   removeProductFromCart,
 } from "../../redux/slices/cartSlice";
 import { removeProductFromFavorites } from "../../redux/slices/favoritesSlice";
+import { getUserSelector } from "../../redux/slices/userSlice";
+import { getRating } from "../../utils/functions";
 import productCardStyles from "../ProductCard/ProductCard.module.css";
-import favoriteItemStyles from "./FavoriteItem.module.css";
+import styles from "./FavoriteItem.module.css";
 
 export function FavoritesItem({
   pictures,
@@ -19,8 +21,13 @@ export function FavoritesItem({
   discount,
   tags,
   id,
+  author,
+  reviews
 }) {
   const dispatch = useDispatch();
+  const user = useSelector(getUserSelector);
+  const isUserProduct = user.email === author.email;
+
   const cart = useSelector(getCartSelector);
   const productWithActiveCart = cart.find((product) => product.id === id);
 
@@ -39,13 +46,13 @@ export function FavoritesItem({
 
   const mouseEnterHandler = () => {
     setHoverStyles({
-      [favoriteItemStyles.displayDelete]: true
+      [styles.displayDelete]: true
     });
   };
 
   const mouseLeaveHandler = () => {
     setHoverStyles({
-      [favoriteItemStyles.displayDelete]: false
+      [styles.displayDelete]: false
     });
   };
 
@@ -68,7 +75,7 @@ export function FavoritesItem({
           </span>
           <span
             className={classNames(
-              favoriteItemStyles.deleteCardLike,
+              styles.deleteCardLike,
               hoverStyles
             )}
             onClick={removeFromFavorites}
@@ -85,6 +92,7 @@ export function FavoritesItem({
               <span className={productCardStyles.oldPrice}>{price} ₽</span>
               )}
             </div>
+            {!isUserProduct && (
             <span
               className={classNames(
                 productCardStyles.cardBodyCart,
@@ -96,9 +104,21 @@ export function FavoritesItem({
             >
               <i className="fa-solid fa-cart-shopping" />
             </span>
+            )}
           </h3>
-          <p className={productCardStyles.wight}>{wight}</p>
-          <p className={productCardStyles.name}>{name}</p>
+          <p className={productCardStyles.containerStar}>
+            <i
+              className={classNames(
+                "fa-solid fa-star",
+                { [productCardStyles.isActiveStar]: !!reviews.length },
+                { [productCardStyles.isNoActiveStar]: !reviews.length }
+              )}
+            />
+            <span>
+              {reviews.length ? `  ${getRating(reviews)}` : `  0`}
+            </span>
+          </p>
+          <p className={productCardStyles.name}>{`${name}, ${wight}`}</p>
         </div>
       </div>
     </Link>

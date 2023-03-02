@@ -6,7 +6,6 @@ import { getTokenSelector } from "../../redux/slices/userSlice";
 import { Logo } from "../Logo/Logo";
 import { Search } from "../Search/Search";
 import headerStyles from "./Header.module.css";
-// import logo from "./logo.png";
 
 export function Header() {
   const token = useSelector(getTokenSelector);

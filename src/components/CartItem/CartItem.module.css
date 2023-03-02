@@ -10,6 +10,10 @@
     height: auto;
 }
 
+.checkbox {
+    width: 13px;
+}
+
 .cardImg {
     height: 100%;
     width: 200px;
@@ -69,6 +73,15 @@
     margin: 0;
     text-align: end;
     line-height: 100%;
+}
+
+.containerCounter {
+    align-items: flex-start;
+    width: 30%;
+}
+
+.containerCounter h4 {
+    text-align: start;
 }
 
 .containerCounter p.remove {

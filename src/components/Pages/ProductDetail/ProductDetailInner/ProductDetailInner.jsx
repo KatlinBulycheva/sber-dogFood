@@ -21,6 +21,7 @@ import { NewReviewModal } from "../../../Modals/NewReviewModal/NewReviewModal";
 import { EditProductModal } from "../../../Modals/EditProductModal/EditProductModal";
 import { DeleteProductModal } from "../../../Modals/DeleteProductModal/DeleteProductModal";
 import { getUserSelector } from "../../../../redux/slices/userSlice";
+import { getRating } from "../../../../utils/functions";
 
 export const ProductDetailInner = withQuery(({ data: product }) => {
   const dispatch = useDispatch();
@@ -67,21 +68,13 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
     } else dispatch(addProductToFavorites(product["_id"]));
   };
 
-  const getRating = () => {
-    const sumRating = product.reviews.reduce(
-      (sum, review) => sum + review.rating,
-      0
-    );
-    const countReviews = product.reviews.length;
-    return (sumRating / countReviews).toFixed(1);
-  };
-
   return (
     <UniversalPage>
       <article className={styles.containerMain}>
         <section className={styles.containerLeft}>
           <div className={styles.containerImage}>
             <img src={product.pictures} alt={product.name} />
+            {!isUserProduct && (
             <span
               onClick={likeOfProductHandler}
               title={
@@ -105,6 +98,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
                 />
               )}
             </span>
+            )}
             <div className={styles.offers}>
               {!!product.discount && (
                 <span className={productCardStyles.discount}>
@@ -127,7 +121,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
                 )}
               />
               <span className={styles.stars}>
-                {product.reviews.length ? `   ${getRating()}` : "   Нет оценок"}
+                {product.reviews.length ? `   ${getRating(product.reviews)}` : "   Нет оценок"}
               </span>
               <span className={styles.countReviews}>
                 {product.reviews.length
@@ -178,7 +172,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
               {isUserProduct && (
                 <>
                   <Button type="button" onClick={openEditProductModalHandler}>
-                    Редактировать
+                    Изменить
                   </Button>
                   <Button type="button" onClick={openDeleteProductModalHandler}>
                     Удалить
@@ -203,7 +197,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
               {isUserProduct && (
                 <>
                   <Button type="button" onClick={openEditProductModalHandler}>
-                    Редактировать
+                    Изменить
                   </Button>
                   <Button type="button" onClick={openDeleteProductModalHandler}>
                     Удалить

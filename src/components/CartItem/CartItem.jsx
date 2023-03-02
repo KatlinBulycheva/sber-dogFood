@@ -12,7 +12,7 @@ import { Button } from "../Button/Button";
 import cartItemStyles from "./CartItem.module.css";
 
 export function CartItem({
-  pictures, name, price, wight, id, stock, discount
+  pictures, name, price, wight, id, stock, discount, available
 }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
@@ -37,53 +37,68 @@ export function CartItem({
   };
 
   return (
-    <div className={cartItemStyles.card}>
-      <input
-        type="checkbox"
-        onChange={productIsChecked}
-        checked={product.isChecked}
-      />
-      <div className={cartItemStyles.cardImg}>
-        <Link to={`/products/${id}`}>
-          <img src={pictures} alt={name} />
-        </Link>
-      </div>
-      <div className={cartItemStyles.cardBody}>
-        <div className={cartItemStyles.containerInfo}>
-          <p className={cartItemStyles.name}>{name}</p>
-          <p className={cartItemStyles.wight}>{wight}</p>
+    <>
+      <div className={cartItemStyles.card}>
+        <div className={cartItemStyles.checkbox}>
+          {available && (
+          <input
+            type="checkbox"
+            onChange={productIsChecked}
+            checked={product.isChecked}
+          />
+          )}
         </div>
-        <div className={cartItemStyles.containerCounter}>
-          <div className={cartItemStyles.counter}>
-            <Button
-              disabled={product.count === 1}
-              type="button"
-              onClick={counterDecrement}
-            >
-              -
-            </Button>
-            <span>{product.count}</span>
-            <Button
-              disabled={product.count === stock}
-              type="button"
-              onClick={counterIncrement}
-            >
-              +
-            </Button>
+        <div className={cartItemStyles.cardImg}>
+          <Link to={`/products/${id}`}>
+            <img src={pictures} alt={name} />
+          </Link>
+        </div>
+        <div className={cartItemStyles.cardBody}>
+          <div className={cartItemStyles.containerInfo}>
+            <p className={cartItemStyles.name}>{name}</p>
+            <p className={cartItemStyles.wight}>{wight}</p>
           </div>
-          <p
-            className={cartItemStyles.remove}
-            role="presentation"
-            onClick={removeProduct}
-          >
-            Удалить
-          </p>
-        </div>
-        <div className={cartItemStyles.containerPrice}>
-          <h3>{priceWithDiscount * product.count} ₽</h3>
-          {!!discount && (<span>{price * product.count} ₽</span>)}
+          <div className={cartItemStyles.containerCounter}>
+            {available && (
+              <div className={cartItemStyles.counter}>
+                <Button
+                  disabled={product.count === 1}
+                  type="button"
+                  onClick={counterDecrement}
+                >
+                  -
+                </Button>
+                <span>{product.count}</span>
+                <Button
+                  disabled={product.count === stock}
+                  type="button"
+                  onClick={counterIncrement}
+                >
+                  +
+                </Button>
+              </div>
+            )}
+            <p
+              className={cartItemStyles.remove}
+              role="presentation"
+              onClick={removeProduct}
+            >
+              Удалить
+            </p>
+          </div>
+          <div className={cartItemStyles.containerPrice}>
+            {available ? (
+              <>
+                <h3>{priceWithDiscount * product.count} ₽</h3>
+                {!!discount && (<span>{price * product.count} ₽</span>)}
+              </>
+            ) : (
+              <h4>Нет в наличии</h4>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <hr />
+    </>
   );
 }

@@ -30,14 +30,15 @@ export const CartInner = withQuery(({ data }) => {
     (product) => {
       const productWithDiscount = Math.round(product.price * (1 - product.discount * 0.01));
       const productDiscount = product.price - productWithDiscount;
-      finalPriceCart += productWithDiscount * product.count;
-      finalCountCart += product.count;
-      finalDiscountCart += productDiscount * product.count;
-      finalPriceWithoutDiscount += product.price * product.count;
+      if (product.available) {
+        finalPriceCart += productWithDiscount * product.count;
+        finalCountCart += product.count;
+        finalDiscountCart += productDiscount * product.count;
+        finalPriceWithoutDiscount += product.price * product.count;
+      }
     }
   );
 
-  const firstProductWithDiscount = checkedProductsFull.find((product) => product.discount > 0);
   const isAllProductCheck = checkedProductsFull.length === cart.length;
 
   const checkAllProductsHandler = () => {
@@ -96,7 +97,7 @@ export const CartInner = withQuery(({ data }) => {
                 <p>Товары, {finalCountCart} шт.</p>
                 <p>{finalPriceWithoutDiscount} ₽</p>
               </div>
-              {!!firstProductWithDiscount && (
+              {!!finalDiscountCart && (
                 <div>
                   <p>Скидка</p>
                   <p>-{finalDiscountCart} ₽</p>

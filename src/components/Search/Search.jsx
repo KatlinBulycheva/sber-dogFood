@@ -14,7 +14,6 @@ export function Search() {
   const searchValueFromQuery = searchParams.get('q');
 
   const [searchValue, setSearchValue] = useState(() =>
-    // const searchValueFromQuery = searchParams.get('q');
     searchValueFromQuery ?? ''
   );
   const debouncedSearchValue = useDebounce(searchValue, 600);
