@@ -153,7 +153,7 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
                 key={id}
                 productId={product["_id"]}
               />
-            ))}
+            )).reverse()}
           </div>
         </section>
         <section className={styles.containerRight}>
