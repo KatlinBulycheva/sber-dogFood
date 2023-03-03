@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -9,7 +8,6 @@ import searchStyles from "./Search.module.css";
 export function Search() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [onFocus, setOnFocus] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchValueFromQuery = searchParams.get('q');
 
@@ -28,7 +26,6 @@ export function Search() {
   };
 
   const focusSearchHandler = () => {
-    setOnFocus(true);
     let queryStr = '/products?';
     const queryArr = Object.entries(Object.fromEntries(searchParams.entries()));
     queryArr.forEach((arr) => {
@@ -38,17 +35,16 @@ export function Search() {
     navigate(queryStr);
   };
 
-  const noFocusSearchHandler = () => {
-    setOnFocus(false);
-  };
-
   useEffect(() => {
     dispatch(changeSearchFilter(debouncedSearchValue));
   }, [debouncedSearchValue, dispatch]);
 
-  if (!searchValueFromQuery) {
-    dispatch(clearSearchFilter());
-  }
+  useEffect(() => {
+    if (!searchValueFromQuery) {
+      dispatch(clearSearchFilter());
+    }
+  }, [searchValueFromQuery]);
+
   return (
     <input
       type="text"
@@ -56,13 +52,7 @@ export function Search() {
       placeholder="Поиск"
       onInput={changeSearchHandler}
       onFocus={focusSearchHandler}
-      onBlur={noFocusSearchHandler}
-      className={classNames(
-        searchStyles.search,
-        {
-          [searchStyles.onfocus]: onFocus
-        }
-      )}
+      className={searchStyles.search}
     />
   );
 }

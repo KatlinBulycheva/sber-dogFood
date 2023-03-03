@@ -68,7 +68,7 @@ export function NewReviewModal({
             <label htmlFor="rating">Оцените товар</label>
             <Field
               name="rating"
-              // value={rating}
+              value={rating}
               type="number"
               // className={styles.stars}
             />

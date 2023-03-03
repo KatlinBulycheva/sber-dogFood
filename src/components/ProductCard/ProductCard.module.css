@@ -96,10 +96,6 @@
     cursor: pointer;
 }
 
-.cardBodyCart:hover {
-    color: black;    
-}
-
 .activeCart {
     color: black;
 }
