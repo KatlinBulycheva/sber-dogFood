@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ErrorMessage, Field, Formik, Form
 } from "formik";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { dogFoodApi } from "../../../api/DogFoodApi";
 import { getTokenSelector } from "../../../redux/slices/userSlice";
@@ -22,18 +21,14 @@ export function NewReviewModal({
 }) {
   const token = useSelector(getTokenSelector);
 
-  const [rating, setRating] = useState(0);
-  console.log(">>>>", { rating });
-
   const closeNewReviewModalHandler = () => {
     setIsNewReviewModalOpen(false);
   };
 
   const initialValuesNewReview = {
-    rating,
+    rating: 0,
     text: "",
   };
-  console.log({ initialValuesNewReview });
 
   const queryClient = useQueryClient();
   const { mutateAsync, error, isError } = useMutation({
@@ -42,7 +37,6 @@ export function NewReviewModal({
   });
 
   const submitHandler = async (values) => {
-    console.log("данные формы", { values });
     await mutateAsync(values);
     setIsNewReviewModalOpen(false);
   };
@@ -56,9 +50,6 @@ export function NewReviewModal({
         Отзыв к товару &quot;{name}&quot;
       </h4>
       <Formik
-        // options={{
-        //   enableReinitialize: true
-        // }}
         initialValues={initialValuesNewReview}
         validationSchema={createNewProductValidationSchema}
         onSubmit={submitHandler}
@@ -66,13 +57,7 @@ export function NewReviewModal({
         <Form className={styles.containerForm}>
           <div className={styles.containerField}>
             <label htmlFor="rating">Оцените товар</label>
-            <Field
-              name="rating"
-              value={rating}
-              type="number"
-              // className={styles.stars}
-            />
-            <Rate rating={rating} setRating={setRating} />
+            <Rate />
             <ErrorMessage component="p" name="rating" className="error" />
           </div>
 

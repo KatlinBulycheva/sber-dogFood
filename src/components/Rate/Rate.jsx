@@ -1,21 +1,30 @@
 import classNames from "classnames";
+import { useFormikContext } from "formik";
 import { useMemo, useState } from "react";
 
 export function Rate({
-  rating, setRating, count, color
+  count, color
 }) {
   const [hoverRating, setHoverRating] = useState(0);
-  // console.log({ rating });
+
+  const { values, setValues } = useFormikContext();
+
+  const clickRatingHandler = (elem) => {
+    setValues((prev) => ({
+      ...prev,
+      rating: elem
+    }));
+  };
 
   const getColor = (elem) => {
     if (hoverRating >= elem) return color.filled;
-    if (!hoverRating && rating >= elem) return color.filled;
+    if (!hoverRating && values.rating >= elem) return color.filled;
     return color.unfilled;
   };
 
   const starRating = useMemo(() => Array(count)
     .fill(0)
-    .map((_, ind) => ind + 1), [rating, hoverRating]);
+    .map((_, ind) => ind + 1), [values.rating, hoverRating]);
 
   return (
     <div>
@@ -25,8 +34,8 @@ export function Rate({
           className={classNames(
             "fa-solid fa-star"
           )}
-          onClick={() => setRating(elem)}
-          style={{ color: getColor(elem) }}
+          onClick={() => clickRatingHandler(elem)}
+          style={{ color: getColor(elem), cursor: "pointer" }}
           onMouseEnter={() => setHoverRating(elem)}
           onMouseLeave={() => setHoverRating(0)}
         />
