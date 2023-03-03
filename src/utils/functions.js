@@ -40,6 +40,7 @@ export const productsSorting = (data) => {
       break;
     case FILTER_PRICEUP:
       sortData = data
+        .map((item) => item)
         .sort((item1, item2) => {
           const priceItem1 = item1.price * (1 - item1.discount * 0.01);
           const priceItem2 = item2.price * (1 - item2.discount * 0.01);
@@ -48,6 +49,7 @@ export const productsSorting = (data) => {
       break;
     case FILTER_PRICEDOWN:
       sortData = data
+        .map((item) => item)
         .sort((item1, item2) => {
           const priceItem1 = item1.price * (1 - item1.discount * 0.01);
           const priceItem2 = item2.price * (1 - item2.discount * 0.01);
