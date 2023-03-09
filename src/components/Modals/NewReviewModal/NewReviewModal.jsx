@@ -5,7 +5,7 @@ import {
 import { useSelector } from "react-redux";
 import { dogFoodApi } from "../../../api/DogFoodApi";
 import { getTokenSelector } from "../../../redux/slices/userSlice";
-import { getQueryKeyProduct } from "../../../utils/functions";
+import { getQueryKeyReviewsByProductId } from "../../../utils/functions";
 import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import profileStyles from "../../Pages/Profile/Profile.module.css";
@@ -33,7 +33,7 @@ export function NewReviewModal({
   const queryClient = useQueryClient();
   const { mutateAsync, error, isError } = useMutation({
     mutationFn: (values) => dogFoodApi.postNewReview(values, token, id),
-    onSuccess: () => queryClient.invalidateQueries(getQueryKeyProduct(id)),
+    onSuccess: () => queryClient.invalidateQueries(getQueryKeyReviewsByProductId(id)),
   });
 
   const submitHandler = async (values) => {

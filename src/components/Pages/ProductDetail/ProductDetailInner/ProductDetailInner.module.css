@@ -96,8 +96,16 @@
     grid-column: 1 / 3;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    /* align-items: flex-start; */
     gap: 20px;
+}
+
+.containerReviews h3 {
+    text-align: start;
+}
+
+.filters {
+    display: flex;
 }
 
 .containerRight {

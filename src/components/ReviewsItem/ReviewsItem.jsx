@@ -1,30 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { dogFoodApi } from "../../api/DogFoodApi";
 import { getTokenSelector, getUserSelector } from "../../redux/slices/userSlice";
-import { formatDate, getQueryKeyProduct, getQueryKeyUser } from "../../utils/functions";
+import { formatDate, getQueryKeyReviewsByProductId } from "../../utils/functions";
 import { Rating } from "../Rating/Rating";
 import styles from "./ReviewsItem.module.css";
 
-export function ReviewsItem({
-  id, text, rating, updated_at: updatedAt, author: authorId, productId
-}) {
+export function ReviewsItem({ review }) {
   const token = useSelector(getTokenSelector);
   const user = useSelector(getUserSelector);
 
-  const { data: author } = useQuery({
-    queryKey: getQueryKeyUser(authorId),
-    queryFn: () => dogFoodApi.getUserById(authorId, token),
-    enabled: !!token
-  });
-
-  const isUserReview = (author && author.email) === user.email;
+  const isUserReview = review.author.email === user.email;
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation({
-    mutationFn: () => dogFoodApi.deleteReview(productId, token, id),
-    onSuccess: () => queryClient.invalidateQueries(getQueryKeyProduct(productId)),
+    mutationFn: () => dogFoodApi.deleteReview(review.product, token, review['_id']),
+    onSuccess: () => queryClient.invalidateQueries(getQueryKeyReviewsByProductId(review.product)),
   });
 
   const deleteUserReview = async () => {
@@ -35,19 +27,19 @@ export function ReviewsItem({
     <>
       <div className={styles.reviewsItem}>
         <div className={styles.containerImage}>
-          {author && <img src={author.avatar} alt={author.name} />}
+          <img src={review.author.avatar} alt={review.author.name} />
         </div>
         <div className={styles.containerRating}>
           <p>
-            <span>{author && author.name}</span>
-            <span>{formatDate(updatedAt)}</span>
+            <span>{review.author.name}</span>
+            <span>{formatDate(review.updated_at)}</span>
           </p>
           <p>
-            <Rating rating={rating} />
+            <Rating rating={review.rating} />
           </p>
         </div>
         <div className={styles.containerText}>
-          {text}
+          {review.text}
         </div>
         {isUserReview && (
           <i

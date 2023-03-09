@@ -9,7 +9,6 @@ import cartStyles from "../../Cart/CartInner/Cart.module.css";
 import { Button } from "../../../Button/Button";
 
 export const FavoritesInner = withQuery(({ data }) => {
-  console.log({ data });
   const dispatch = useDispatch();
   const favorites = useSelector(getFavoritesSelector);
 

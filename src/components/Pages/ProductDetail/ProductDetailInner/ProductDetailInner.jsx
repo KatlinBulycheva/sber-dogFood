@@ -16,14 +16,15 @@ import {
   getCartSelector,
   removeProductFromCart,
 } from "../../../../redux/slices/cartSlice";
-import { ReviewsItem } from "../../../ReviewsItem/ReviewsItem";
+// import { ReviewsItem } from "../../../ReviewsItem/ReviewsItem";
 import { NewReviewModal } from "../../../Modals/NewReviewModal/NewReviewModal";
 import { EditProductModal } from "../../../Modals/EditProductModal/EditProductModal";
 import { DeleteProductModal } from "../../../Modals/DeleteProductModal/DeleteProductModal";
 import { getUserSelector } from "../../../../redux/slices/userSlice";
 import { getRating } from "../../../../utils/functions";
+import { ReviewsList } from "../../../ReviewsList/ReviewsList";
 
-export const ProductDetailInner = withQuery(({ data: product }) => {
+export const ProductDetailInner = withQuery(({ product }) => {
   const dispatch = useDispatch();
 
   const user = useSelector(getUserSelector);
@@ -141,19 +142,14 @@ export const ProductDetailInner = withQuery(({ data: product }) => {
           <div className={styles.containerReviews}>
             <h3>Отзывы</h3>
             {!isUserProduct && (
-              <Button type="button" onClick={openNewReviewModalHandler}>
-                Добавить отзыв
-              </Button>
+              <div className={styles.filters}>
+                <Button type="button" onClick={openNewReviewModalHandler}>
+                  Добавить отзыв
+                </Button>
+              </div>
             )}
             {!product.reviews.length && <span>Отзывов пока нет</span>}
-            {product.reviews.map(({ _id: id, ...reviewer }) => (
-              <ReviewsItem
-                {...reviewer}
-                id={id}
-                key={id}
-                productId={product["_id"]}
-              />
-            )).reverse()}
+            <ReviewsList productId={product["_id"]} />
           </div>
         </section>
         <section className={styles.containerRight}>

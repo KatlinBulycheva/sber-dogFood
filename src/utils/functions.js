@@ -17,6 +17,7 @@ export const getQueryKeyFavorites = (ids) => ["FavoritesProductsFetch", ids];
 export const getQueryKeyProduct = (id) => ["DetailProductFetch", id];
 export const getQueryKeyUser = (id) => ["UserFetch", id];
 export const getQueryKeyProductsUser = (ids) => ["ProductsUserFetch", ids];
+export const getQueryKeyReviewsByProductId = (id) => ["ProductReviewsFetch", id];
 
 export const formatDate = (date) =>
   `${date.slice(0, 10)}     ${date.slice(11, 16)}`;

@@ -177,6 +177,18 @@ class DogFoodApi {
 
     return res.json();
   }
+
+  async getReviewsByProductId(token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    });
+
+    return res.json();
+  }
 }
 
 export const dogFoodApi = new DogFoodApi({ baseURL: 'https://api.react-learning.ru' });

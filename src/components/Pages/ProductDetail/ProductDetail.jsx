@@ -19,7 +19,7 @@ export function ProductDetail() {
   }, [token]);
 
   const {
-    data, isLoading, isError, error, refetch
+    data: product, isLoading, isError, error, refetch
   } = useQuery({
     queryKey: getQueryKeyProduct(productId),
     queryFn: () => dogFoodApi.getProductById(productId, token),
@@ -28,7 +28,7 @@ export function ProductDetail() {
 
   return (
     <ProductDetailInner
-      data={data}
+      product={product}
       isLoading={isLoading}
       isError={isError}
       error={error}
