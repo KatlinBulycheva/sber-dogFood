@@ -11,73 +11,113 @@ import {
 import { Button } from "../Button/Button";
 import cartItemStyles from "./CartItem.module.css";
 
-export function CartItem({
-  pictures, name, price, wight, id, stock, discount, available
-}) {
+export function CartItem({ product }) {
   const dispatch = useDispatch();
   const cart = useSelector(getCartSelector);
-  const product = cart.find((productItem) => productItem.id === id);
-  const priceWithDiscount = Math.round(price * (1 - discount * 0.01));
+  const productCart = cart.find(
+    (productItem) => productItem.id === product["_id"]
+  );
+  const priceWithDiscount = Math.round(
+    product.price * (1 - product.discount * 0.01)
+  );
 
   const productIsChecked = () => {
-    if (!product.isChecked) dispatch(setChecked(id));
-    else dispatch(setUnChecked(id));
+    if (!productCart.isChecked) dispatch(setChecked(product["_id"]));
+    else dispatch(setUnChecked(product["_id"]));
   };
 
   const removeProduct = () => {
-    dispatch(removeProductFromCart(id));
+    dispatch(removeProductFromCart(product["_id"]));
   };
 
   const counterIncrement = () => {
-    dispatch(counterIncrementProduct(id));
+    dispatch(counterIncrementProduct(product["_id"]));
   };
 
   const counterDecrement = () => {
-    dispatch(counterDecrementProduct(id));
+    dispatch(counterDecrementProduct(product["_id"]));
   };
+
+  if ("name" in product) {
+    return (
+      <>
+        <div className={cartItemStyles.card}>
+          <div className={cartItemStyles.checkbox}>
+            {product.available && (
+              <input
+                type="checkbox"
+                onChange={productIsChecked}
+                checked={productCart.isChecked}
+              />
+            )}
+          </div>
+          <div className={cartItemStyles.cardImg}>
+            <Link to={`/products/${product["_id"]}`}>
+              <img src={product.pictures} alt={product.name} />
+            </Link>
+          </div>
+          <div className={cartItemStyles.cardBody}>
+            <div className={cartItemStyles.containerInfo}>
+              <p className={cartItemStyles.name}>{product.name}</p>
+              <p className={cartItemStyles.wight}>{product.wight}</p>
+            </div>
+            <div className={cartItemStyles.containerCounter}>
+              {product.available && (
+                <div className={cartItemStyles.counter}>
+                  <Button
+                    disabled={productCart.count === 1}
+                    type="button"
+                    onClick={counterDecrement}
+                  >
+                    -
+                  </Button>
+                  <span>{productCart.count}</span>
+                  <Button
+                    disabled={productCart.count === product.stock}
+                    type="button"
+                    onClick={counterIncrement}
+                  >
+                    +
+                  </Button>
+                </div>
+              )}
+              <p
+                className={cartItemStyles.remove}
+                role="presentation"
+                onClick={removeProduct}
+              >
+                Удалить
+              </p>
+            </div>
+            <div className={cartItemStyles.containerPrice}>
+              {product.available ? (
+                <>
+                  <h3>{priceWithDiscount * productCart.count} ₽</h3>
+                  {!!product.discount && (
+                    <span>{product.price * productCart.count} ₽</span>
+                  )}
+                </>
+              ) : (
+                <h4>Нет в наличии</h4>
+              )}
+            </div>
+          </div>
+        </div>
+        <hr />
+      </>
+    );
+  }
 
   return (
     <>
       <div className={cartItemStyles.card}>
-        <div className={cartItemStyles.checkbox}>
-          {available && (
-          <input
-            type="checkbox"
-            onChange={productIsChecked}
-            checked={product.isChecked}
-          />
-          )}
-        </div>
+        <div className={cartItemStyles.checkbox} />
         <div className={cartItemStyles.cardImg}>
-          <Link to={`/products/${id}`}>
-            <img src={pictures} alt={name} />
-          </Link>
+          <img src="https://cdn-icons-png.flaticon.com/512/4812/4812459.png" alt="Фото продукта" />
         </div>
         <div className={cartItemStyles.cardBody}>
           <div className={cartItemStyles.containerInfo}>
-            <p className={cartItemStyles.name}>{name}</p>
-            <p className={cartItemStyles.wight}>{wight}</p>
-          </div>
-          <div className={cartItemStyles.containerCounter}>
-            {available && (
-              <div className={cartItemStyles.counter}>
-                <Button
-                  disabled={product.count === 1}
-                  type="button"
-                  onClick={counterDecrement}
-                >
-                  -
-                </Button>
-                <span>{product.count}</span>
-                <Button
-                  disabled={product.count === stock}
-                  type="button"
-                  onClick={counterIncrement}
-                >
-                  +
-                </Button>
-              </div>
-            )}
+            <h3>Товар удален</h3>
             <p
               className={cartItemStyles.remove}
               role="presentation"
@@ -86,16 +126,8 @@ export function CartItem({
               Удалить
             </p>
           </div>
-          <div className={cartItemStyles.containerPrice}>
-            {available ? (
-              <>
-                <h3>{priceWithDiscount * product.count} ₽</h3>
-                {!!discount && (<span>{price * product.count} ₽</span>)}
-              </>
-            ) : (
-              <h4>Нет в наличии</h4>
-            )}
-          </div>
+          <div className={cartItemStyles.containerCounter} />
+          <div className={cartItemStyles.containerPrice} />
         </div>
       </div>
       <hr />

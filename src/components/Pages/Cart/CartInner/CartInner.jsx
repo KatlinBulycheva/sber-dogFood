@@ -81,8 +81,8 @@ export const CartInner = withQuery(({ data }) => {
           </div>
         </div>
         <hr />
-        {data.map(({ _id: id, ...product }) => (
-          <CartItem {...product} id={id} key={id} />
+        {data.map((product) => (
+          <CartItem product={product} key={product['_id']} />
         ))}
       </section>
       <section className={cartStyles.ordering}>

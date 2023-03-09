@@ -9,6 +9,7 @@ import cartStyles from "../../Cart/CartInner/Cart.module.css";
 import { Button } from "../../../Button/Button";
 
 export const FavoritesInner = withQuery(({ data }) => {
+  console.log({ data });
   const dispatch = useDispatch();
   const favorites = useSelector(getFavoritesSelector);
 
@@ -39,8 +40,8 @@ export const FavoritesInner = withQuery(({ data }) => {
         </p>
       </div>
       <div className={styles.listFav}>
-        {data.map(({ _id: id, ...product }) => (
-          <FavoritesItem {...product} id={id} key={id} />
+        {data.map((product) => (
+          <FavoritesItem product={product} key={product['_id']} />
         ))}
       </div>
     </section>

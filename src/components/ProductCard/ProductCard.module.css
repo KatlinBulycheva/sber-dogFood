@@ -119,8 +119,8 @@ p.name {
 
 .containerStar {
     font-size: small;
-    margin: 0;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
+    min-height: 17.3px;
 }
 
 .isActiveStar {

@@ -65,7 +65,10 @@ class DogFoodApi {
       headers: {
         authorization: this.getAuthorizationHeader(token),
       }
-    }).then((res) => res.json())));
+    }).then((res) => {
+      if (res.status === 404) return { _id: id };
+      return res.json();
+    })));
   }
 
   async getProductById(id, token) {
