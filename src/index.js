@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       }
     ]
   }
-]);
+], { basename: "/sber-dogFood" });
 
 const queryClient = new QueryClient({
   defaultOptions: {
