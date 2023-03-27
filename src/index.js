@@ -9,10 +9,11 @@ import { Home } from "./components/Pages/Home/Home";
 import { Products } from "./components/Pages/Products/Products";
 import { Signin } from "./components/Pages/SignupOrSignin/Signin/Signin";
 import { Signup } from "./components/Pages/SignupOrSignin/Signup/Signup";
-import { ProductsAll } from "./components/Pages/ProductsAll/ProductsAll";
 import { Profile } from "./components/Pages/Profile/Profile";
 import { store } from "./redux/store";
 import { Cart } from "./components/Pages/Cart/Cart";
+import { Favorites } from "./components/Pages/Favorites/Favorites";
+import { ProductDetail } from "./components/Pages/ProductDetail/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -26,12 +27,6 @@ const router = createBrowserRouter([
       {
         path: "products/",
         element: <Products />,
-        children: [
-          {
-            index: true,
-            element: <ProductsAll />
-          }
-        ]
       },
       {
         path: "signin",
@@ -48,10 +43,18 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />
+      },
+      {
+        path: "favorites",
+        element: <Favorites />
+      },
+      {
+        path: "products/:productId",
+        element: <ProductDetail />
       }
     ]
   }
-], { basename: "/sber-dogFood" });
+]);
 
 const queryClient = new QueryClient({
   defaultOptions: {

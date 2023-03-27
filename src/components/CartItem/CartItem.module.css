@@ -10,6 +10,10 @@
     height: auto;
 }
 
+.checkbox {
+    width: 13px;
+}
+
 .cardImg {
     height: 100%;
     width: 200px;
@@ -39,18 +43,22 @@
     width: 40%;
 }
 
-.containerInfo p.name {
+p.name {
     text-align: left;
     margin: 0;
     overflow: hidden;
     max-height: 60%;
 }
 
-.containerInfo p.wight {
+p.wight {
     font-size: smaller;
     color: gray;
     text-align: left;
     margin: 0;
+}
+
+.containerInfo h3 {
+    text-align: start;
 }
 
 .containerPrice {
@@ -71,7 +79,16 @@
     line-height: 100%;
 }
 
-.containerCounter p.remove {
+.containerCounter {
+    align-items: flex-start;
+    width: 30%;
+}
+
+.containerCounter h4 {
+    text-align: start;
+}
+
+p.remove {
     text-align: left;
     margin: 0;
     font-size: smaller;
@@ -79,7 +96,7 @@
     cursor: pointer;
 }
 
-.containerCounter p.remove:hover {
+p.remove:hover {
     text-decoration: underline;
 }
 

@@ -65,7 +65,129 @@ class DogFoodApi {
       headers: {
         authorization: this.getAuthorizationHeader(token),
       }
-    }).then((res) => res.json())));
+    }).then((res) => {
+      if (res.status === 404) return { _id: id };
+      return res.json();
+    })));
+  }
+
+  async getProductById(id, token) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/${id}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    });
+
+    return res.json();
+  }
+
+  async getUserById(id, token) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/v2/sm9/users/${id}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    });
+
+    return res.json();
+  }
+
+  async postNewProduct(values, token) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products`, {
+      method: "POST",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 400) {
+      throw new Error(`Не корректно заполнено одно из полей`);
+    }
+
+    return res.json();
+  }
+
+  async postNewReview(values, token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}`, {
+      method: "POST",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 400) {
+      throw new Error(`Не корректно заполнено одно из полей`);
+    }
+
+    return res.json();
+  }
+
+  async deleteReview(productId, token, reviewId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}/${reviewId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this.getAuthorizationHeader(token)
+      }
+    });
+
+    if (res.status === 403) {
+      throw new Error(`Невозможно удалить отзыв`);
+    }
+
+    return res.json();
+  }
+
+  async patchEditProduct(token, productId, values) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/${productId}`, {
+      method: "PATCH",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    return res.json();
+  }
+
+  async deleteProduct(token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    });
+
+    return res.json();
+  }
+
+  async getReviewsByProductId(token, productId) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseURL}/products/review/${productId}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+      }
+    });
+
+    return res.json();
   }
 }
 

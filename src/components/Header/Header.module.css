@@ -26,16 +26,23 @@ header i {
     position: relative;
 }
 
-.cartCount {
+.cartCount, .favoritesCount {
     position: absolute;
     min-width: 15px;
     padding: 0 1px;
-    right: -7px;
     top: -10px;
     border-radius: 40%;
     background-color: white;
     font-size: 11px;
     font-weight: 500;
+}
+
+.cartCount {
+    right: -7px;
+}
+
+.favoritesCount {
+    left: 12px;
 }
 
 .profile {

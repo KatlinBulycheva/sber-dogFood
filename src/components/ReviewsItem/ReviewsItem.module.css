@@ -1,0 +1,61 @@
+.reviewsItem {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-template-rows: 50px auto;
+    width: 100%;
+    gap: 20px 30px;
+    position: relative;
+}
+
+.icoDelete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: gray;
+    cursor: pointer;
+}
+
+.icoDelete:hover {
+    color: black;
+}
+
+.reviewsItem p {
+    margin: 0;
+}
+
+.containerImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.containerRating {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.containerRating p:last-child {
+    text-align: start;
+    font-size: smaller;
+}
+
+.containerRating p:first-child {
+    display: flex;
+    gap: 40px;
+    justify-self: flex-start;
+}
+
+.containerRating p:first-child span:last-child {
+    color: gray;
+}
+
+.containerRating p:first-child span:first-child {
+    font-weight: 500;
+}
+
+.containerText {
+    grid-column: 2/3;
+    text-align: start;
+}

@@ -1,0 +1,30 @@
+.favorites {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.clearFav {
+    margin: 0;
+    color: gray;
+}
+
+.clearFav:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.titleFav {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px 20px;
+}
+
+.listFav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 0.3fr));
+    gap: 30px;
+    justify-content: center;
+}

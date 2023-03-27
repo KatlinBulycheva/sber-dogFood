@@ -1,0 +1,27 @@
+.containerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.containerField {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerField p {
+    margin: 5px 0 0;
+}
+
+.containerField input, .containerField textarea {
+    background-color: rgb(235, 229, 229);
+    width: 100%;
+}
+
+.containerField textarea {
+    height: 50px;
+    min-width: 100%;
+    max-width: 100%;
+}

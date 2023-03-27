@@ -1,0 +1,16 @@
+.deleteCardLike {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: rgb(178, 175, 175);
+    visibility: hidden;
+}
+
+.deleteCardLike:hover {
+    color: black;
+}
+
+.displayDelete {
+    visibility: visible;
+}

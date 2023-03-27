@@ -37,5 +37,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react/jsx-filename-extension': 0,
     'max-len': ['error', { code: 100 }],
+    'jsx-a11y/label-has-associated-control': 0,
+    'dot-notation': 0,
   },
 };

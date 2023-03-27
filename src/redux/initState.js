@@ -2,17 +2,18 @@ import { REDUX_LS_KEY } from "../utils/constants";
 
 export const initState = {
   user: {
-    group: '',
     name: '',
-    email: '',
     about: '',
     avatar: '',
-    token: ''
+    email: '',
+    token: '',
+    // productIds: []
   },
   filter: {
     search: ''
   },
-  cart: []
+  cart: [],
+  favorites: []
 };
 
 export const getInitState = () => {

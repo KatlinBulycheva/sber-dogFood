@@ -6,12 +6,23 @@ const userSlice = createSlice({
   initialState: initState.user,
   reducers: {
     setTokenUser(state, action) {
-      // eslint-disable-next-line no-param-reassign
       state.token = action.payload;
+    },
+    setDataUser(state, action) {
+      return {
+        ...state,
+        name: action.payload.name,
+        about: action.payload.about,
+        avatar: action.payload.avatar,
+        email: action.payload.email
+      };
     }
   }
 });
 
-export const { setTokenUser } = userSlice.actions;
+export const {
+  setTokenUser, setDataUser
+} = userSlice.actions;
 export const userReduce = userSlice.reducer;
 export const getTokenSelector = (state) => state.user.token;
+export const getUserSelector = (state) => state.user;

@@ -22,13 +22,13 @@
 .cart, .ordering {
     box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
     border-radius: 10px;
-    padding: 20px 20px;
 }
 
 .cart {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 20px 20px 40px 20px;
 }
 
 .cartTitle {
@@ -65,17 +65,13 @@
     cursor: pointer;
 }
 
-.hr {
-    height: .5px; 
-    background-color: rgb(235, 229, 229); 
-}
-
 .ordering {
     min-height: 90px;
     height: max-content;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding: 20px 20px;
 }
 
 .orderingBody {
@@ -84,7 +80,7 @@
     gap: 11px;
 }
 
-.orderingBody>div {
+.orderingBody div {
     display: flex;
     justify-content: space-between;
 }
@@ -99,7 +95,7 @@
 }
 
 .ordering button:hover {
-    background-color: rgb(249, 222, 116);
+    background-color: rgb(252, 235, 169);
 }
 
 .emptyListChecked {

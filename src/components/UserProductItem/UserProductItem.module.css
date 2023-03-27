@@ -1,0 +1,67 @@
+.card {
+    display: flex;
+    gap: 30px;
+    height: 150px;
+    align-items: flex-start;
+}
+
+.cardImg {
+    height: 100%;
+    width: 200px;
+}
+
+.cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.cardBody {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.containerInfo, .containerPrice {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.containerInfo {
+    width: 40%;
+}
+
+.containerInfo p.name {
+    text-align: left;
+    margin: 0;
+    overflow: hidden;
+    max-height: 60%;
+}
+
+.containerInfo p.wight {
+    font-size: smaller;
+    color: gray;
+    text-align: left;
+    margin: 0;
+}
+
+.containerPrice {
+    width: 30%;
+}
+
+.containerPrice span {
+    color: gray;
+    text-align: end;
+    line-height: 100%;
+    font-size: smaller;
+    text-decoration: line-through;
+}
+
+.containerPrice h3{
+    margin: 0;
+    text-align: end;
+    line-height: 100%;
+}

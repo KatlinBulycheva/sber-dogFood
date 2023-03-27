@@ -5,11 +5,3 @@
     gap: 30px;
     justify-content: center;
 }
-
-.filterLink {
-    color: rgba(109, 108, 108, 0.781);
-}
-
-.activeLink {
-    color: black;
-}
